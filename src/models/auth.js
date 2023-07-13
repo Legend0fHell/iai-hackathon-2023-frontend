@@ -43,6 +43,7 @@ export async function register(email, password, userInfo) {
     .catch((error) => {
         console.log("Reg: Something went wrong.");
         console.log(error.message);
+        alert("Reg: Error occured!" + error.message);
     });
 }
 
@@ -54,6 +55,7 @@ export async function login(email, password) {
     .catch((error) => {
         console.log("Login: Something went wrong.");
         console.log(error.message);
+        alert("Login: Error occured!" + error.message);
     });
 }
 
