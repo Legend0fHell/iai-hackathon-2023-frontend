@@ -4,9 +4,13 @@ import { useEffect, useState } from "react";
 import { getUserInfo, logout } from "@/models/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/config/firebaseInit";
+import Layout from '../components/layout/layout'
 
 // Components
 import {HeroSection} from "../common/HeroSection/HeroSection"
+import MainFeature from "../components/MainFeature/MainFeature"
+import Benefit from "../components/Benefit/Benefit"
+import Summary from "../components/Summary/Summary"
 
 const Index = () => {
   const router = useRouter();
@@ -63,13 +67,16 @@ const Index = () => {
   //   </div>
   // );
   return (
-    <>
-      <HeroSection 
+    <Layout user_data={userInfo} >
+      <HeroSection id='hero_section'
         isButton={true} 
         title={"Play, learn, and get reward.."} 
         description={"Enhance your learning experience with teacher by gamify your test into RPG game to fight boss and compete to get the MYSTERIOUS reward."} 
-        />
-    </>
+      />
+      <MainFeature id='main_feature_section' />
+      <Benefit id='benefit_section' />
+      <Summary id='summary_section' />
+    </Layout>
   )
 };
 

@@ -2,10 +2,10 @@ import { Navbar } from '../../common/Navbar/Navbar'
 import { Footer } from '../../common/Footer/Footer'
 
 
-export default function Layout({ children }) {
+export default function Layout({ children, user_data }) {
     return (
         <>
-            <Navbar />
+            <Navbar userData={user_data} />
                 <main>{children}</main>
             <Footer />
         </>

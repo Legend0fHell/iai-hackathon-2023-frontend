@@ -1,10 +1,14 @@
 import * as React from 'react';
-import { AppBar, Container, Typography, Toolbar, Menu, MenuItem, Box, Button, IconButton } from '@mui/material';
+import { AppBar, Container, Typography, Toolbar, Menu, MenuItem, Box, Button, IconButton, Avatar } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useRouter } from 'next/router'
+import { logout } from "@/models/auth";
 
-export const Navbar = () => {
-    const links = ['/', '/library', '/project/animalGame']
+// Images
+import cat from '../../assets/images/cat.jpg'
+
+export const Navbar = ({ userData }) => {
+    const links = ['#hero_section', '#main_feature_section', '#benefit_section']
     const pages = ['Get Started', 'Learn More', 'Activities']
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const router = useRouter()
@@ -72,7 +76,7 @@ export const Navbar = () => {
                                     display: { xs: 'block', md: 'none' },
                                 }}
                             >
-                                {pages.map((page,index) => (
+                                {pages.map((page, index) => (
                                     <MenuItem key={page} component={'a'} href={links[index]} onClick={handleCloseNavMenu}>
                                         <Typography textAlign="center" sx={{
                                             fontFamily: 'Inter, sans-serif',
@@ -136,14 +140,13 @@ export const Navbar = () => {
                             ))}
                         </Box>
 
-                        <Box sx={{ flexGrow: 0 }}>
+                        <Box sx={{ flexGrow: 0, display: 'flex', gap: '16px' }}>
                             <Button
                                 variant='contained'
                                 sx={(theme) => ({
                                     backgroundColor: 'transparent',
                                     border: '1px solid #fff',
                                     color: '#BDCADB',
-                                    marginRight: '8px',
                                     borderRadius: '0px',
                                     textTransform: 'capitalize!important',
                                     fontFamily: 'Inter, san-serif',
@@ -153,32 +156,53 @@ export const Navbar = () => {
                                     [theme.breakpoints.down("sm")]: {
                                         fontSize: '0.5rem',
                                     },
-                                    "&:hover":{
+                                    "&:hover": {
                                         color: '#fff'
                                     }
                                 })}
                             >
                                 Enter Code
                             </Button>
-                            <Button
-                                variant='contained'
-                                sx={(theme) => ({
-                                    backgroundColor: '#9A62FF',
-                                    fontColor: '#BDCADB',
-                                    borderRadius: '0px',
-                                    textTransform: 'capitalize!important',
-                                    fontFamily: 'Inter, san-serif',
-                                    [theme.breakpoints.down("md")]: {
-                                        fontSize: '0.6rem',
-                                    },
-                                    [theme.breakpoints.down("sm")]: {
-                                        fontSize: '0.5rem',
-                                    },
-                                })}
-                            >
-                                Login
-                            </Button>
+
+
+                            {userData.uid ? (
+                                <IconButton
+                                    onClick={logout}
+                                    sx={{ padding: '0px' }} >
+                                    <Avatar alt="Cat" src={cat.src} sx={{
+                                        border: '1px solid #fff',
+                                    }} />
+                                </IconButton>
+                            ) : (
+                                <Button
+                                    component='a'
+                                    href='/login'
+                                    variant='contained'
+                                    sx={(theme) => ({
+                                        backgroundColor: '#9A62FF',
+                                        fontColor: '#BDCADB',
+                                        borderRadius: '0px',
+                                        textTransform: 'capitalize!important',
+                                        fontFamily: 'Inter, san-serif',
+                                        paddingRight: '28px',
+                                        paddingLeft: '28px',
+                                        [theme.breakpoints.down("md")]: {
+                                            fontSize: '0.6rem',
+                                        },
+                                        [theme.breakpoints.down("sm")]: {
+                                            fontSize: '0.5rem',
+                                        },
+                                        "&:hover": {
+                                            backgroundColor: '#9A62FF',
+                                        }
+                                    })}
+                                >
+                                    Login
+                                </Button>
+                            )}
+
                         </Box>
+
                     </Toolbar>
                 </Container>
             </AppBar>

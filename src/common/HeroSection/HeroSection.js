@@ -184,7 +184,7 @@ export const HeroSection = ({ loading, backgroundImg, title, description = null,
                                 }}
                             />
                             <Image
-                                src={ellipse2}
+                                src={ellipse3}
                                 width={'100%'}
                                 height={'100%'}
                                 alt="flower"
@@ -192,7 +192,6 @@ export const HeroSection = ({ loading, backgroundImg, title, description = null,
                                     position: 'absolute',
                                     bottom: '-36px',
                                     left:0,
-                                    transform: 'rotate(45deg)',
                                 }}
                             />
                         </Box>
