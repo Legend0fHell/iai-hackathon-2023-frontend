@@ -53,14 +53,14 @@ const Login = () => {
       console.log('No Data');
       return;
     };
-    if (pass.match(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]{8,})$/)) {
+    if (pass.match(/^(?!.* )(?=.*\d)(?=.*[A-Z]).{8,}$/) && email.match(/^\S+@\S+\.\S+$/) ) {
       console.log(email, pass)
       try {
-        await login(email, password);
+        await login(email, pass);
       } catch (error) {
         console.log(error)
       } 
-      // router.push('/');
+      router.push('/');
     } else {
       console.log('Password not valid')
     }

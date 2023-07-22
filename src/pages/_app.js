@@ -1,5 +1,5 @@
 import '../styles/globals.css'
-// import Layout from '../components/layout/layout'
+import Layout from '../components/layout/layout'
 import {
   ThemeProvider,
   createTheme,
@@ -15,11 +15,11 @@ function MyApp({ Component, pageProps }) {
   return (
     <ThemeProvider theme={theme}>
       <StyledEngineProvider injectFirst>
-
+        <Layout>
           {/* <Provider store={store}> */}
-            <Component {...pageProps} />
+          <Component {...pageProps} />
           {/* </Provider> */}
-
+        </Layout>
       </StyledEngineProvider>
     </ThemeProvider>
   )

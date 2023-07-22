@@ -56,7 +56,7 @@ const Register = () => {
       console.log('No Data');
       return;
     };
-    if (pass.match(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]{8,})$/)) {
+    if (pass.match(/^(?!.* )(?=.*\d)(?=.*[A-Z]).{8,15}$/) && email.match(/^\S+@\S+\.\S+$/)) {
       await register(email, password, { 'uname': name });
       router.push('/');
     } else {

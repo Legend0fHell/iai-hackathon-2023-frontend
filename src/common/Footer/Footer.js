@@ -11,115 +11,115 @@ import insta from '../../assets/images/instagram.png'
 import tele from '../../assets/images/tele.png'
 
 export const Footer = () => {
-    const links = ['/', '/library', '/project/ebs']
-    const pages = ['Trang chủ', 'Thư viện', 'Dự án']
+    const removeRoutes = ['/join','/login','/register']
     const router = useRouter()
     console.log(router.pathname)
-
-    return (
-        <Box component="footer" sx={{ background: '#21204A' }}>
-            <Container maxWidth='xl'>
-                <Box sx={(theme) => ({
-                    pt: '4%',
-                    pb: '2%',
-                    [theme.breakpoints.down("md")]: {
-                        pb: '4%'
-                    },
-                })} >
-                    <Box sx={{ display: 'flex' }}>
-                        <Grid container sx={{width:'100%'}}>
-                            <Grid xs={4}>
-                                <Typography component='a' href='/' variant='h4' sx={(theme) => ({
-                                    fontFamily: 'Andy, sans-serif',
-                                    fontWeight: 700,
-                                    textDecoration: 'none',
-                                    fontSize: '3rem',
-                                    color: '#FFFFFF',
-                                    [theme.breakpoints.down("md")]: {
-                                        fontSize: '2rem',
-                                    },
-                                    [theme.breakpoints.down("sm")]: {
-                                        fontSize: '1.5rem',
-                                    },
-                                })}>
-                                    Testeria
-                                </Typography>
-                                <Typography variant='body1' sx={{ color: '#BDCADB' }}>
-                                    The world’s first website capable of generating RPG game from test file such as pdf, docx.!
-                                </Typography>
-                            </Grid>
-
-                            <Grid xs={8} sx={{
-                                display:'flex',
-                                flexDirection:'column',
-                                alignItems:'flex-end'
-                            }} >
-                                <Typography variant='body1' sx={{ color: '#fff', fontWeight:'bold' }} >
-                                    Join our comunity
-                                </Typography>
-                                <Box sx={{
-                                    display:'flex',
-                                    gap:'16px',
-                                    paddingTop:'16px'
-                                }}
-                                >
-                                    <Image 
-                                        src={face}
-                                        width={20}
-                                        height={20}
-                                        alt='face'
-                                    />
-                                    <Image 
-                                        src={insta}
-                                        width={20}
-                                        height={20}
-                                        alt='insta'
-                                    />
-                                    <Image 
-                                        src={tele}
-                                        width={20}
-                                        height={20}
-                                        alt='tele'
-                                    />
-                                </Box>
-                            </Grid>
-                        </Grid>
-
-
-                    </Box>
-
-                </Box>
-                <Box sx={{
-                    borderTop: '0.5px solid #11315B'
-                }}>
+    if (!removeRoutes.includes(router.pathname)) {
+        return (
+            <Box component="footer" sx={{ background: '#21204A' }}>
+                <Container maxWidth='xl'>
                     <Box sx={(theme) => ({
-                        display: 'flex',
-                        justifyContent: 'space-between',
-                        py: '2%',
+                        pt: '4%',
+                        pb: '2%',
                         [theme.breakpoints.down("md")]: {
-                            pt: '3%'
+                            pb: '4%'
                         },
-                    })}>
-                        <Typography variant='body2'
-                            sx={(theme) => ({
-                                fontFamily: 'Inter, sans-serif',
-                                fontSize: '0.875rem',
-                                fontWeight: '400',
-                                color: '#D9DBE1',
-                                [theme.breakpoints.down("md")]: {
-                                    fontSize: '0.65rem',
-                                },
-                            })}
-                        >
-                            © 2023 Testeria. All rights reserved
-                        </Typography>
-                        <Box component='a' href='https://www.facebook.com/minhpmdev/' target={'_blank'}>
-                            <FacebookOutlined spin={true} style={{ color: '#D9DBE1' }} />
-                        </Box>
-                    </Box>
+                    })} >
+                        <Box sx={{ display: 'flex' }}>
+                            <Grid container sx={{ width: '100%' }}>
+                                <Grid xs={4}>
+                                    <Typography component='a' href='/' variant='h4' sx={(theme) => ({
+                                        fontFamily: 'Andy, sans-serif',
+                                        fontWeight: 700,
+                                        textDecoration: 'none',
+                                        fontSize: '3rem',
+                                        color: '#FFFFFF',
+                                        [theme.breakpoints.down("md")]: {
+                                            fontSize: '2rem',
+                                        },
+                                        [theme.breakpoints.down("sm")]: {
+                                            fontSize: '1.5rem',
+                                        },
+                                    })}>
+                                        Testeria
+                                    </Typography>
+                                    <Typography variant='body1' sx={{ color: '#BDCADB' }}>
+                                        The world’s first website capable of generating RPG game from test file such as pdf, docx.!
+                                    </Typography>
+                                </Grid>
 
-                </Box>
-            </Container>
-        </Box>
-    );
+                                <Grid xs={8} sx={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'flex-end'
+                                }} >
+                                    <Typography variant='body1' sx={{ color: '#fff', fontWeight: 'bold' }} >
+                                        Join our comunity
+                                    </Typography>
+                                    <Box sx={{
+                                        display: 'flex',
+                                        gap: '16px',
+                                        paddingTop: '16px'
+                                    }}
+                                    >
+                                        <Image
+                                            src={face}
+                                            width={20}
+                                            height={20}
+                                            alt='face'
+                                        />
+                                        <Image
+                                            src={insta}
+                                            width={20}
+                                            height={20}
+                                            alt='insta'
+                                        />
+                                        <Image
+                                            src={tele}
+                                            width={20}
+                                            height={20}
+                                            alt='tele'
+                                        />
+                                    </Box>
+                                </Grid>
+                            </Grid>
+
+
+                        </Box>
+
+                    </Box>
+                    <Box sx={{
+                        borderTop: '0.5px solid #11315B'
+                    }}>
+                        <Box sx={(theme) => ({
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            py: '2%',
+                            [theme.breakpoints.down("md")]: {
+                                pt: '3%'
+                            },
+                        })}>
+                            <Typography variant='body2'
+                                sx={(theme) => ({
+                                    fontFamily: 'Inter, sans-serif',
+                                    fontSize: '0.875rem',
+                                    fontWeight: '400',
+                                    color: '#D9DBE1',
+                                    [theme.breakpoints.down("md")]: {
+                                        fontSize: '0.65rem',
+                                    },
+                                })}
+                            >
+                                © 2023 Testeria. All rights reserved
+                            </Typography>
+                            <Box component='a' href='https://www.facebook.com/minhpmdev/' target={'_blank'}>
+                                <FacebookOutlined spin={true} style={{ color: '#D9DBE1' }} />
+                            </Box>
+                        </Box>
+
+                    </Box>
+                </Container>
+            </Box>
+        );
+    }
 }
