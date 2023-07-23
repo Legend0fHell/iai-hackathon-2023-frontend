@@ -41,14 +41,14 @@ const Index = () => {
 
   return (
     <>
-      <HeroSection id='hero_section'
+      <HeroSection 
         isButton={true} 
         title={"Play, learn, and get reward.."} 
         description={"Enhance your learning experience with teacher by gamify your test into RPG game to fight boss and compete to get the MYSTERIOUS reward."} 
       />
-      <MainFeature id='main_feature_section' />
-      <Benefit id='benefit_section' />
-      <Summary id='summary_section' />
+      <MainFeature />
+      <Benefit />
+      <Summary />
     </>
   )
 };

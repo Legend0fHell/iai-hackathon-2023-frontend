@@ -16,15 +16,8 @@ import ellipse3 from '../../assets/images/Ellipse3.png'
 export const HeroSection = ({ loading, backgroundImg, title, description = null, isButton = false }) => {
 
     return (
-        <Box component='section' className="HeroSection" sx={(theme) => ({
+        <Box component='section' className="HeroSection" id='hero_section' sx={(theme) => ({
             backgroundColor: '#21204A',
-            backgroundPosition: 'center',
-            [theme.breakpoints.down("md")]: {
-                backgroundColor: '#191919',
-                backgroundPosition: 'center',
-                backgroundSize: 'cover',
-                backgroundRepeat: 'no-repeat'
-            },
         })}>
             <Container maxWidth='xl' sx={{ padding: '0 2% !important' }} >
                 <Grid container>
