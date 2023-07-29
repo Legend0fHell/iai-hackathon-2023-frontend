@@ -20,7 +20,13 @@ const TaskCard = ({ img_src, title, description }) => {
             alignItems: 'center',
             justifyContent: 'space-between',
             boxShadow: '0px 3px 4px 0px rgba(0, 0, 0, 0.25)',
-            borderRadius: '5px'
+            borderRadius: '5px',
+            cursor:'pointer',
+            // transition:'0.3s',
+            // transitionTimingFunction: 'ease-in',
+            // '&:hover':{
+            //     opacity:'0'
+            // }
         }}>
             <Box>
                 <Typography variant="body1" sx={{ fontWeight: 'bold', fontFamily: 'Poppins,sans-serif' }}>

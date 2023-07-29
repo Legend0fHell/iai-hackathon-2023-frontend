@@ -5,14 +5,52 @@ import {
     Typography,
     Box,
     Button,
-    Avatar
+    Avatar,
+    LinearProgress
 }
     from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
+import Image from "next/image";
+import PropTypes from 'prop-types';
+
+import GameRoomMember from '../../components/GameRoomMember/GameRoomMember';
+import Leaderboard from "../../components/Leaderboard/Leaderboard";
 
 // Images
-import cat from '../../assets/images/cat.jpg'
+import character from '../../assets/images/character.png'
+import gem from '../../assets/images/gem.png'
 import city from '../../assets/images/city.gif'
+
+function LinearProgressWithLabel(props) {
+    return (
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Box sx={{ width: '100%', mr: 2 }}>
+                <LinearProgress variant="determinate" {...props} sx={{
+                    height: '24px',
+                    borderRadius: '10px',
+                    backgroundColor: 'transparent',
+                    border: '1px solid #E4E4E4',
+                    '& > span': {
+                        backgroundColor: '#FF2626'
+                    }
+                }} />
+            </Box>
+            <Box sx={{ minWidth: 35 }}>
+                <Typography variant="body1" color="#fff">{`${Math.round(
+                    props.value,
+                )}%`}</Typography>
+            </Box>
+        </Box>
+    );
+}
+
+LinearProgressWithLabel.propTypes = {
+    /**
+     * The value of the progress indicator for the determinate and buffer variants.
+     * Value between 0 and 100.
+     */
+    value: PropTypes.number.isRequired,
+};
 
 const Join = () => {
 
@@ -31,105 +69,141 @@ const Join = () => {
                     // justifyContent: 'center',
                     alignItems: 'center',
                     paddingBottom: '4%',
-                    gap: '32px',
-
                 }}
                 >
-                    <Box sx={{display:'flex', flexDirection:'column', alignItems:'center', gap:'8px', paddingTop:'4%'}} >
-                        <Typography
-                            variant='h1'
-                            sx={{
-                                color: '#fff',
-                                fontFamily: 'VT323, monospace',
-                                lineHeight: 'normal',
-                            }}
-                        >
-                            Game: Giải tích I
-                        </Typography>
+                    {/* <GameRoomMember/> */}
 
-                        <Typography
-                            variant='h4'
-                            sx={{
-                                color:'#fff',
-                                fontFamily:'Poppins, sans-serif',
+                    {/* <Leaderboard/> */}
 
-                            }}
-                        >
-                            Code: 85674385
-                        </Typography>
-                    </Box>
-                    
-                    <Grid container sx={{
-                        gap:'128px',
-                        paddingTop:'48px'
-                    }}>
-                        <Grid xs={4} sx={{display:'flex', width:'fit-content', gap:'16px', alignItems:'center'}} >
-                            <Avatar alt="Remy Sharp" src={`url(${cat.src})`} sx={{
-                                boxShadow: '0px 0px 0.5px 0px rgba(13, 15, 17, 0.10) inset, 6px 12px 24px 0px rgba(102, 146, 204, 0.08)',
-                                border: '2px solid #fff',
-                                width:'56px',
-                                height:'56px'
-                            }} />
-                            <Typography variant='body1' sx={{
-                                color: '#fff',
-                                fontFamily:'Poppins, sans-serif',
-                                fontSize:'24px',
-                                fontWeight:'bold'
-                            }}
-                            >
-                                Phuong Pham
-                            </Typography>
-                        </Grid>
-                        
-                        <Grid xs={4} sx={{display:'flex', width:'fit-content', gap:'16px', alignItems:'center'}} >
-                            <Avatar alt="Remy Sharp" src={`url(${cat.src})`} sx={{
-                                boxShadow: '0px 0px 0.5px 0px rgba(13, 15, 17, 0.10) inset, 6px 12px 24px 0px rgba(102, 146, 204, 0.08)',
-                                border: '2px solid #fff',
-                                width:'56px',
-                                height:'56px'
-                            }} />
-                            <Typography variant='body1' sx={{
-                                color: '#fff',
-                                fontFamily:'Poppins, sans-serif',
-                                fontSize:'24px',
-                                fontWeight:'bold'
-                            }}
-                            >
-                                Phuong Pham
-                            </Typography>
-                        </Grid>
-
-                        <Grid xs={4} sx={{display:'flex', width:'fit-content', gap:'16px', alignItems:'center'}} >
-                            <Avatar alt="Remy Sharp" src={`url(${cat.src})`} sx={{
-                                boxShadow: '0px 0px 0.5px 0px rgba(13, 15, 17, 0.10) inset, 6px 12px 24px 0px rgba(102, 146, 204, 0.08)',
-                                border: '2px solid #fff',
-                                width:'56px',
-                                height:'56px'
-                            }} />
-                            <Typography variant='body1' sx={{
-                                color: '#fff',
-                                fontFamily:'Poppins, sans-serif',
-                                fontSize:'24px',
-                                fontWeight:'bold'
-                            }}
-                            >
-                                Phuong Pham
-                            </Typography>
-                        </Grid>
-                    </Grid>
-
-                    <Button variant='contained' sx={{
-                        backgroundColor:'#fff',
-                        borderRadius:'5px',
-                        padding:'12px 24px',
-                        boxShadow: '0px 1px 2px 0px rgba(0, 0, 0, 0.24), 0px 1px 3px 0px rgba(0, 0, 0, 0.12)',
-                        color:'#000',
-                        fontFamily:'Poppins, sans-serif',
-                        fontWeight:'bold',
-                        marginTop:'32px'
+                    <Box sx={{
+                        width: '35%',
+                        height: 'fit-content',
+                        backgroundColor: 'rgba(36, 36, 36, 0.70)',
+                        borderRadius: '5px',
+                        marginTop: '4%',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center'
                     }} >
-                        Start Game
-                    </Button>
+                        <Typography variant='h3' sx={{
+                            fontFamily: 'VT323, sans-serif',
+                            color: '#fff',
+                            paddingTop: '32px'
+                        }}>
+                            Summary
+                        </Typography>
+                        <Typography variant="h3" sx={{
+                            fontFamily: 'VT323, sans-serif',
+                            color: '#E5E16D',
+                        }}>
+                            1st
+                        </Typography>
+                        <Image src={character} style={{
+                            width: '15%',
+                            height: 'auto'
+                        }} />
+
+
+
+                        {/* Text Section */}
+                        <Box sx={{ paddingBottom: '32px' }} >
+                            <Box sx={{ display: 'flex', gap: '16px', marginTop: '20px' }} >
+                                <Typography variant="h4" sx={{
+                                    fontFamily: 'VT323, sans-serif',
+                                    color: '#fff',
+                                    textDecoration: 'underline'
+                                }}>
+                                    Precision:
+                                </Typography>
+                                <Typography variant="h4" sx={{
+                                    fontFamily: 'VT323, sans-serif',
+                                    color: '#1EF467',
+
+                                }}>
+                                    100%
+                                </Typography>
+                            </Box>
+                            <Box sx={{ display: 'flex', gap: '16px', marginTop: '20px' }} >
+                                <Typography variant="h4" sx={{
+                                    fontFamily: 'VT323, sans-serif',
+                                    color: '#fff',
+                                    textDecoration: 'underline'
+                                }}>
+                                    Correct:
+                                </Typography>
+                                <Typography variant="h4" sx={{
+                                    fontFamily: 'VT323, sans-serif',
+                                    color: '#1EF467',
+
+                                }}>
+                                    40/40
+                                </Typography>
+                            </Box>
+
+                            <Box sx={{ display: 'flex', gap: '16px', marginTop: '20px' }} >
+                                <Typography variant="h4" sx={{
+                                    fontFamily: 'VT323, sans-serif',
+                                    color: '#fff',
+                                    textDecoration: 'underline'
+                                }}>
+                                    Clear time:
+                                </Typography>
+                                <Typography variant="h4" sx={{
+                                    fontFamily: 'VT323, sans-serif',
+                                    color: '#fff',
+
+                                }}>
+                                    650s
+                                </Typography>
+                            </Box>
+
+                            <Box sx={{ display: 'flex', gap: '16px', marginTop: '20px' }} >
+                                <Typography variant="h4" sx={{
+                                    fontFamily: 'VT323, sans-serif',
+                                    color: '#fff',
+                                    textDecoration: 'underline'
+                                }}>
+                                    Rewarded gems:
+                                </Typography>
+                                <Box sx={{ display: 'flex', gap: '12px', alignItems: 'center' }} >
+                                    <Typography variant="h4" sx={{
+                                        fontFamily: 'VT323, sans-serif',
+                                        color: '#fff',
+
+                                    }}>
+                                        15
+                                    </Typography>
+                                    <Image src={gem} style={{
+                                        width: '32px',
+                                        height: '32px'
+                                    }} />
+                                </Box>
+                            </Box>
+                        </Box>
+
+                        <Button
+                            component='a'
+                            href='/dashboard'
+                            variant='outlined'
+                            sx={{
+                                borderColor: '#BDCADB',
+                                borderRadius: '0px',
+                                fontFamily: 'VT323, sans-serif',
+                                color: '#BDCADB',
+                                fontSize: '24px',
+                                textTransform: 'unset',
+                                border: '2px solid',
+                                padding: '8px 20px',
+                                marginBottom: '32px',
+                                '&:hover': {
+                                    border: '2px solid #BDCADB'
+                                }
+                            }}>
+                            Back to Dashboard
+                        </Button>
+
+                    </Box>
+
                 </Box>
             </Box>
         </>
