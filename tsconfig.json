@@ -22,8 +22,20 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "useUnknownInCatchVariables": false,
+    "useUnknownInCatchVariables": false
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/models/auth.js", "src/pages/index.js", "src/pages/register.js", "src/pages/login.js", "src/pages/about.js", "src/config/firebaseInit.jsx"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/models/auth.js",
+    "src/pages/index.js",
+    "src/pages/register.js",
+    "src/pages/login.js",
+    "src/pages/about.js",
+    "src/config/firebaseInit.jsx",
+    "src/pages/game/index.js"
+  ],
   "exclude": ["node_modules"]
 }
