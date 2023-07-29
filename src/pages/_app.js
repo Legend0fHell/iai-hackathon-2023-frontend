@@ -1,10 +1,11 @@
-import '../styles/globals.css'
-import Layout from '../components/layout/layout'
+import "../styles/globals.css";
+import Layout from "../components/layout/layout";
 import {
   ThemeProvider,
   createTheme,
-  StyledEngineProvider
+  StyledEngineProvider,
 } from "@mui/material/styles";
+import { useRouter } from "next/router";
 
 // import { store } from '../src/redux/store';
 // import { Provider } from 'react-redux';
@@ -12,17 +13,23 @@ import {
 const theme = createTheme();
 
 function MyApp({ Component, pageProps }) {
+  const router = useRouter();
+
   return (
     <ThemeProvider theme={theme}>
       <StyledEngineProvider injectFirst>
-        <Layout>
-          {/* <Provider store={store}> */}
+        {router.pathname === "/game" ? (
           <Component {...pageProps} />
-          {/* </Provider> */}
-        </Layout>
+        ) : (
+          <Layout>
+            {/* <Provider store={store}> */}
+            <Component {...pageProps} />
+            {/* </Provider> */}
+          </Layout>
+        )}
       </StyledEngineProvider>
     </ThemeProvider>
-  )
+  );
 }
 
-export default MyApp
+export default MyApp;

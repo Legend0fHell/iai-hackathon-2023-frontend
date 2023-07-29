@@ -11,6 +11,11 @@
   src: url("../fonts/FVF_Fernando_08.TTF");
 }
 
+@font-face {
+  font-family: "Pixel";
+  src: url("../fonts/FVF_Fernando_08.TTF");
+}
+
 html,
 body {
   padding: 0;
