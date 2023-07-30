@@ -70,3 +70,10 @@ a {
   -webkit-text-fill-color: transparent;
 }
 
+.visible {
+  display: block;
+}
+
+.invisible {
+  display: none;
+}
