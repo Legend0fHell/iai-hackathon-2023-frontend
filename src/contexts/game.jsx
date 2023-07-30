@@ -127,6 +127,10 @@ export const GameProvider = ({ children }) => {
     [setCards, setBoard, cards]
   );
 
+  const onFinished = useCallback(() => {
+    console.log("Call this function after user answered a question");
+  }, []);
+
   useEffect(() => {
     for (let y = 0; y < 3; y++) {
       for (let x = 0; x < 3; x++) {
@@ -156,6 +160,7 @@ export const GameProvider = ({ children }) => {
         selectedSlotId,
         setSelectedSlotId,
         weapon,
+        onFinished,
       }}
     >
       {children}
