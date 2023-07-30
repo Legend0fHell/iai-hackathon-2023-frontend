@@ -1,13 +1,11 @@
 import { Box, Stack } from "@mui/material";
 import { CARD_HEIGHT, CARD_WIDTH } from "../../config/game";
 import Card from "./Card";
+import { useGameContext } from "../../contexts/game";
 
 export default function GameBoard() {
-  const BOARD = [
-    [0, 0, 0],
-    [0, 0, 0],
-    [0, 0, 0],
-  ];
+  const { cards, moveCard } = useGameContext();
+
   return (
     <Stack
       alignItems="center"
@@ -15,8 +13,8 @@ export default function GameBoard() {
         bgcolor: "#34495e",
         mt: 1,
         mb: 2,
-        p: 2,
         borderRadius: 2,
+        p: 1,
       }}
     >
       <Box
@@ -27,7 +25,13 @@ export default function GameBoard() {
           position: "relative",
         }}
       >
-        {BOARD.map((row, y) => row.map((card, x) => <Card x={x} y={y} />))}
+        {Object.keys(cards).map((cardId) => (
+          <Card
+            card={cards[cardId]}
+            key={cardId}
+            onClick={() => moveCard(cardId, 1, 0)}
+          />
+        ))}
       </Box>
     </Stack>
   );

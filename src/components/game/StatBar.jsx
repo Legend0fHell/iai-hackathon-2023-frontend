@@ -49,12 +49,12 @@ export default function StatBar() {
             variant="subtitle1"
             color="white"
             fontFamily="Pixel"
-            sx={{ mr: 0.5, color: "#4cd137" }}
+            sx={{ color: "#4cd137" }}
           >
             {gem}
           </Typography>
           <img
-            src={`/assets/game/icons/gem.png`}
+            src={`/assets/game/images/gem.png`}
             alt="icon"
             width={24}
             height={24}

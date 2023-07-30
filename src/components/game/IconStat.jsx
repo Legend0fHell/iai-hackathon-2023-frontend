@@ -4,7 +4,7 @@ export default function IconStat({ icon, value, width }) {
   return (
     <Stack direction="row" sx={{ width }}>
       <img
-        src={`/assets/game/icons/${icon}.png`}
+        src={`/assets/game/images/${icon}.png`}
         alt="icon"
         width={18}
         height={18}

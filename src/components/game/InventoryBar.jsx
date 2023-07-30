@@ -3,7 +3,8 @@ import Iconify from "../Inconify";
 import { useGameContext } from "../../contexts/game";
 
 export default function InventoryBar() {
-  const { score, inventory } = useGameContext();
+  const { score, inventory, selectedSlotId, setSelectedSlotId } =
+    useGameContext();
 
   return (
     <Stack
@@ -13,23 +14,51 @@ export default function InventoryBar() {
       <Stack direction="row" spacing={1} sx={{ mr: 5 }}>
         {inventory.map((item, index) => (
           <Button
+            key={index}
+            onClick={() => setSelectedSlotId(index)}
             sx={{
               p: 1,
               borderRadius: 1,
               minWidth: 0,
-              bgcolor: item ? "#45596d" : "#2c3e50",
+              position: "relative",
               "&:hover": {
-                bgcolor: item ? "#506374" : "#2c3e50",
+                bgcolor: "white",
               },
             }}
           >
+            <Box
+              sx={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+              }}
+            >
+              <img
+                src={`/assets/game/images/square_${
+                  selectedSlotId == index ? 0 : 1
+                }.png`}
+                draggable={false}
+                style={{
+                  imageRendering: "pixelated",
+                  objectFit: "contain",
+                  width: "100%",
+                  height: "100%",
+                }}
+              />
+            </Box>
             {item ? (
               <img
-                src={`/assets/game/icons/${item.name}.png`}
+                src={`/assets/game/images/${item.name}.png`}
                 width={32}
                 height={32}
                 draggable={false}
-                style={{ imageRendering: "pixelated" }}
+                style={{
+                  imageRendering: "pixelated",
+                  objectFit: "contain",
+                  transform: "rotate(45deg)",
+                }}
               />
             ) : (
               <Box sx={{ width: 32, height: 32 }} />
