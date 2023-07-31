@@ -5,7 +5,6 @@ import { useGameContext } from "../../contexts/game";
 import CardStat from "./CardStat";
 
 export default function Card({ card, onClick }) {
-  const image = card.type == "player" ? card.character.name : card.mob.name;
   const { weapon } = useGameContext();
 
   return (
@@ -46,6 +45,7 @@ export default function Card({ card, onClick }) {
             width: "100%",
             height: "100%",
             p: 1,
+            py: 1.5,
           }}
         >
           <Box>
@@ -56,17 +56,7 @@ export default function Card({ card, onClick }) {
                 sx={{ float: "right", px: 1 }}
                 spacing={1}
               >
-                {card.mob.death ? (
-                  <Typography
-                    variant="subtitle2"
-                    color="white"
-                    fontFamily="Pixel"
-                  >
-                    {card.mob.reward}
-                  </Typography>
-                ) : (
-                  <CardStat icon="health" value={card.mob.health} />
-                )}
+                <CardStat icon="health" value={card.data.health} />
               </Stack>
             )}
           </Box>
@@ -76,11 +66,7 @@ export default function Card({ card, onClick }) {
             color={card.type == "player" ? "#f1c40f" : "#e6e6e6"}
             fontFamily="Pixel"
           >
-            {card.type == "player"
-              ? card.character.displayName
-              : card.mob.death
-              ? "Gem"
-              : card.mob.displayName}
+            {card.data.displayName}
           </Typography>
         </Stack>
         <Box
@@ -94,45 +80,23 @@ export default function Card({ card, onClick }) {
             transform: "scale(0.75)",
           }}
         >
-          {card.type == "player" ? (
-            <Spritesheet
-              image={`/assets/game/images/${image}.png`}
-              widthFrame={24}
-              heightFrame={24}
-              fps={6}
-              startAt={card.character.spritesheet.idle[0]}
-              endAt={card.character.spritesheet.idle[1]}
-              style={{
-                imageRendering: "pixelated",
-              }}
-              loop
-            />
-          ) : (
-            card.type == "mob" &&
-            (!card.mob.death ? (
-              <Spritesheet
-                image={`/assets/game/images/${image}.png`}
-                widthFrame={24}
-                heightFrame={24}
-                fps={6}
-                startAt={card.mob.spritesheet.idle[0]}
-                endAt={card.mob.spritesheet.idle[1]}
-                style={{
-                  imageRendering: "pixelated",
-                }}
-                loop
-              />
-            ) : (
-              <img
-                src={`/assets/game/images/gem.png`}
-                style={{
-                  imageRendering: "pixelated",
-                  width: "100%",
-                  height: "100%",
-                }}
-              />
-            ))
-          )}
+          <Spritesheet
+            image={`/assets/game/images/${card.data.name}.png`}
+            widthFrame={card.data.spritesheet.width}
+            heightFrame={card.data.spritesheet.height}
+            fps={6}
+            startAt={
+              card.data.spritesheet.idle ? card.data.spritesheet.idle[0] + 1 : 0
+            }
+            endAt={
+              card.data.spritesheet.idle ? card.data.spritesheet.idle[1] + 1 : 1
+            }
+            style={{
+              imageRendering: "pixelated",
+              transform: `scale(${card.data.spritesheet.scale || 1})`,
+            }}
+            loop
+          />
         </Box>
         {card.type == "player" && weapon != null && (
           <Box

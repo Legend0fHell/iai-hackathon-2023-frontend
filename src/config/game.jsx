@@ -14,37 +14,87 @@ export const CHARACTER_CONFIGS = {
     name: "knight",
     group: "player",
     maxHealth: 15,
-    inventory: ["iron_sword", "wooden_sword", "golden_sword", null, null],
+    inventory: ["iron_sword", null, null, null, null],
     spritesheet: {
       idle: [0, 3],
+      width: 24,
+      height: 24,
     },
   },
 };
 
 export const ITEM_CONFIGS = {
   wooden_sword: {
-    displayName: "Wooden Sword",
+    displayName: "Sword",
     name: "wooden_sword",
     group: "weapon",
     subgroup: "sword",
     damage: 1,
     duribility: 2,
+    spritesheet: {
+      width: 12,
+      height: 24,
+      scale: 0.45,
+    },
   },
   iron_sword: {
-    displayName: "Iron Sword",
+    displayName: "Sword",
     name: "iron_sword",
     group: "weapon",
     subgroup: "sword",
     damage: 2,
     duribility: 3,
+    spritesheet: {
+      width: 12,
+      height: 24,
+      scale: 0.45,
+    },
   },
   golden_sword: {
-    displayName: "Golden Sword",
+    displayName: "Sword",
     name: "golden_sword",
     group: "weapon",
     subgroup: "sword",
     damage: 5,
     duribility: 1,
+    spritesheet: {
+      width: 12,
+      height: 24,
+      scale: 0.45,
+    },
+  },
+  orange_mushroom: {
+    displayName: "Mushroom",
+    name: "orange_mushroom",
+    group: "food",
+    subgroup: "mushroom",
+    spritesheet: {
+      width: 16,
+      height: 16,
+      sclae: 0.75,
+    },
+  },
+  brown_mushroom: {
+    displayName: "Mushroom",
+    name: "brown_mushroom",
+    group: "food",
+    subgroup: "mushroom",
+    health: 3,
+    spritesheet: {
+      width: 16,
+      height: 16,
+    },
+  },
+  campfire: {
+    displayName: "Campfire",
+    name: "campfire",
+    group: "campfire",
+    spritesheet: {
+      idle: [0, 2],
+      width: 16,
+      height: 16,
+      scale: 0.8,
+    },
   },
 };
 
@@ -58,6 +108,8 @@ export const MOB_CONFIGS = {
     reward: 1,
     spritesheet: {
       idle: [0, 3],
+      width: 24,
+      height: 24,
     },
   },
   orc: {
@@ -69,6 +121,8 @@ export const MOB_CONFIGS = {
     reward: 2,
     spritesheet: {
       idle: [0, 3],
+      width: 24,
+      height: 24,
     },
   },
   demon: {
@@ -80,6 +134,8 @@ export const MOB_CONFIGS = {
     reward: 3,
     spritesheet: {
       idle: [0, 3],
+      width: 24,
+      height: 24,
     },
   },
 };
