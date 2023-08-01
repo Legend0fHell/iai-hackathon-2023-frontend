@@ -1,33 +1,55 @@
 import Phaser from "phaser";
 
 export default class PlayGame extends Phaser.Scene {
-    constructor() {
+    constructor({gem, character, gameData }) {
         super('playGame'); // Identifier for this scene
         this.isRunning = false;
         this.swing = false;
+        this.answer = null;
+        this.gem = gem;
+        this.character = character;
+        this.gameData = gameData;
     }
 
     create() {
-        this.background = this.add.image(0, 0, "background");
+        // console.log(this.gem, this.character)
+        this.background = this.add.image(this.gameData.map.x, this.gameData.map.y, this.gameData.map.name);
+        // this.tundra = this.add.image(-240, -140, "tundra");
         this.background.setOrigin(0, 0);
 
         // Declaration using sprite
-        this.goblin = this.physics.add.sprite(400 - 50, 300 / 2, 'goblin');
-        const lancelot = this.physics.add.sprite(50, 300 / 2, 'lancelot');
-        this.excalibur = this.physics.add.sprite(70, 300 / 2 + 20, 'excalibur')
+        this.monster = this.physics.add.sprite(400 - 50, 300 / 2, this.gameData.monster);
+        const player = this.physics.add.sprite(50, 300 / 2, this.gameData.character);
+        this.excalibur = this.physics.add.sprite(64, 300 / 2 + 15, 'excalibur')
+        this.diamond_pickaxe = this.physics.add.sprite(400 - 60, 300 / 2 + 15, 'pickaxe_diamond')
+        this.dust = this.physics.add.sprite(30, 300 / 2 + 16, 'dust')
+
+        // Audio
+        this.swing_sound = this.sound.add('swing');
+        this.bonk = this.sound.add('bonk');
+        this.falling = this.sound.add('falling')
+        this.step = this.sound.add('step')
+        this.step.setLoop(true)
 
         // Set Scale and play anim
-        this.goblin.setScale(3);
-        this.goblin.setSize(5, 20, true)
-        this.goblin.play('idle_goblin_anim');
+        this.monster.setScale(2);
+        this.monster.setSize(5, 20, true)
+        this.monster.play('idle_'+this.gameData.monster+'_anim');
 
-        lancelot.setScale(3);
-        lancelot.play('idle_lancelot_anim')
-        lancelot.setCollideWorldBounds(true)
+        this.diamond_pickaxe.setScale(1.5);
+        this.diamond_pickaxe.angle = -90;
+        // this.diamond_pickaxe.play('pickaxe_swing_l')
 
-        this.lancelot = lancelot;
+        this.dust.setScale(1.5);
+        // this.dust.play('dust_particle')
 
-        this.excalibur.setScale(2);
+        player.setScale(2);
+        player.play('idle_'+this.gameData.character+'_anim')
+        player.setCollideWorldBounds(true)
+
+        this.player = player;
+
+        this.excalibur.setScale(1.5);
         this.excalibur.angle = 90
         this.excalibur.play('excalibur_idle')
 
@@ -35,33 +57,26 @@ export default class PlayGame extends Phaser.Scene {
 
         this.cPlayer.setSize(32, 32)
         this.physics.add.existing(this.cPlayer)
-        this.cPlayer.add([this.lancelot, this.excalibur])
+        this.cPlayer.add([this.player, this.excalibur, this.dust])
 
 
         // Logic
-        // this.goblin.setInteractive();
 
-        // this.input.on('gameobjectdown', this.killPlayer, this)
-
-        lancelot.on(Phaser.Animations.Events.ANIMATION_START, function () {
-
+        this.game.events.on('Answer_Event', (event)=>{
+            console.log(event)
+            this.answer = event
             this.isRunning = true;
+            this.player.play('run_'+this.gameData.character+'_anim');
+            this.step.play();
+            this.dust.playReverse('dust_particle');
+        })
 
-        }, this);
-
-        this.input.once('pointerdown', function () {
-
-            lancelot.play('run_lancelot_anim');
-
-        });
-
-
-
-        this.physics.add.overlap(lancelot, this.goblin, this.killMonster, null, this);
+        this.physics.add.overlap(player, this.monster, this.handleOverlap, null, this);
 
         // Finally trigger an event so that the scene is now visible. This is optional 
         // but useful if you want to transition your game's appearance.
         this.game.events.emit("putOnPlayGame", true)
+
     }
 
     movePlayer(player, speed) {
@@ -79,20 +94,52 @@ export default class PlayGame extends Phaser.Scene {
     killMonster(player, monster) {
 
         if (this.swing == false) {
+            this.step.stop();
             this.swing = true;
             this.excalibur.play('excalibur_swing_r', true);
+            this.swing_sound.play();
+            this.dust.play('idle_dust_particle');
+            this.falling.play();
+            this.diamond_pickaxe.visible = false;
         }
-        player.play('idle_lancelot_anim', true);
-        monster.play('ded_goblin_anim', true);
+        player.play('idle_'+this.gameData.character+'_anim', true);
+        monster.play('ded_'+this.gameData.monster+'_anim', true);
 
         this.isRunning = false;
     }
 
+    hitPlayer(player, monster) {
+
+        if (this.swing == false) {
+            this.step.stop();
+            this.bonk.play();
+            this.swing = true;
+            this.diamond_pickaxe.play('pickaxe_swing_l', true)
+            this.dust.play('idle_dust_particle');
+            this.excalibur.visible = false;
+            // this.falling.play();
+        }
+        
+        player.play('ded_'+this.gameData.character+'_anim', true);
+        // monster.play('_orc_anim', true);
+
+        this.isRunning = false;
+    }
+
+    handleOverlap(player, monster) {
+        if (this.answer) {
+            this.killMonster(player, monster)
+        } else {
+            this.hitPlayer(player, monster)
+        }
+    }
+
     update() {
+        
 
         if (this.isRunning) {
-            this.movePlayer(this.cPlayer, 2)
-            // lancelot.x += 2
+            this.movePlayer(this.cPlayer, 2);
+            // player.x += 2
         }
 
         let { lives, progress } = this
