@@ -95,29 +95,27 @@ export default function CoreGame() {
     // console.log('Clicked')
     // console.log(e.target.value)
     const value = e.target.value;
+    let correct;
+
     if (value == 2) {
       game.events.emit("Answer_Event", true);
       setAnswered(true);
       setCorrect("#1EF467");
       setMessage("Congratulation, you have the correct answer! 😎");
-      setCorrectAnswer(true);
+      correct = true;
     } else {
       game.events.emit("Answer_Event", false);
       setAnswered(true);
       setCorrect("#EC6B5E");
       setMessage("Oh noo, wrong answer! 😥");
-      setCorrectAnswer(false);
+      correct = false;
     }
-    // setAnswered(true)
+
     setTimeout(() => {
       handleClose();
+      onFinished(correct);
     }, 2000);
   };
-
-  // const handleClickOpen = () => {
-  //   setOpen(true);
-  //   loadGame();
-  // };
 
   const handleClose = () => {
     // setOpen(false);
@@ -127,7 +125,6 @@ export default function CoreGame() {
     setMessage("");
     setCorrect("#fff");
     setDone(false);
-    onFinished(correct);
   };
 
   useEffect(() => {
