@@ -1,7 +1,7 @@
 import Phaser from "phaser";
 
 export default class PlayGame extends Phaser.Scene {
-    constructor({gem, character, gameData }) {
+    constructor({gem, character, gameData, setDone }) {
         super('playGame'); // Identifier for this scene
         this.isRunning = false;
         this.swing = false;
@@ -9,6 +9,7 @@ export default class PlayGame extends Phaser.Scene {
         this.gem = gem;
         this.character = character;
         this.gameData = gameData;
+        this.setDone = setDone;
     }
 
     create() {
@@ -132,6 +133,7 @@ export default class PlayGame extends Phaser.Scene {
         } else {
             this.hitPlayer(player, monster)
         }
+        this.setDone(true);
     }
 
     update() {

@@ -17,6 +17,7 @@ export default function CoreGame() {
   const [open, setOpen] = useState(false);
   const [isAnswered, setAnswered] = useState(false);
   const [isCorrect, setCorrect] = useState('#fff');
+  const [done, setDone] = useState(false)
   const [message, setMessage] = useState('')
   const { gem, character, onFinished } = useGameContext();
 
@@ -37,6 +38,11 @@ export default function CoreGame() {
 
   // This is the basic data for game scene
   const [gameData, setGameData] = useState(gameDataTrash)
+
+  // Check if done animation
+  if(done){
+    console.log('Animation Done!')
+  }
 
   // Function that load phaser game into <div id ='game'/>
   const loadGame = async () => {
@@ -95,7 +101,7 @@ export default function CoreGame() {
       scene: [
         // new SimpleScene({ gem, character }),
         new BootGame({ gem, character }),
-        new PlayGame({ gem, character, gameData })
+        new PlayGame({ gem, character, gameData, setDone })
       ], // <--- INPUT
       physics: {
         default: 'arcade',
