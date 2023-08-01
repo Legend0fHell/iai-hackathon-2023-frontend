@@ -4,21 +4,43 @@ import Spritesheet from "react-responsive-spritesheet";
 import { useGameContext } from "../../contexts/game";
 import CardStat from "./CardStat";
 
+const { motion } = require("framer-motion");
+
 export default function Card({ card, onClick }) {
   const { weapon } = useGameContext();
 
   return (
     <Box
+      component={motion.div}
       draggable={false}
+      initial={{
+        rotate: 180,
+        scale: 0,
+        left: CARD_WIDTH * 1.5,
+        top: CARD_HEIGHT * 1.5,
+      }}
+      animate={{
+        rotate: 0,
+        scale: 1,
+        left: card.x * CARD_WIDTH,
+        top: card.y * CARD_HEIGHT,
+      }}
+      transition={{
+        type: "spring",
+        stiffness: 260,
+        damping: 20,
+        duration: 0.5,
+      }}
+      exit={{
+        rotate: 180,
+        scale: 0,
+      }}
       sx={{
         userSelect: "none",
         position: "absolute",
-        left: card.x * CARD_WIDTH,
-        top: card.y * CARD_HEIGHT,
         width: CARD_WIDTH,
         height: CARD_HEIGHT,
         p: 1,
-        transitionDuration: "0.5s",
       }}
     >
       <Box
@@ -86,7 +108,7 @@ export default function Card({ card, onClick }) {
             heightFrame={card.data.spritesheet.height}
             fps={6}
             startAt={
-              card.data.spritesheet.idle ? card.data.spritesheet.idle[0] + 1 : 0
+              card.data.spritesheet.idle ? card.data.spritesheet.idle[0] : 0
             }
             endAt={
               card.data.spritesheet.idle ? card.data.spritesheet.idle[1] + 1 : 1

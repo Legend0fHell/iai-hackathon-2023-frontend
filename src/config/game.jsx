@@ -30,7 +30,7 @@ export const ITEM_CONFIGS = {
     group: "weapon",
     subgroup: "sword",
     damage: 1,
-    duribility: 2,
+    maxDuribility: 2,
     spritesheet: {
       width: 12,
       height: 24,
@@ -43,7 +43,7 @@ export const ITEM_CONFIGS = {
     group: "weapon",
     subgroup: "sword",
     damage: 2,
-    duribility: 3,
+    maxDuribility: 3,
     spritesheet: {
       width: 12,
       height: 24,
@@ -56,7 +56,7 @@ export const ITEM_CONFIGS = {
     group: "weapon",
     subgroup: "sword",
     damage: 5,
-    duribility: 1,
+    maxDuribility: 1,
     spritesheet: {
       width: 12,
       height: 24,
@@ -71,7 +71,6 @@ export const ITEM_CONFIGS = {
     spritesheet: {
       width: 16,
       height: 16,
-      sclae: 0.75,
     },
   },
   brown_mushroom: {
@@ -94,6 +93,16 @@ export const ITEM_CONFIGS = {
       width: 16,
       height: 16,
       scale: 0.8,
+    },
+  },
+  gem: {
+    displayName: "Gem",
+    name: "gem",
+    group: "gem",
+    spritesheet: {
+      width: 16,
+      height: 16,
+      scale: 0.75,
     },
   },
 };
@@ -129,7 +138,7 @@ export const MOB_CONFIGS = {
     displayName: "Demon",
     name: "demon",
     group: "monster",
-    maxHealth: 2,
+    maxHealth: 10,
     damage: 5,
     reward: 3,
     spritesheet: {
