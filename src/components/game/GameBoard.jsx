@@ -4,7 +4,7 @@ import Card from "./Card";
 import { useGameContext } from "../../contexts/game";
 
 export default function GameBoard() {
-  const { cards, moveCard } = useGameContext();
+  const { cards, tryToMove } = useGameContext();
 
   return (
     <Stack
@@ -29,7 +29,7 @@ export default function GameBoard() {
           <Card
             card={cards[cardId]}
             key={cardId}
-            onClick={() => moveCard(cardId, 1, 0)}
+            onClick={() => tryToMove(cards[cardId].x, cards[cardId].y)}
           />
         ))}
       </Box>
