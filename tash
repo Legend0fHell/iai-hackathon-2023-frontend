@@ -1,0 +1,178 @@
+[1mdiff --git a/package-lock.json b/package-lock.json[m
+[1mindex 9fee396..80ae9cf 100644[m
+[1m--- a/package-lock.json[m
+[1m+++ b/package-lock.json[m
+[36m@@ -22,6 +22,7 @@[m
+         "@types/react-dom": "18.2.6",[m
+         "axios": "^1.4.0",[m
+         "firebase": "^10.0.0",[m
+[32m+[m[32m        "framer-motion": "^10.15.0",[m
+         "grid-engine": "^2.34.0",[m
+         "lodash": "^4.17.21",[m
+         "net": "^1.0.2",[m
+[36m@@ -6050,6 +6051,44 @@[m
+         "node": ">=0.10.0"[m
+       }[m
+     },[m
+[32m+[m[32m    "node_modules/framer-motion": {[m
+[32m+[m[32m      "version": "10.15.0",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/framer-motion/-/framer-motion-10.15.0.tgz",[m
+[32m+[m[32m      "integrity": "sha512-HDjWrYWgbO5orKuhnXETLFzk7UUvwWur2HFs2elAZ8lVpI49ClHql31DNTVvVBcOrSHfAOS4eBDBedIvOx634w==",[m
+[32m+[m[32m      "dependencies": {[m
+[32m+[m[32m        "tslib": "^2.4.0"[m
+[32m+[m[32m      },[m
+[32m+[m[32m      "optionalDependencies": {[m
+[32m+[m[32m        "@emotion/is-prop-valid": "^0.8.2"[m
+[32m+[m[32m      },[m
+[32m+[m[32m      "peerDependencies": {[m
+[32m+[m[32m        "react": "^18.0.0",[m
+[32m+[m[32m        "react-dom": "^18.0.0"[m
+[32m+[m[32m      },[m
+[32m+[m[32m      "peerDependenciesMeta": {[m
+[32m+[m[32m        "react": {[m
+[32m+[m[32m          "optional": true[m
+[32m+[m[32m        },[m
+[32m+[m[32m        "react-dom": {[m
+[32m+[m[32m          "optional": true[m
+[32m+[m[32m        }[m
+[32m+[m[32m      }[m
+[32m+[m[32m    },[m
+[32m+[m[32m    "node_modules/framer-motion/node_modules/@emotion/is-prop-valid": {[m
+[32m+[m[32m      "version": "0.8.8",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/@emotion/is-prop-valid/-/is-prop-valid-0.8.8.tgz",[m
+[32m+[m[32m      "integrity": "sha512-u5WtneEAr5IDG2Wv65yhunPSMLIpuKsbuOktRojfrEiEvRyC85LgPMZI63cr7NUqT8ZIGdSVg8ZKGxIug4lXcA==",[m
+[32m+[m[32m      "optional": true,[m
+[32m+[m[32m      "dependencies": {[m
+[32m+[m[32m        "@emotion/memoize": "0.7.4"[m
+[32m+[m[32m      }[m
+[32m+[m[32m    },[m
+[32m+[m[32m    "node_modules/framer-motion/node_modules/@emotion/memoize": {[m
+[32m+[m[32m      "version": "0.7.4",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/@emotion/memoize/-/memoize-0.7.4.tgz",[m
+[32m+[m[32m      "integrity": "sha512-Ja/Vfqe3HpuzRsG1oBtWTHk2PGZ7GR+2Vz5iYGelAw8dx32K0y7PjVuxK6z1nMpZOqAFsRUPCkK1YjJ56qJlgw==",[m
+[32m+[m[32m      "optional": true[m
+[32m+[m[32m    },[m
+     "node_modules/fresh": {[m
+       "version": "0.5.2",[m
+       "resolved": "https://registry.npmjs.org/fresh/-/fresh-0.5.2.tgz",[m
+[36m@@ -15271,6 +15310,32 @@[m
+         "map-cache": "^0.2.2"[m
+       }[m
+     },[m
+[32m+[m[32m    "framer-motion": {[m
+[32m+[m[32m      "version": "10.15.0",[m
+[32m+[m[32m      "resolved": "https://registry.npmjs.org/framer-motion/-/framer-motion-10.15.0.tgz",[m
+[32m+[m[32m      "integrity": "sha512-HDjWrYWgbO5orKuhnXETLFzk7UUvwWur2HFs2elAZ8lVpI49ClHql31DNTVvVBcOrSHfAOS4eBDBedIvOx634w==",[m
+[32m+[m[32m      "requires": {[m
+[32m+[m[32m        "@emotion/is-prop-valid": "^0.8.2",[m
+[32m+[m[32m        "tslib": "^2.4.0"[m
+[32m+[m[32m      },[m
+[32m+[m[32m      "dependencies": {[m
+[32m+[m[32m        "@emotion/is-prop-valid": {[m
+[32m+[m[32m          "version": "0.8.8",[m
+[32m+[m[32m          "resolved": "https://registry.npmjs.org/@emotion/is-prop-valid/-/is-prop-valid-0.8.8.tgz",[m
+[32m+[m[32m          "integrity": "sha512-u5WtneEAr5IDG2Wv65yhunPSMLIpuKsbuOktRojfrEiEvRyC85LgPMZI63cr7NUqT8ZIGdSVg8ZKGxIug4lXcA==",[m
+[32m+[m[32m          "optional": true,[m
+[32m+[m[32m          "requires": {[m
+[32m+[m[32m            "@emotion/memoize": "0.7.4"[m
+[32m+[m[32m          }[m
+[32m+[m[32m        },[m
+[32m+[m[32m        "@emotion/memoize": {[m
+[32m+[m[32m          "version": "0.7.4",[m
+[32m+[m[32m          "resolved": "https://registry.npmjs.org/@emotion/memoize/-/memoize-0.7.4.tgz",[m
+[32m+[m[32m          "integrity": "sha512-Ja/Vfqe3HpuzRsG1oBtWTHk2PGZ7GR+2Vz5iYGelAw8dx32K0y7PjVuxK6z1nMpZOqAFsRUPCkK1YjJ56qJlgw==",[m
+[32m+[m[32m          "optional": true[m
+[32m+[m[32m        }[m
+[32m+[m[32m      }[m
+[32m+[m[32m    },[m
+     "fresh": {[m
+       "version": "0.5.2",[m
+       "resolved": "https://registry.npmjs.org/fresh/-/fresh-0.5.2.tgz",[m
+[1mdiff --git a/package.json b/package.json[m
+[1mindex 504c4c0..8fa6b63 100644[m
+[1m--- a/package.json[m
+[1m+++ b/package.json[m
+[36m@@ -23,6 +23,7 @@[m
+     "@types/react-dom": "18.2.6",[m
+     "axios": "^1.4.0",[m
+     "firebase": "^10.0.0",[m
+[32m+[m[32m    "framer-motion": "^10.15.0",[m
+     "grid-engine": "^2.34.0",[m
+     "lodash": "^4.17.21",[m
+     "net": "^1.0.2",[m
+[1mdiff --git a/src/components/CoreGame.jsx b/src/components/CoreGame.jsx[m
+[1mindex b53525f..94f622a 100644[m
+[1m--- a/src/components/CoreGame.jsx[m
+[1m+++ b/src/components/CoreGame.jsx[m
+[36m@@ -1,11 +1,5 @@[m
+ import { useEffect, useState } from "react";[m
+[31m-import {[m
+[31m-  Box,[m
+[31m-  Dialog,[m
+[31m-  DialogContent,[m
+[31m-  Button[m
+[31m-}[m
+[31m-  from '@mui/material';[m
+[32m+[m[32mimport { Box, Dialog, DialogContent, Button } from "@mui/material";[m
+ [m
+ import GameQuestions from "./GameQuestions";[m
+ [m
+[36m@@ -14,120 +8,87 @@[m [mimport { useGameContext } from "../contexts/game";[m
+ export default function CoreGame() {[m
+   // Basic states[m
+   const [game, setGame] = useState(null);[m
+[31m-  const [open, setOpen] = useState(false);[m
+[32m+[m[32m  const [open, setOpen] = useState(false); // -> don't need this[m
+   const [isAnswered, setAnswered] = useState(false);[m
+[31m-  const [isCorrect, setCorrect] = useState('#fff');[m
+[31m-  const [message, setMessage] = useState('')[m
+[31m-  const { gem, character, onFinished } = useGameContext();[m
+[32m+[m[32m  const [isCorrect, setCorrect] = useState("#fff");[m
+[32m+[m[32m  const [message, setMessage] = useState("");[m
+[32m+[m[32m  const { gem, character, onFinished, currentCard, setCurrentCard } =[m
+[32m+[m[32m    useGameContext();[m
+[32m+[m
+[32m+[m[32m  // currentCard is the monster that is being fought[m
+[32m+[m[32m  // currentCard.data is the data of the monster (@/config/game.jsx)[m
+[32m+[m[32m  // open dialog when currentCard is not null[m
+[32m+[m[32m  // dialog is closed automatically after calling onFinished[m
+ [m
+   // Example of data put in game and question section[m
+   const data_trash = {[m
+[31m-    'question': 'Câu 1: Bộ phận nào trong số các bộ phận sau đây thuộc hệ hô hấp ?',[m
+[31m-    'answers': ['Gan', 'Dạ Dày', 'Não Bộ', 'Phổi'][m
+[31m-  }[m
+[32m+[m[32m    question:[m
+[32m+[m[32m      "Câu 1: Bộ phận nào trong số các bộ phận sau đây thuộc hệ hô hấp ?",[m
+[32m+[m[32m    answers: ["Gan", "Dạ Dày", "Não Bộ", "Phổi"],[m
+[32m+[m[32m  };[m
+   const gameDataTrash = {[m
+[31m-    'map': {[m
+[31m-      'name': 'taiga',[m
+[31m-      'x': -130,[m
+[31m-      'y': -140[m
+[32m+[m[32m    map: {[m
+[32m+[m[32m      name: "taiga",[m
+[32m+[m[32m      x: -130,[m
+[32m+[m[32m      y: -140,[m
+     },[m
+[31m-    character: 'knight',[m
+[31m-    monster: 'goblin'[m
+[31m-  }[m
+[32m+[m[32m    character: "knight",[m
+[32m+[m[32m    monster: "goblin",[m
+[32m+[m[32m  };[m
+ [m
+   // This is the basic data for game scene[m
+[31m-  const [gameData, setGameData] = useState(gameDataTrash)[m
+[32m+[m[32m  const [gameData, setGameData] = useState(gameDataTrash);[m
+ [m
+   // Function that load phaser game into <div id ='game'/>[m
+   const loadGame = async () => {[m
+[31m-    console.log('Loading....')[m
+[32m+[m[32m    console.log("Loading....");[m
+     const Phaser = await import("phaser");[m
+[31m-    const { default: BootGame } = await import('../scenes/BootGame');[m
+[31m-    const { default: PlayGame } = await import('../scenes/PlayGame')[m
+[31m-[m
+[31m-    class Simple

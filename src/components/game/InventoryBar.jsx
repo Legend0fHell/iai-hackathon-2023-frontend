@@ -1,9 +1,10 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
 import Iconify from "../Inconify";
 import { useGameContext } from "../../contexts/game";
+import InventorySlot from "./InventorySlot";
 
 export default function InventoryBar() {
-  const { score, inventory, selectedSlotId, setSelectedSlotId } =
+  const { score, inventory, selectedSlotId, setSelectedSlotId, sellItem } =
     useGameContext();
 
   return (
@@ -13,57 +14,13 @@ export default function InventoryBar() {
     >
       <Stack direction="row" spacing={1} sx={{ mr: 5 }}>
         {inventory.map((item, index) => (
-          <Button
+          <InventorySlot
             key={index}
+            item={item}
             onClick={() => setSelectedSlotId(index)}
-            sx={{
-              p: 1,
-              borderRadius: 1,
-              minWidth: 0,
-              position: "relative",
-              "&:hover": {
-                bgcolor: "white",
-              },
-            }}
-          >
-            <Box
-              sx={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                width: "100%",
-                height: "100%",
-              }}
-            >
-              <img
-                src={`/assets/game/images/square_${
-                  selectedSlotId == index ? 0 : 1
-                }.png`}
-                draggable={false}
-                style={{
-                  imageRendering: "pixelated",
-                  objectFit: "contain",
-                  width: "100%",
-                  height: "100%",
-                }}
-              />
-            </Box>
-            {item ? (
-              <img
-                src={`/assets/game/images/${item.name}.png`}
-                width={32}
-                height={32}
-                draggable={false}
-                style={{
-                  imageRendering: "pixelated",
-                  objectFit: "contain",
-                  transform: "rotate(45deg)",
-                }}
-              />
-            ) : (
-              <Box sx={{ width: 32, height: 32 }} />
-            )}
-          </Button>
+            onSell={() => sellItem(index)}
+            isSelecting={selectedSlotId === index}
+          />
         ))}
       </Stack>
       <Box
