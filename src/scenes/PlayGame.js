@@ -152,21 +152,10 @@ export default class PlayGame extends Phaser.Scene {
       this.hitPlayer(player, monster);
     }
 
-<<<<<<< HEAD
-    handleOverlap(player, monster) {
-        if (this.answer) {
-            this.killMonster(player, monster)
-        } else {
-            this.hitPlayer(player, monster)
-        }
-        this.setDone(true);
-    }
-=======
     setTimeout(() => {
       this.setDone(true);
     }, 1000);
   }
->>>>>>> 704202ab34749e2b7c83c6f415c45d171cb4eedc
 
   update() {
     if (this.isRunning) {
