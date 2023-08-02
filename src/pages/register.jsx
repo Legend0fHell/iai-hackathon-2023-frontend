@@ -57,7 +57,7 @@ const Register = () => {
       return;
     };
     if (pass.match(/^(?!.* )(?=.*\d)(?=.*[A-Z]).{8,15}$/) && email.match(/^\S+@\S+\.\S+$/)) {
-      await register(email, password, { 'uname': name });
+      await register(email, pass, { 'uname': name });
       router.push('/');
     } else {
       console.log('Password not valid')
