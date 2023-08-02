@@ -27,6 +27,7 @@
     "framer-motion": "^10.15.0",
     "grid-engine": "^2.34.0",
     "lodash": "^4.17.21",
+    "mui-file-input": "^2.0.6",
     "net": "^1.0.2",
     "next": "13.4.9",
     "phaser": "^3.60.0",

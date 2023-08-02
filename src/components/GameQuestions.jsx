@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Typography, Box, Button } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
-
+import NodeContent from "./NodeContent";
 
 const GameQuestions = ({ data, handleOnClick, correct, answer, message }) => {
   return (
@@ -12,18 +12,10 @@ const GameQuestions = ({ data, handleOnClick, correct, answer, message }) => {
         width: "100%",
       }}
     >
-      <Typography
-        variant="h5"
-        sx={{
-          fontFamily: "VT323, sans-serif",
-          color: correct,
-          fontSize: "30px",
-        }}
-      >
-        {data.question
-          ? data.question
-          : "Câu 1: Bộ phận nào trong số các bộ phận sau đây thuộc hệ hô hấp ?"}
-      </Typography>
+      <NodeContent
+        sx={{ fontSize: "16px", color: "white" }}
+        nodes={data.content}
+      />
       {answer ? (
         <Typography
           variant="body1"
@@ -63,7 +55,7 @@ const GameQuestions = ({ data, handleOnClick, correct, answer, message }) => {
               },
             }}
           >
-            A. {data.answers[0] ? data.answers[0] : "Gan"}
+            <NodeContent nodes={data.choices[0]} />
           </Button>
         </Grid>
         <Grid xs={6} sx={{ padding: "0 32px" }}>
@@ -86,7 +78,7 @@ const GameQuestions = ({ data, handleOnClick, correct, answer, message }) => {
               },
             }}
           >
-            B. {data.answers[1] ? data.answers[1] : "Dạ Dày"}
+            <NodeContent nodes={data.choices[1]} />
           </Button>
         </Grid>
         <Grid xs={6} sx={{ padding: "0 32px" }}>
@@ -109,7 +101,7 @@ const GameQuestions = ({ data, handleOnClick, correct, answer, message }) => {
               },
             }}
           >
-            C. {data.answers[2] ? data.answers[2] : "Não Bộ"}
+            <NodeContent nodes={data.choices[2]} />
           </Button>
         </Grid>
         <Grid xs={6} sx={{ padding: "0 32px" }}>
@@ -133,7 +125,7 @@ const GameQuestions = ({ data, handleOnClick, correct, answer, message }) => {
               },
             }}
           >
-            D. {data.answers[3] ? data.answers[3] : "Phổi"}
+            <NodeContent nodes={data.choices[3]} />
           </Button>
         </Grid>
       </Grid>

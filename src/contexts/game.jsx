@@ -10,15 +10,19 @@ import { CHARACTER_CONFIGS, ITEM_CONFIGS, MOB_CONFIGS } from "../config/game";
 import uuid from "../utils/uuid";
 import { getRandomValue } from "../utils/random";
 import shuffle from "lodash/shuffle";
+import { useRouter } from "next/router";
+import { socket } from "../models/wsEventListener";
+import axios from "axios";
 
 const GameContext = createContext();
 
 export const useGameContext = () => useContext(GameContext);
 
 export const GameProvider = ({ children }) => {
+  const router = useRouter();
   const [character, setCharacter] = useState(CHARACTER_CONFIGS.knight);
   const [gem, setGem] = useState(24);
-  const [score, setScore] = useState(102);
+  const [score, setScore] = useState(0);
   const [movable, setMovable] = useState(true);
   const [inventory, setInventory] = useState(
     character.inventory.map((item) => {
@@ -49,6 +53,9 @@ export const GameProvider = ({ children }) => {
   ]);
   const [selectedSlotId, setSelectedSlotId] = useState(0);
   const [currentCard, setCurrentCard] = useState(null);
+  const [room, setRoom] = useState(null);
+  const [questions, setQuestions] = useState([]);
+  const [currentQuestion, setCurrentQuestion] = useState(null);
 
   const addGem = useCallback((amount) => setGem((gem) => gem + amount), []);
 
@@ -190,6 +197,8 @@ export const GameProvider = ({ children }) => {
       }
 
       setCurrentCard(null);
+      setCurrentQuestion(null);
+
       handleEffects();
     },
     [inventory, currentCard, cards, weapon, damage]
@@ -262,6 +271,16 @@ export const GameProvider = ({ children }) => {
         return true;
       } else if (card.type == "mob") {
         setCurrentCard(card);
+
+        // pop last question
+        setQuestions((questions) => {
+          const questions_ = [...questions];
+          const currentQuestion = questions_.pop();
+
+          setCurrentQuestion(currentQuestion);
+
+          return questions_;
+        });
 
         return false;
       }
@@ -457,11 +476,38 @@ export const GameProvider = ({ children }) => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   if (currentCard == null) return;
+  useEffect(() => {
+    if (!router.query.roomId) return;
 
-  //   onFinished(true);
-  // }, [currentCard]);
+    socket.emit(
+      "post-joinRoom",
+      localStorage.getItem("uid"),
+      router.query.roomId
+    );
+
+    async function getData() {
+      const res0 = await axios.post(
+        `${process.env.NEXT_PUBLIC_NODE_BACKEND_URL}/room/get`,
+        {
+          uid: localStorage.getItem("uid"),
+          data: router.query.roomId,
+        }
+      );
+
+      const room = res0.data.data;
+
+      const res1 = await axios.get(
+        `${process.env.NEXT_PUBLIC_FLASK_BACKEND_URL}/data/${room.testid}/questions`
+      );
+
+      setRoom(room);
+
+      const questions = shuffle(res1.data.questions);
+      setQuestions(questions);
+    }
+
+    getData();
+  }, [router]);
 
   return (
     <GameContext.Provider
@@ -489,6 +535,7 @@ export const GameProvider = ({ children }) => {
         currentCard,
         setCurrentCard,
         sellItem,
+        currentQuestion,
       }}
     >
       {children}

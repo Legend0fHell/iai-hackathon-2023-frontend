@@ -13,7 +13,8 @@ export default function CoreGame() {
   const [correct, setCorrectAnswer] = useState(null);
   const [done, setDone] = useState(true);
   const [message, setMessage] = useState("");
-  const { gem, character, onFinished, currentCard } = useGameContext();
+  const { gem, character, onFinished, currentCard, currentQuestion } =
+    useGameContext();
 
   // currentCard is the monster that is being fought
   // currentCard.data is the data of the monster (@/config/game.jsx)
@@ -21,11 +22,7 @@ export default function CoreGame() {
   // dialog is closed automatically after calling onFinished
 
   // Example of data put in game and question section
-  const data_trash = {
-    question:
-      "Câu 1: Bộ phận nào trong số các bộ phận sau đây thuộc hệ hô hấp ?",
-    answers: ["Gan", "Dạ Dày", "Não Bộ", "Phổi"],
-  };
+
   const gameDataTrash = {
     map: {
       name: "taiga",
@@ -40,8 +37,7 @@ export default function CoreGame() {
   const [gameData, setGameData] = useState(gameDataTrash);
 
   // Check if done animation
-  if(done){
-    console.log('Animation Done!')
+  if (done) {
   }
 
   // Function that load phaser game into <div id ='game'/>
@@ -164,13 +160,15 @@ export default function CoreGame() {
               }}
             >
               <Box id="game"></Box>
-              <GameQuestions
-                data={data_trash}
-                handleOnClick={handleOnClick}
-                correct={isCorrect}
-                answer={isAnswered}
-                message={message}
-              />
+              {currentQuestion && (
+                <GameQuestions
+                  data={currentQuestion}
+                  handleOnClick={handleOnClick}
+                  correct={isCorrect}
+                  answer={isAnswered}
+                  message={message}
+                />
+              )}
             </Box>
           </Box>
         </DialogContent>

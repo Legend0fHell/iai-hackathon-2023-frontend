@@ -6,13 +6,39 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { fs } from "../../config/firebaseInit";
+import { MuiFileInput } from "mui-file-input";
+import { Button } from "antd";
+import axios from "axios";
 
 export default function New() {
   const [groups, setGroups] = useState([]);
   const [group, setGroup] = useState("Select a group");
+  const [file, setFile] = useState(null);
+
+  const createQuiz = useCallback(async () => {
+    const { questions } = require("../../testdata/questions.json");
+
+    const { data: roomId } = await axios.post(
+      `${process.env.NEXT_PUBLIC_NODE_BACKEND_URL}/group/rooms/create`,
+      {
+        uid: localStorage.getItem("uid"),
+        data: {
+          groupId: groups.find((g) => g.name === group).groupId,
+          roomData: {
+            name: "t1 is the winner",
+            desc: "never gonna happen",
+            diff: 0.2,
+            tframe: 25,
+            testid: "99915a9a369d4f549b2c4c0443784a85",
+            qnum: questions.length,
+          },
+        },
+      }
+    );
+  }, [group, groups]);
 
   useEffect(() => {
     async function getGroups() {
@@ -30,10 +56,12 @@ export default function New() {
 
   return (
     <Stack alignItems="center">
-      <Box sx={{ p: 2 }}>
-        <Typography variant="h4">Create a new quiz</Typography>
+      <Box sx={{ p: 3 }}>
+        <Typography variant="h4" sx={{ mb: 2 }}>
+          Create a new quiz
+        </Typography>
 
-        <Box>
+        <Box sx={{ mb: 2 }}>
           <InputLabel id="group-label">Select a group</InputLabel>
           <Select
             labelId="group-label"
@@ -48,6 +76,13 @@ export default function New() {
             ))}
           </Select>
         </Box>
+        <Box>
+          <MuiFileInput value={file} onChange={setFile} />
+        </Box>
+
+        <Button type="primary" sx={{ mt: 2 }} onClick={createQuiz}>
+          Create
+        </Button>
       </Box>
     </Stack>
   );

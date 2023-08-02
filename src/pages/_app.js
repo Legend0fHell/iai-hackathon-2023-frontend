@@ -18,13 +18,11 @@ function MyApp({ Component, pageProps }) {
   return (
     <ThemeProvider theme={theme}>
       <StyledEngineProvider injectFirst>
-        {router.pathname === "/game" ? (
+        {router.pathname.startsWith("/game/") ? (
           <Component {...pageProps} />
         ) : (
           <Layout>
-            {/* <Provider store={store}> */}
             <Component {...pageProps} />
-            {/* </Provider> */}
           </Layout>
         )}
       </StyledEngineProvider>

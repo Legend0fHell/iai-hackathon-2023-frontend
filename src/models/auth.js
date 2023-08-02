@@ -35,6 +35,7 @@ export async function register(email, password, userInfo) {
       // Signed in
       const user = userCred.user;
       console.log("Reg: User created, logged in: ", user.uid);
+      localStorage.setItem("uid", userCred.user.uid);
       await setUserInfo({
         uname: userInfo.uname,
         email: email,
