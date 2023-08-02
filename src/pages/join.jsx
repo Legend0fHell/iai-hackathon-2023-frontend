@@ -66,7 +66,7 @@ const Join = () => {
                             label="Enter Code Here (Number Only)"
                             variant="filled"
                             value={code}
-                            type='number'
+                            // type='number'
                             onChange={handleChange}
                             sx={{
                                 width: '100%',

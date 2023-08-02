@@ -7,6 +7,7 @@ import {
     from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 
+
 const GameQuestions = ({ data, handleOnClick, correct, answer, message }) => {
 
     return (
@@ -125,6 +126,7 @@ const GameQuestions = ({ data, handleOnClick, correct, answer, message }) => {
                     </Button>
                 </Grid>
             </Grid>
+  
         </Box>
     )
 }

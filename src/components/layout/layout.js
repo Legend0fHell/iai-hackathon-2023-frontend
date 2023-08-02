@@ -7,12 +7,15 @@ import { Typography, Box, Backdrop, CircularProgress } from '@mui/material';
 import { Navbar } from '../../common/Navbar/Navbar'
 import { Footer } from '../../common/Footer/Footer'
 
+import { useRouter } from "next/router";
 
 export default function Layout({ children }) {
     const initUser = { uname: "def", email: "", priv: "", uid: "" };
     const [userInfo, setInfUserInfo] = useState(initUser);
     const [user, loading] = useAuthState(auth);
     const [loading2, setLoading] = useState(false);
+    const router = useRouter();
+    const pushRoutes = ['/','/login', '/register']
 
     useEffect(() => {
         async function upd() {
@@ -44,6 +47,11 @@ export default function Layout({ children }) {
             </Backdrop>
         )
     } else {
+        console.log('user:',user)
+        if (user != null && pushRoutes.includes(router.pathname) ) {
+            router.push('/dashboard')
+        }
+
         return (
             <>
                 <Navbar userData={userInfo} />

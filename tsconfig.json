@@ -30,9 +30,9 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/models/auth.js",
-    "src/pages/index.js",
-    "src/pages/register.js",
-    "src/pages/login.js",
+    "src/pages/index.jsx",
+    "src/pages/register.jsx",
+    "src/pages/login.jsx",
     "src/pages/about.js",
     "src/config/firebaseInit.jsx",
     "src/pages/game/index.js"
