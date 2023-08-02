@@ -114,7 +114,7 @@ export default function CoreGame() {
     setTimeout(() => {
       handleClose();
       onFinished(correct);
-    }, 2000);
+    }, 2200);
   };
 
   const handleClose = () => {

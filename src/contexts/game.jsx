@@ -10,7 +10,6 @@ import { CHARACTER_CONFIGS, ITEM_CONFIGS, MOB_CONFIGS } from "../config/game";
 import uuid from "../utils/uuid";
 import { getRandomValue } from "../utils/random";
 import shuffle from "lodash/shuffle";
-import { set } from "lodash";
 
 const GameContext = createContext();
 
@@ -22,12 +21,21 @@ export const GameProvider = ({ children }) => {
   const [score, setScore] = useState(102);
   const [movable, setMovable] = useState(true);
   const [inventory, setInventory] = useState(
-    character.inventory.map((item) => ITEM_CONFIGS[item])
+    character.inventory.map((item) => {
+      const data = ITEM_CONFIGS[item];
+
+      if (data) {
+        return {
+          ...data,
+          durability: data.maxDurability,
+        };
+      }
+      return null;
+    })
   );
   const [health, setHealth] = useState(character.maxHealth);
   const [cards, setCards] = useState({});
-  const [fire, setFire] = useState(1);
-  const [poison, setPoison] = useState(1);
+  const [effects, setEffects] = useState({});
   const [board, setBoard] = useState([
     null,
     null,
@@ -49,38 +57,23 @@ export const GameProvider = ({ children }) => {
     []
   );
 
-  const addHealth = useCallback(
-    (amount) =>
-      setHealth((health) => Math.min(health + amount, character.maxHealth)),
-    []
-  );
-
-  const reduceHealth = useCallback(
-    (amount) => setHealth((health) => Math.min(health - amount, 1)),
-    []
-  );
-
   const addItem = useCallback(
     (item) => {
-      const index = inventory.findIndex((i) => i == null);
+      setInventory((inventory) => {
+        const index = inventory.findIndex((i) => i == null);
+        const inventory_ = [...inventory];
+        inventory_[index] = item;
 
-      if (index == -1) {
-        return false;
-      }
-
-      const inventory_ = [...inventory];
-      inventory_[index] = item;
-
-      setInventory(inventory_);
-      return true;
+        return inventory_;
+      });
     },
     [inventory]
   );
 
-  const armor = useMemo(() => {
-    const armors = inventory.filter((item) => item && item.group == "armor");
-    return armors.reduce((total, item) => total + item.defense, 0);
-  }, [inventory]);
+  const isInventoryFull = useMemo(
+    () => inventory.every((item) => item != null),
+    [inventory]
+  );
 
   const weapon = useMemo(() => {
     const currentItem = inventory[selectedSlotId];
@@ -91,11 +84,54 @@ export const GameProvider = ({ children }) => {
     return null;
   }, [inventory, selectedSlotId]);
 
+  const damage = useMemo(() => {
+    let damage_ = weapon ? weapon.damage : 2;
+
+    if (effects.power) {
+      damage_ += effects.power.amount.damage;
+    }
+
+    return damage_;
+  }, [weapon, effects]);
+
+  const armor = useMemo(() => {
+    let armors = inventory.filter((item) => item && item.group == "armor");
+    return (
+      armors.reduce((total, item) => total + item.defense, 0) +
+      (effects.power?.amount.armor || 0)
+    );
+  }, [inventory, effects]);
+
+  const addHealth = useCallback(
+    (amount) =>
+      setHealth((health) => Math.min(health + amount, character.maxHealth)),
+    []
+  );
+
+  const reduceHealth = useCallback(
+    (amount) => {
+      const amount_ = Math.max(Math.floor((amount * 10) / (10 + armor)), 1);
+      setHealth((health) => Math.max(health - amount_, 1));
+    },
+    [armor]
+  );
+
+  const sellItem = useCallback(
+    (index) => {
+      setInventory((inventory) => {
+        const inventory_ = [...inventory];
+        addGem(inventory_[index].price);
+        inventory_[index] = null;
+        return inventory_;
+      });
+    },
+    [addGem]
+  );
+
   const onFinished = useCallback(
     (isCorrect) => {
       if (isCorrect) {
         const currentHealth = currentCard.data.health;
-        const damage = weapon ? weapon.damage : 1;
 
         if (currentHealth > damage) {
           setCards({
@@ -136,10 +172,66 @@ export const GameProvider = ({ children }) => {
           setCards(newCards);
         }
       }
+
+      if (weapon) {
+        if (inventory[selectedSlotId].durability == 1) {
+          setInventory((inventory) => {
+            const inventory_ = [...inventory];
+            inventory_[selectedSlotId] = null;
+            return inventory_;
+          });
+        } else {
+          setInventory((inventory) => {
+            const inventory_ = [...inventory];
+            inventory_[selectedSlotId].durability--;
+            return inventory_;
+          });
+        }
+      }
+
       setCurrentCard(null);
+      handleEffects();
     },
-    [currentCard, cards, weapon]
+    [inventory, currentCard, cards, weapon, damage]
   );
+
+  const addEffect = useCallback((effectName, potionName, amount, duration) => {
+    setEffects((effects) => ({
+      ...effects,
+      [effectName]: {
+        amount,
+        duration,
+        potionName,
+        firstTime: true,
+      },
+    }));
+  }, []);
+
+  const handleEffects = useCallback(() => {
+    setEffects((effects) => {
+      const effects_ = { ...effects };
+
+      for (const effectName in effects_) {
+        const effect = effects_[effectName];
+
+        if (effect.firstTime) {
+          effect.firstTime = false;
+          continue;
+        }
+
+        if (effectName == "poison") {
+          reduceHealth(effect.amount);
+        }
+
+        effect.duration--;
+
+        if (effect.duration == 0) {
+          delete effects_[effectName];
+        }
+      }
+      return effects_;
+    });
+  }, [reduceHealth]);
 
   const handleInteraction = useCallback(
     (card) => {
@@ -147,11 +239,24 @@ export const GameProvider = ({ children }) => {
         const item = card.data;
 
         if (item.group == "weapon") {
-          return addItem(item);
+          if (!isInventoryFull) {
+            addItem(item);
+            return true;
+          } else {
+            return false;
+          }
         }
 
         if (item.group == "gem") {
           addGem(item.amount);
+        }
+
+        if (item.group == "potion") {
+          if (item.subgroup == "health") {
+            addHealth(item.amount);
+          } else {
+            addEffect(item.subgroup, item.name, item.amount, item.duration);
+          }
         }
 
         return true;
@@ -163,8 +268,46 @@ export const GameProvider = ({ children }) => {
 
       return true;
     },
-    [addItem, onFinished]
+    [addItem, onFinished, addGem, addHealth, addEffect, isInventoryFull]
   );
+
+  const generateCard = useCallback((x, y, isPlayer = false) => {
+    const card = {
+      id: uuid(),
+      x,
+      y,
+    };
+
+    if (isPlayer) {
+      card.type = "player";
+      card.data = character;
+    } else {
+      card.type = Math.random() < 0.5 ? "mob" : "item";
+
+      if (card.type == "mob") {
+        card.data = getRandomValue(MOB_CONFIGS);
+        card.data.health = card.data.maxHealth;
+      } else {
+        card.type = "item";
+        card.data = getRandomValue(ITEM_CONFIGS);
+
+        if (card.data.group == "weapon") {
+          card.data.durability = card.data.maxDurability;
+        }
+      }
+    }
+
+    setCards((cards) => ({
+      ...cards,
+      [card.id]: card,
+    }));
+
+    setBoard((board) => {
+      const newBoard = [...board];
+      newBoard[x + y * 3] = card.id;
+      return newBoard;
+    });
+  }, []);
 
   const tryToMove = useCallback(
     (x, y) => {
@@ -270,50 +413,13 @@ export const GameProvider = ({ children }) => {
         generateCard(emptyX, emptyY);
 
         setTimeout(() => {
+          handleEffects();
           setMovable(true);
         }, 200);
       }, 450);
     },
-    [board, cards, movable]
+    [board, cards, movable, handleInteraction, generateCard, handleEffects]
   );
-
-  const generateCard = useCallback((x, y, isPlayer = false) => {
-    const card = {
-      id: uuid(),
-      x,
-      y,
-    };
-
-    if (isPlayer) {
-      card.type = "player";
-      card.data = character;
-    } else {
-      card.type = ["mob", "item"][Math.floor(Math.random() * 2)];
-
-      if (card.type == "mob") {
-        card.data = getRandomValue(MOB_CONFIGS);
-        card.data.health = card.data.maxHealth;
-      } else {
-        card.type = "item";
-        card.data = getRandomValue(ITEM_CONFIGS);
-
-        if (card.data.group == "weapon") {
-          card.data.durability = card.data.maxDurability;
-        }
-      }
-    }
-
-    setCards((cards) => ({
-      ...cards,
-      [card.id]: card,
-    }));
-
-    setBoard((board) => {
-      const newBoard = [...board];
-      newBoard[x + y * 3] = card.id;
-      return newBoard;
-    });
-  }, []);
 
   const moveCard = useCallback(
     (cardId, dx, dy) => {
@@ -371,17 +477,18 @@ export const GameProvider = ({ children }) => {
         addScore,
         inventory,
         cards,
-        fire,
-        poison,
+        effects,
         board,
         moveCard,
         selectedSlotId,
         setSelectedSlotId,
         weapon,
+        damage,
         onFinished,
         tryToMove,
         currentCard,
         setCurrentCard,
+        sellItem,
       }}
     >
       {children}
