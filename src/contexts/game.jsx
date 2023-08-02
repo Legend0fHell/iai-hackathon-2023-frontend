@@ -56,7 +56,7 @@ export const GameProvider = ({ children }) => {
   );
 
   const reduceHealth = useCallback(
-    (amount) => setHealth((health) => Math.min(health - amount, 1)),
+    (amount) => setHealth((health) => Math.max(health - amount, 1)),
     []
   );
 
