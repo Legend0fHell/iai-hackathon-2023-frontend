@@ -44,6 +44,11 @@ export const Navbar = ({ userData }) => {
         setAnchorElNav(null);
     };
 
+    const handleLogOut =  () => {
+        logout();
+        router.push('/')
+    }
+
     if (!removeRoutes.includes(router.pathname)) {
         return (
             <nav>
@@ -215,7 +220,7 @@ export const Navbar = ({ userData }) => {
                                         >
                                         <MenuItem  component='a' href='/dashboard' >Dashboard</MenuItem>
                                         {/* <MenuItem onClick={handleClose}>My account</MenuItem> */}
-                                        <MenuItem onClick={logout}>Logout</MenuItem>
+                                        <MenuItem onClick={handleLogOut}>Logout</MenuItem>
                                     </Menu>
                                     </>
                                 ) : (
