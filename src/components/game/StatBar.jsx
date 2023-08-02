@@ -1,10 +1,9 @@
 import { Box, Stack, Typography } from "@mui/material";
 import IconStat from "./IconStat";
 import { useGameContext } from "../../contexts/game";
-import Iconify from "../Inconify";
 
 export default function StatBar() {
-  const { health, armor, gem, character, poison, fire } = useGameContext();
+  const { health, armor, damage, gem, character, effects } = useGameContext();
 
   return (
     <Stack
@@ -27,20 +26,27 @@ export default function StatBar() {
           value={`${health}/${character.maxHealth}`}
         />
         <IconStat icon="armor" width={35} value={armor} />
+        <IconStat icon="damage" width={35} value={damage} />
         <Stack direction="row" spacing={1}>
-          {poison > 0 && (
-            <Box sx={{ bgcolor: "#2c3e50", borderRadius: 1, p: 0.5 }}>
-              <Iconify icon="mdi:poison" sx={{ color: "#27ae60" }} />
-            </Box>
-          )}
-          {fire > 0 && (
-            <Box sx={{ bgcolor: "#2c3e50", borderRadius: 1, p: 0.5 }}>
-              <Iconify
-                icon="game-icons:burning-skull"
-                sx={{ color: "#e84118" }}
+          {Object.values(effects).map((effect) => (
+            <Box key={effect.potionName}>
+              <img
+                src={`/assets/game/images/${effect.potionName}.png`}
+                alt="icon"
+                width={24}
+                height={24}
+                style={{ imageRendering: "pixelated" }}
               />
+              <Typography
+                variant="caption"
+                color="white"
+                fontFamily="Pixel"
+                sx={{ ml: "-5px" }}
+              >
+                {effect.duration}
+              </Typography>
             </Box>
-          )}
+          ))}
         </Stack>
       </Stack>
       <Box>

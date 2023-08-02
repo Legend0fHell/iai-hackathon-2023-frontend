@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Typography, Box, Button } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
 
+
 const GameQuestions = ({ data, handleOnClick, correct, answer, message }) => {
   return (
     <Box

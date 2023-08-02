@@ -39,6 +39,11 @@ export default function CoreGame() {
   // This is the basic data for game scene
   const [gameData, setGameData] = useState(gameDataTrash);
 
+  // Check if done animation
+  if(done){
+    console.log('Animation Done!')
+  }
+
   // Function that load phaser game into <div id ='game'/>
   const loadGame = async () => {
     console.log("Loading....");
@@ -114,7 +119,7 @@ export default function CoreGame() {
     setTimeout(() => {
       handleClose();
       onFinished(correct);
-    }, 2000);
+    }, 2200);
   };
 
   const handleClose = () => {

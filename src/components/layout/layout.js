@@ -15,6 +15,7 @@ export default function Layout({ children }) {
     const [user, loading] = useAuthState(auth);
     const [loading2, setLoading] = useState(false);
     const router = useRouter();
+    const pushRoutes = ['/','/login', '/register']
 
     useEffect(() => {
         async function upd() {
@@ -46,8 +47,8 @@ export default function Layout({ children }) {
             </Backdrop>
         )
     } else {
-        // console.log('user:',user.uid)
-        if (user.uid && router.pathname == '/' ) {
+        console.log('user:',user)
+        if (user != null && pushRoutes.includes(router.pathname) ) {
             router.push('/dashboard')
         }
 
