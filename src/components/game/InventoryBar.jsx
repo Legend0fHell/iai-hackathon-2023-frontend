@@ -4,8 +4,14 @@ import { useGameContext } from "../../contexts/game";
 import InventorySlot from "./InventorySlot";
 
 export default function InventoryBar() {
-  const { score, inventory, selectedSlotId, setSelectedSlotId, sellItem } =
-    useGameContext();
+  const {
+    score,
+    inventory,
+    selectedSlotId,
+    setSelectedSlotId,
+    sellItem,
+    streak,
+  } = useGameContext();
 
   return (
     <Stack
@@ -49,7 +55,7 @@ export default function InventoryBar() {
           </Typography>
           <Stack direction="row">
             <Typography variant="caption" color="white" fontFamily="Pixel">
-              3
+              {streak}
             </Typography>
             <Iconify icon="mdi:fire" sx={{ color: "white", mt: "1px" }} />
           </Stack>
@@ -70,7 +76,7 @@ export default function InventoryBar() {
               borderRadius: 2,
               backgroundImage: "linear-gradient(to right, #e67e22, #f39c12)",
               height: "100%",
-              width: "70%",
+              width: `${Math.min((streak * 100) / 5, 100)}%`,
               transitionDuration: "0.5s",
             }}
           />

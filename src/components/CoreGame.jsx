@@ -4,6 +4,7 @@ import { Box, Dialog, DialogContent, Button } from "@mui/material";
 import GameQuestions from "./GameQuestions";
 
 import { useGameContext } from "../contexts/game";
+import { socket } from "../models/wsEventListener";
 
 export default function CoreGame() {
   // Basic states
@@ -13,8 +14,17 @@ export default function CoreGame() {
   const [correct, setCorrectAnswer] = useState(null);
   const [done, setDone] = useState(true);
   const [message, setMessage] = useState("");
-  const { gem, character, onFinished, currentCard, currentQuestion } =
-    useGameContext();
+  const {
+    health,
+    armor,
+    damage,
+    gem,
+    effects,
+    character,
+    onFinished,
+    currentCard,
+    currentQuestion,
+  } = useGameContext();
 
   // currentCard is the monster that is being fought
   // currentCard.data is the data of the monster (@/config/game.jsx)
@@ -92,30 +102,19 @@ export default function CoreGame() {
   };
 
   // Handle when user choose answer
-  const handleOnClick = (e) => {
+  const handleOnClick = async (value) => {
     // console.log('Clicked')
     // console.log(e.target.value)
-    const value = e.target.value;
-    let correct;
+    console.log("Choose answer", value);
 
-    if (value == 2) {
-      game.events.emit("Answer_Event", true);
-      setAnswered(true);
-      setCorrect("#1EF467");
-      setMessage("Congratulation, you have the correct answer! 😎");
-      correct = true;
-    } else {
-      game.events.emit("Answer_Event", false);
-      setAnswered(true);
-      setCorrect("#EC6B5E");
-      setMessage("Oh noo, wrong answer! 😥");
-      correct = false;
-    }
+    socket.emit("post-answer", currentQuestion.id, value, {
+      hp: health,
+      def: armor,
+      atk: damage,
+      buff: effects.blue ? effects.blue.amount : 0,
+    });
 
-    setTimeout(() => {
-      handleClose();
-      onFinished(correct);
-    }, 2200);
+    setAnswered(true);
   };
 
   const handleClose = () => {
@@ -131,8 +130,35 @@ export default function CoreGame() {
   useEffect(() => {
     if (currentCard != null) {
       loadGame();
+      socket.emit("post-startQues", currentQuestion.id);
     }
   }, [currentCard]);
+
+  useEffect(() => {
+    if (!game) return;
+
+    socket.on("get-answer", (id, isCorrect) => {
+      if (isCorrect) {
+        game.events.emit("Answer_Event", true);
+        setCorrect("#1EF467");
+        setMessage("Congratulation, you have the correct answer! 😎");
+      } else {
+        game.events.emit("Answer_Event", false);
+        setAnswered(true);
+        setCorrect("#EC6B5E");
+        setMessage("Oh noo, wrong answer! 😥");
+      }
+
+      setTimeout(() => {
+        handleClose();
+        onFinished(isCorrect);
+      }, 2200);
+    });
+
+    return () => {
+      socket.off("get-answer");
+    };
+  }, [game]);
 
   return (
     <>

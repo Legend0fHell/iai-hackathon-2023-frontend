@@ -24,6 +24,7 @@ export const GameProvider = ({ children }) => {
   const [gem, setGem] = useState(24);
   const [score, setScore] = useState(0);
   const [movable, setMovable] = useState(true);
+  const [streak, setStreak] = useState(0);
   const [inventory, setInventory] = useState(
     character.inventory.map((item) => {
       const data = ITEM_CONFIGS[item];
@@ -502,12 +503,29 @@ export const GameProvider = ({ children }) => {
 
       setRoom(room);
 
-      const questions = shuffle(res1.data.questions);
+      let questions = res1.data.questions;
+      questions = questions.map((q, i) => ({ ...q, id: i }));
+      questions = shuffle(questions);
       setQuestions(questions);
     }
 
     getData();
   }, [router]);
+
+  useEffect(() => {
+    socket.on("get-playerData", (uid, streak, nCorrects, score) => {
+      console.log(uid, score);
+
+      if (uid == localStorage.getItem("uid")) {
+        setStreak(streak);
+        setScore(score);
+      }
+    });
+
+    return () => {
+      socket.off("get-playerDate");
+    };
+  }, []);
 
   return (
     <GameContext.Provider
@@ -536,6 +554,7 @@ export const GameProvider = ({ children }) => {
         setCurrentCard,
         sellItem,
         currentQuestion,
+        streak,
       }}
     >
       {children}

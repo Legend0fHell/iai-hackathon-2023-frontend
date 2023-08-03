@@ -37,7 +37,7 @@ const GameQuestions = ({ data, handleOnClick, correct, answer, message }) => {
       >
         <Grid xs={6} sx={{ padding: "0 32px" }}>
           <Button
-            onClick={handleOnClick}
+            onClick={() => handleOnClick(0)}
             variant="outlined"
             value={0}
             sx={{
@@ -60,7 +60,7 @@ const GameQuestions = ({ data, handleOnClick, correct, answer, message }) => {
         </Grid>
         <Grid xs={6} sx={{ padding: "0 32px" }}>
           <Button
-            onClick={handleOnClick}
+            onClick={() => handleOnClick(1)}
             variant="outlined"
             value={1}
             sx={{
@@ -83,7 +83,7 @@ const GameQuestions = ({ data, handleOnClick, correct, answer, message }) => {
         </Grid>
         <Grid xs={6} sx={{ padding: "0 32px" }}>
           <Button
-            onClick={handleOnClick}
+            onClick={() => handleOnClick(2)}
             variant="outlined"
             value={2}
             sx={{
@@ -106,10 +106,9 @@ const GameQuestions = ({ data, handleOnClick, correct, answer, message }) => {
         </Grid>
         <Grid xs={6} sx={{ padding: "0 32px" }}>
           <Button
-            onClick={handleOnClick}
+            onClick={() => handleOnClick(3)}
             variant="outlined"
             // className = {}
-            value={3}
             sx={{
               transition: "0.5s",
               fontFamily: "VT323, sans-serif",

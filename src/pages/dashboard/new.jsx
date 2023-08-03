@@ -28,11 +28,11 @@ export default function New() {
         data: {
           groupId: groups.find((g) => g.name === group).groupId,
           roomData: {
-            name: "t1 is the winner",
-            desc: "never gonna happen",
+            name: "GDCD",
+            desc: "vc",
             diff: 0.2,
             tframe: 25,
-            testid: "99915a9a369d4f549b2c4c0443784a85",
+            testid: "f25da92b216743e8bee93c9b2781c92d",
             qnum: questions.length,
           },
         },
