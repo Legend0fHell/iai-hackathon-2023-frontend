@@ -4,7 +4,7 @@ import {
   createUserWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 
 export const getUserInfo = (uid) => {
   return new Promise(async (resolve) => {
@@ -18,30 +18,31 @@ export const getUserInfo = (uid) => {
   });
 };
 
-export const setUserInfo = (userInfo) => {
-  return new Promise(async (resolve) => {
-    if (userInfo.uid) {
-      await setDoc(doc(fs, "user_data", userInfo.uid), userInfo);
-      resolve(true);
-    } else {
-      resolve(false);
-    }
-  });
-};
-
 export async function register(email, password, userInfo) {
   return await createUserWithEmailAndPassword(auth, email, password)
     .then(async (userCred) => {
       // Signed in
       const user = userCred.user;
-      console.log("Reg: User created, logged in: ", user.uid);
-      localStorage.setItem("uid", userCred.user.uid);
-      await setUserInfo({
-        uname: userInfo.uname,
-        email: email,
-        priv: "0",
-        uid: user.uid,
-      });
+      localStorage.setItem("uid", user.uid);
+      fetch("http://127.0.0.1:5678/user/init", {
+        method: "POST",
+        body: JSON.stringify({
+          uid: user.uid,
+          data: {
+            uname: userInfo.uname,
+            email: email,
+            priv: "0",
+            uid: user.uid,
+          },
+        }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      })
+        .then((response) => response.json())
+        .then(() => {
+          console.log("Reg: User created, logged in: ", user.uid);
+        });
     })
     .catch((error) => {
       console.log("Reg: Something went wrong.");
