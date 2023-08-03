@@ -30,8 +30,7 @@ const GameCard = ({ img_src, data }) => {
           .then((response) => response.json())
           .then((json) => {
             console.log(json.msg);
-            if(json.msg.charAt(0) == 'o') router.push(`/gameroom/${data.rid}`);
-            else alert(json.msg);
+            router.push(`/gameroom/${data.rid}`);
           });
     }   
     console.log('data:', data)

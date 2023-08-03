@@ -38,8 +38,7 @@ const Join = () => {
               .then((response) => response.json())
               .then((json) => {
                 console.log(json.msg);
-                if(json.msg.charAt(0) == 'o') router.push(`/gameroom/${code}`);
-                else alert(json.msg);
+                router.push(`/gameroom/${code}`);
               });
     }
 
