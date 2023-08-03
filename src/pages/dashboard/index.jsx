@@ -17,12 +17,14 @@ import wizard_staff from "../../assets/images/wizard_staff.png";
 import holy_rope from "../../assets/images/holy_rope.png";
 
 const Index = () => {
-  const [value, setValue] = React.useState("1");
+  const [value, setValue] = React.useState("2");
   const [uData, setuData] = React.useState("");
   const [storage, setStorage] = React.useState("");
+  const [room, setRoom] = React.useState("");
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+  console.log(localStorage.getItem("uid"))
 
   React.useEffect(() => {
     fetch("http://127.0.0.1:5678/user/get", {
@@ -40,20 +42,37 @@ const Index = () => {
         console.log(json.data);
         setuData(json.data);
       });
-      fetch("http://127.0.0.1:5678/storage/get", {
-        method: "POST",
-        body: JSON.stringify({
-          uid: localStorage.getItem("uid"),
-        }),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
-      })
-        .then((response) => response.json())
-        .then((json) => {
-          console.log("storage", json.data);
-          setStorage(json.data);
-        });
+
+    fetch("http://127.0.0.1:5678/storage/get", {
+      method: "POST",
+      body: JSON.stringify({
+        uid: localStorage.getItem("uid"),
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        console.log("storage", json.data);
+        setStorage(json.data);
+      });
+
+    fetch("http://127.0.0.1:5678/group/all/rooms", {
+      method: "POST",
+      body: JSON.stringify({
+        uid: localStorage.getItem("uid"),
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        // console.log("all rooms: ", json.data);
+        console.log("all rooms", Object.values(json.data));
+        setRoom(Object.values(json.data));
+      });
   }, []);
 
   return (
@@ -151,7 +170,6 @@ const Index = () => {
                     aria-label="lab API tabs example"
                   >
                     <Tab label="Previous Game" value="1" />
-                    {/* <Tab label="Available Game" value="2" /> */}
                     <Tab label="Group Game" value="2" />
                   </TabList>
                 </Box>
@@ -167,8 +185,23 @@ const Index = () => {
                     </Grid>
                   </Grid>
                 </TabPanel>
-                {/* <TabPanel value="2" sx={{ padding: '24px 0' }} >Item Two</TabPanel> */}
-                <TabPanel value="2" sx={{ padding: "24px 0" }}></TabPanel>
+
+                <TabPanel value="2" sx={{ padding: "24px 0" }}>
+                  <Grid container spacing={4}>
+                    {room && room.map((item, key) => {
+                      return (
+                        <GameCard
+                          img_src={login_bg}
+                          title={"Giải tích I"}
+                          description={"Giải quyết những bài toán hóc búa"}
+                          code={item}
+                          data={item}
+                          key={key}
+                        />
+                      )
+                    })}
+                  </Grid>
+                </TabPanel>
               </TabContext>
             </Grid>
             {/* Game Section */}

@@ -7,8 +7,9 @@ import { socket } from "../../../models/wsEventListener";
 
 export default function GameRoom() {
   const router = useRouter();
-
+  console.log(router.query.roomId)
   const startGame = useCallback(() => {
+    console.log('Start')
     socket.emit("post-start");
   }, []);
 

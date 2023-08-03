@@ -21,6 +21,8 @@ import CachedIcon from '@mui/icons-material/Cached';
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 import Image from "next/image";
 
+import { useRouter } from "next/router";
+
 // Icons
 import PeopleIcon from '@mui/icons-material/People';
 
@@ -28,15 +30,16 @@ import PeopleIcon from '@mui/icons-material/People';
 import GroupCard from "../../components/Group/GroupCard";
 
 import image1 from '../../assets/images/login_bg.jpg'
-import { set } from "lodash";
 
 const GroupPage = () => {
     const [searchData, setSearchData] = React.useState('');
     const [open, setOpen] = React.useState(false);
 
     const [data, setData] = React.useState('');
-    const [member, setMember] = React.useState()
-    const [code, setCode] = React.useState()
+    const [member, setMember] = React.useState();
+    const [code, setCode] = React.useState();
+
+    const router = useRouter();
 
     const handleChange = (e) => {
         console.log(e.target.value);
@@ -70,12 +73,30 @@ const GroupPage = () => {
 
     const handleSubmit = () => {
         let group_data = {
-            'game_name' : data,
+            'game_name': data,
             'members': member,
             'code': code
         }
-        console.log(group_data)
-        console.log('Submit')
+        fetch("http://127.0.0.1:5678/group/create", {
+            method: "POST",
+            body: JSON.stringify({
+                'uid': localStorage.getItem("uid"),
+                'data':{
+                    "name": data,
+                    "desc": member
+                }
+            }),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+            },
+        })
+            .then((response) => response.json())
+            .then((json) => {
+                // console.log(json.data);
+                router.push(`/group/${json.data}`)
+            });
+        // console.log(group_data)
+        // console.log('Submit')
     }
 
     return (
@@ -240,11 +261,11 @@ const GroupPage = () => {
                                                 Number of members
                                             </Typography>
                                             <FormControl sx={{ width: '30ch', paddingBottom: '16px' }} required>
-                                                <InputLabel id="demo-simple-select-label">Age</InputLabel>
+                                                <InputLabel id="demo-simple-select-label">Members</InputLabel>
                                                 <Select
                                                     id="nums_of_member"
                                                     value={member}
-                                                    label="Age"
+                                                    label="Members"
                                                     onChange={handleSelect}
                                                 >
                                                     <MenuItem value={10}>10</MenuItem>
