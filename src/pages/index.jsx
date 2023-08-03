@@ -1,7 +1,6 @@
 // import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { getUserInfo, logout } from "@/models/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/config/firebaseInit";
 

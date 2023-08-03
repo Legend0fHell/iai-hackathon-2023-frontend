@@ -28,8 +28,8 @@ const Index = () => {
     fetch("http://127.0.0.1:5678/user/get", {
       method: "POST",
       body: JSON.stringify({
-        uid: "hPnZoOJ5K3VPD9BWgo7KtxkuUBC3",
-        data: "hPnZoOJ5K3VPD9BWgo7KtxkuUBC3",
+        uid: localStorage.getItem("uid"),
+        data: localStorage.getItem("uid"),
       }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
@@ -40,23 +40,20 @@ const Index = () => {
         console.log(json.data);
         setuData(json.data);
       });
-  }, []);
-
-  React.useEffect(() => {
-    fetch("http://127.0.0.1:5678/storage/get", {
-      method: "POST",
-      body: JSON.stringify({
-        uid: "hPnZoOJ5K3VPD9BWgo7KtxkuUBC3",
-      }),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        console.log("storage", json.data);
-        setStorage(json.data);
-      });
+      fetch("http://127.0.0.1:5678/storage/get", {
+        method: "POST",
+        body: JSON.stringify({
+          uid: localStorage.getItem("uid"),
+        }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      })
+        .then((response) => response.json())
+        .then((json) => {
+          console.log("storage", json.data);
+          setStorage(json.data);
+        });
   }, []);
 
   return (
