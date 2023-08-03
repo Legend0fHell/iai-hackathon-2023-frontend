@@ -1,5 +1,6 @@
 // import type { NextPage } from "next";
 import React, { useEffect } from "react";
+import { useRouter } from "next/router";
 
 import {
     Typography,
@@ -13,12 +14,32 @@ import {
 import city from '../assets/images/city.gif'
 
 const Join = () => {
+    const router = useRouter();
     const [code, setCode] = React.useState()
 
     const handleChange = (e) => {
         e.preventDefault();
         let data = e.target.value;
         setCode(data)
+    }
+
+    const handleJoin = (e) => {
+            if(code == null || code == "") return;
+            fetch("http://127.0.0.1:5678/room/join", {
+              method: "POST",
+              body: JSON.stringify({
+                uid: localStorage.getItem("uid"),
+                data: code,
+              }),
+              headers: {
+                "Content-type": "application/json; charset=UTF-8",
+              },
+            })
+              .then((response) => response.json())
+              .then((json) => {
+                console.log(json.msg);
+                router.push(`/gameroom/${code}`);
+              });
     }
 
     return (
@@ -92,6 +113,7 @@ const Join = () => {
                                 height: 'fit-content',
                                 backgroundColor: '#0698F9'
                             }}
+                            onClick={handleJoin}
                         >
                             JOIN
                         </Button>

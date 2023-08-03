@@ -1,5 +1,6 @@
 // import type { NextPage } from "next";
 import React from "react";
+import { useRouter } from "next/router";
 import {
     Typography,
     Box,
@@ -13,6 +14,25 @@ import bg1 from '../../assets/images/login_bg.jpg'
 import bg2 from '../../assets/images/register_bg.jpg'
 
 const GameCard = ({ img_src, data }) => {
+    const router = useRouter();
+    const handleJoin = (e) => {
+        if(data == null || data.rid == null || data.rid == "") return;
+        fetch("http://127.0.0.1:5678/room/join", {
+          method: "POST",
+          body: JSON.stringify({
+            uid: localStorage.getItem("uid"),
+            data: data.rid,
+          }),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          },
+        })
+          .then((response) => response.json())
+          .then((json) => {
+            console.log(json.msg);
+            router.push(`/gameroom/${data.rid}`);
+          });
+    }   
     console.log('data:', data)
     if (data) {
         if (data.ended == false) {
@@ -45,12 +65,13 @@ const GameCard = ({ img_src, data }) => {
                             </Box>
                             <Button
                                 component='a'
-                                href={`/gameroom/${data.rid ? data.rid : '#'}`}
                                 variant='contained' sx={{
                                     backgroundColor: '#0698F9',
                                     borderRadius: '0px',
                                     padding: '10px 24px'
-                                }}>
+                                }}
+                                onClick={handleJoin}>
+                                
                                 JOIN
                             </Button>
                         </Box>
