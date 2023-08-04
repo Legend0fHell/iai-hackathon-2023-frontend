@@ -495,7 +495,7 @@ export const GameProvider = ({ children }) => {
       const room = res0.data.data;
 
       const res1 = await axios.get(
-        `http://157.245.149.209:3000/data/${room.testid}/questions`
+        `http://157.245.149.209:8000/data/${room.testid}/questions`
       );
 
       setRoom(room);
