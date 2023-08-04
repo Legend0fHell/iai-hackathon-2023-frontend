@@ -487,18 +487,15 @@ export const GameProvider = ({ children }) => {
     );
 
     async function getData() {
-      const res0 = await axios.post(
-        `${process.env.NEXT_PUBLIC_NODE_BACKEND_URL}/room/get`,
-        {
-          uid: localStorage.getItem("uid"),
-          data: router.query.roomId,
-        }
-      );
+      const res0 = await axios.post(`http://157.245.149.209:5678/room/get`, {
+        uid: localStorage.getItem("uid"),
+        data: router.query.roomId,
+      });
 
       const room = res0.data.data;
 
       const res1 = await axios.get(
-        `${process.env.NEXT_PUBLIC_FLASK_BACKEND_URL}/data/${room.testid}/questions`
+        `http://157.245.149.209:3000/data/${room.testid}/questions`
       );
 
       setRoom(room);
