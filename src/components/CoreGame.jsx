@@ -152,7 +152,7 @@ export default function CoreGame() {
       setTimeout(() => {
         handleClose();
         onFinished(isCorrect);
-      }, 2200);
+      }, 3000);
     });
 
     return () => {

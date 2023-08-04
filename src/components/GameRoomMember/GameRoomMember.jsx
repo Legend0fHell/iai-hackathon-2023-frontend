@@ -3,11 +3,14 @@ import React from "react";
 import { Typography, Box, Button, Avatar } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
 
+import Image from "next/image";
+
 // Images
 import cat from "../../assets/images/cat.jpg";
 import city from "../../assets/images/city.gif";
+import image1 from '../../assets/images/bg.jpg'
 
-const Join = ({ onStart }) => {
+const Join = ({ onStart, data, role, leaveGame }) => {
   return (
     <>
       <Box
@@ -48,123 +51,80 @@ const Join = ({ onStart }) => {
           paddingTop: "48px",
         }}
       >
-        <Grid
-          xs={4}
-          sx={{
-            display: "flex",
-            width: "fit-content",
-            gap: "16px",
-            alignItems: "center",
-          }}
-        >
-          <Avatar
-            alt="Remy Sharp"
-            src={`url(${cat.src})`}
-            sx={{
-              boxShadow:
-                "0px 0px 0.5px 0px rgba(13, 15, 17, 0.10) inset, 6px 12px 24px 0px rgba(102, 146, 204, 0.08)",
-              border: "2px solid #fff",
-              width: "56px",
-              height: "56px",
-            }}
-          />
-          <Typography
-            variant="body1"
-            sx={{
-              color: "#fff",
-              fontFamily: "Poppins, sans-serif",
-              fontSize: "24px",
-              fontWeight: "bold",
-            }}
-          >
-            Phuong Pham
-          </Typography>
-        </Grid>
+        {data.map((item, key) => {
+          return (
+            <Grid
+              xs={4}
+              sx={{
+                display: "flex",
+                width: "fit-content",
+                gap: "16px",
+                alignItems: "center",
+              }}
+              key={key}
+            >
+              <Image alt='ava' src={image1} width={120} height={120} style={{
+                width: '64px',
+                height: 'auto',
+                aspectRatio: '1/1',
+                borderRadius: '100px',
+                border: `2px solid ${item.data.mode == 9 ? '#F4BF4F' : '#FFF'}`
+              }} />
+              <Typography
+                variant="body1"
+                sx={{
+                  color: "#fff",
+                  fontFamily: "Poppins, sans-serif",
+                  fontSize: "24px",
+                  fontWeight: "bold",
+                }}
+              >
+                {item.user.uname}
+              </Typography>
+            </Grid>
+          )
+        })}
 
-        <Grid
-          xs={4}
-          sx={{
-            display: "flex",
-            width: "fit-content",
-            gap: "16px",
-            alignItems: "center",
-          }}
-        >
-          <Avatar
-            alt="Remy Sharp"
-            src={`url(${cat.src})`}
-            sx={{
-              boxShadow:
-                "0px 0px 0.5px 0px rgba(13, 15, 17, 0.10) inset, 6px 12px 24px 0px rgba(102, 146, 204, 0.08)",
-              border: "2px solid #fff",
-              width: "56px",
-              height: "56px",
-            }}
-          />
-          <Typography
-            variant="body1"
-            sx={{
-              color: "#fff",
-              fontFamily: "Poppins, sans-serif",
-              fontSize: "24px",
-              fontWeight: "bold",
-            }}
-          >
-            Phuong Pham
-          </Typography>
-        </Grid>
-
-        <Grid
-          xs={4}
-          sx={{
-            display: "flex",
-            width: "fit-content",
-            gap: "16px",
-            alignItems: "center",
-          }}
-        >
-          <Avatar
-            alt="Remy Sharp"
-            src={`url(${cat.src})`}
-            sx={{
-              boxShadow:
-                "0px 0px 0.5px 0px rgba(13, 15, 17, 0.10) inset, 6px 12px 24px 0px rgba(102, 146, 204, 0.08)",
-              border: "2px solid #fff",
-              width: "56px",
-              height: "56px",
-            }}
-          />
-          <Typography
-            variant="body1"
-            sx={{
-              color: "#fff",
-              fontFamily: "Poppins, sans-serif",
-              fontSize: "24px",
-              fontWeight: "bold",
-            }}
-          >
-            Phuong Pham
-          </Typography>
-        </Grid>
       </Grid>
+      {role == 'Admin' ?
+        (
+          <Button
+            variant="contained"
+            onClick={onStart}
+            sx={{
+              backgroundColor: "#fff",
+              borderRadius: "5px",
+              padding: "12px 24px",
+              boxShadow:
+                "0px 1px 2px 0px rgba(0, 0, 0, 0.24), 0px 1px 3px 0px rgba(0, 0, 0, 0.12)",
+              color: "#000",
+              fontFamily: "Poppins, sans-serif",
+              fontWeight: "bold",
+              marginTop: "32px",
+            }}
+          >
+            Start Game
+          </Button>
+        ) : (
+          <Button
+            variant="contained"
+            onClick={leaveGame}
+            sx={{
+              backgroundColor: "#fff",
+              borderRadius: "5px",
+              padding: "12px 24px",
+              boxShadow:
+                "0px 1px 2px 0px rgba(0, 0, 0, 0.24), 0px 1px 3px 0px rgba(0, 0, 0, 0.12)",
+              color: "#000",
+              fontFamily: "Poppins, sans-serif",
+              fontWeight: "bold",
+              marginTop: "32px",
+            }}
+          >
+            Leave Game
+          </Button>
+        )}
 
-      <Button
-        variant="contained"
-        onClick={onStart}
-        sx={{
-          backgroundColor: "#fff",
-          borderRadius: "5px",
-          padding: "12px 24px",
-          boxShadow:
-            "0px 1px 2px 0px rgba(0, 0, 0, 0.24), 0px 1px 3px 0px rgba(0, 0, 0, 0.12)",
-          color: "#000",
-          fontFamily: "Poppins, sans-serif",
-          fontWeight: "bold",
-          marginTop: "32px",
-        }}
-      >
-        Start Game
-      </Button>
     </>
   );
 };

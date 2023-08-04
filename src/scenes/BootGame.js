@@ -60,6 +60,11 @@ export default class BootGame extends Phaser.Scene {
             frameHeight: 32
         })
 
+        this.load.spritesheet('orc', "../assets/game/dungeonSprites_/weapons_.png", {
+            frameWidth: 12,
+            frameHeight: 24
+        })
+
         this.load.spritesheet('dust', "../assets/game/caveSprites_/dust_.png", {
             frameWidth: 8,
             frameHeight: 8

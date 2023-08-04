@@ -14,7 +14,7 @@ const GameQuestions = ({ data, handleOnClick, correct, answer, message }) => {
     >
       <NodeContent
         sx={{ fontSize: "16px", color: "white" }}
-        nodes={data.content}
+        node={data.content}
       />
       {answer ? (
         <Typography
@@ -55,7 +55,7 @@ const GameQuestions = ({ data, handleOnClick, correct, answer, message }) => {
               },
             }}
           >
-            <NodeContent nodes={data.choices[0]} />
+            <NodeContent node={data.choices[0]} />
           </Button>
         </Grid>
         <Grid xs={6} sx={{ padding: "0 32px" }}>
@@ -78,7 +78,7 @@ const GameQuestions = ({ data, handleOnClick, correct, answer, message }) => {
               },
             }}
           >
-            <NodeContent nodes={data.choices[1]} />
+            <NodeContent node={data.choices[1]} />
           </Button>
         </Grid>
         <Grid xs={6} sx={{ padding: "0 32px" }}>
@@ -101,7 +101,7 @@ const GameQuestions = ({ data, handleOnClick, correct, answer, message }) => {
               },
             }}
           >
-            <NodeContent nodes={data.choices[2]} />
+            <NodeContent node={data.choices[2]} />
           </Button>
         </Grid>
         <Grid xs={6} sx={{ padding: "0 32px" }}>
@@ -124,7 +124,7 @@ const GameQuestions = ({ data, handleOnClick, correct, answer, message }) => {
               },
             }}
           >
-            <NodeContent nodes={data.choices[3]} />
+            <NodeContent node={data.choices[3]} />
           </Button>
         </Grid>
       </Grid>

@@ -4,9 +4,14 @@ import {
     Typography,
     Box,
     Button,
+    Snackbar,
+    IconButton
 } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
 import Image from "next/image";
+import { useRouter } from "next/router";
+
+import CloseIcon from '@mui/icons-material/Close';
 
 // Images
 import bg1 from '../../assets/images/login_bg.jpg'
@@ -14,7 +19,11 @@ import bg2 from '../../assets/images/register_bg.jpg'
 
 const GroupCard = ({ img_src, title, description, code, data }) => {
     const [cardData, setCardData] = useState('');
-    const [difficulty, setDifficulty] = useState('')
+    const [difficulty, setDifficulty] = useState('');
+    const [open, setOpen] = React.useState(false);
+    const [message, setMessage] = React.useState('');
+
+    const router = useRouter();
 
     if (data) {
         useEffect(() => {
@@ -53,6 +62,53 @@ const GroupCard = ({ img_src, title, description, code, data }) => {
                     }
                 });
         }, [])
+
+        const handleJoin = (e) => {
+            if (data == null || data.rid == null || data.rid == "") return;
+            fetch("http://127.0.0.1:5678/room/join", {
+                method: "POST",
+                body: JSON.stringify({
+                    uid: localStorage.getItem("uid"),
+                    data: data.rid,
+                }),
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                },
+            })
+                .then((response) => response.json())
+                .then((json) => {
+                    console.log(json.msg);
+                    // if(json.msg.charAt(0) == 'o') {
+                    //     router.push(`/gameroom/${data.rid}`);
+                    // } else {
+                    //     setMessage(json.msg);
+                    //     setOpen(true)
+                    // }
+                    router.push(`/gameroom/${data.rid}`);
+                });
+        }
+
+        const handleClose = (event, reason) => {
+            if (reason === 'clickaway') {
+                return;
+            }
+    
+            setOpen(false);
+        };
+
+        const action = (
+            <React.Fragment>
+                <IconButton
+                    size="small"
+                    aria-label="close"
+                    color="inherit"
+                    onClick={handleClose}
+                >
+                    <CloseIcon fontSize="small" />
+                </IconButton>
+            </React.Fragment>
+        );
+
         if (cardData) {
             return (
                 <Box sx={{
@@ -81,8 +137,7 @@ const GroupCard = ({ img_src, title, description, code, data }) => {
                             </Typography>
                         </Box>
                         <Button
-                            component='a'
-                            href={`/gameroom/${data.rid}`}
+                            onClick={handleJoin}
                             variant='contained' sx={{
                                 backgroundColor: '#0698F9',
                                 borderRadius: '0px',
@@ -132,6 +187,14 @@ const GroupCard = ({ img_src, title, description, code, data }) => {
                             </Typography>
                         </Box>
                     </Box>
+
+                    <Snackbar
+                        open={open}
+                        autoHideDuration={6000}
+                        onClose={handleClose}
+                        message= {message}
+                        action={action}
+                    />
                 </Box>
             )
         }
