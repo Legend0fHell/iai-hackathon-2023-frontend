@@ -18,7 +18,7 @@ export default function GameRoom() {
 
   const leaveGame = useCallback(() => {
     console.log('Leave');
-    fetch("http://127.0.0.1:5678/room/leave", {
+    fetch("http://157.245.149.209:5678/room/leave", {
       method: "POST",
       body: JSON.stringify({
         'uid': localStorage.getItem("uid"),
@@ -58,7 +58,7 @@ export default function GameRoom() {
   }, []);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:5678/room/userlist", {
+    fetch("http://157.245.149.209:5678/room/userlist", {
       method: "POST",
       body: JSON.stringify({
         'uid': localStorage.getItem("uid"),
@@ -73,7 +73,7 @@ export default function GameRoom() {
         setData(json.data);
       });
 
-    fetch("http://127.0.0.1:5678/room/get", {
+    fetch("http://157.245.149.209:5678/room/get", {
       method: "POST",
       body: JSON.stringify({
         'uid': localStorage.getItem("uid"),

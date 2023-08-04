@@ -20,7 +20,7 @@ const MemberCard = ({ number, isButton, data }) => {
         }
 
         useEffect(() => {
-            fetch("http://127.0.0.1:5678/user/get", {
+            fetch("http://157.245.149.209:5678/user/get", {
                 method: "POST",
                 body: JSON.stringify({
                     'uid': data.uid,

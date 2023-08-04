@@ -25,7 +25,7 @@ const Join = () => {
 
     const handleJoin = (e) => {
             if(code == null || code == "") return;
-            fetch("http://127.0.0.1:5678/room/join", {
+            fetch("http://157.245.149.209:5678/room/join", {
               method: "POST",
               body: JSON.stringify({
                 uid: localStorage.getItem("uid"),

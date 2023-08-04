@@ -83,7 +83,7 @@ const CreateGame = () => {
     }
 
     const handleSubmit = () => {
-        fetch("http://127.0.0.1:5678/room/create", {
+        fetch("http://157.245.149.209:5678/room/create", {
             method: "POST",
             body: JSON.stringify({
                 'uid': localStorage.getItem("uid"),
@@ -118,7 +118,7 @@ const CreateGame = () => {
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: 'http://localhost:8000/api/quiz2quiz',
+            url: 'http://157.245.149.209:8000/api/quiz2quiz',
             headers: {
                 'Content-Type': 'multipart/form-data'
             },
@@ -137,7 +137,7 @@ const CreateGame = () => {
                     const id = setInterval(async () => {
                         console.log('inside: ', value)
                         console.log('inside: ', value['testid'])
-                        const res = await axios.get(`http://localhost:8000/data/${value.testid}/progress`)
+                        const res = await axios.get(`http://157.245.149.209:8000/data/${value.testid}/progress`)
                         console.log(res.data)
                         setProgress(res.data.value * 100)
 

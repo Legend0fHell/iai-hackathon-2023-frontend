@@ -43,7 +43,7 @@ const GroupPage = () => {
     const router = useRouter();
 
     useEffect(() => {
-        fetch("http://127.0.0.1:5678/group/all", {
+        fetch("http://157.245.149.209:5678/group/all", {
             method: "POST",
             body: JSON.stringify({
                 'uid': localStorage.getItem("uid"),
@@ -95,7 +95,7 @@ const GroupPage = () => {
             'members': member,
             'code': code
         }
-        fetch("http://127.0.0.1:5678/group/create", {
+        fetch("http://157.245.149.209:5678/group/create", {
             method: "POST",
             body: JSON.stringify({
                 'uid': localStorage.getItem("uid"),

@@ -26,7 +26,7 @@ const Index = () => {
   };
 
   React.useEffect(() => {
-    fetch("http://127.0.0.1:5678/user/get", {
+    fetch("http://157.245.149.209:5678/user/get", {
       method: "POST",
       body: JSON.stringify({
         uid: localStorage.getItem("uid"),
@@ -41,7 +41,7 @@ const Index = () => {
         setuData(json.data);
       });
 
-    fetch("http://127.0.0.1:5678/storage/get", {
+    fetch("http://157.245.149.209:5678/storage/get", {
       method: "POST",
       body: JSON.stringify({
         uid: localStorage.getItem("uid"),
@@ -56,7 +56,7 @@ const Index = () => {
         setStorage(json.data);
       });
 
-    fetch("http://127.0.0.1:5678/group/all/rooms", {
+    fetch("http://157.245.149.209:5678/group/all/rooms", {
       method: "POST",
       body: JSON.stringify({
         uid: localStorage.getItem("uid"),
