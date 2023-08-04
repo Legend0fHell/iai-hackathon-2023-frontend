@@ -51,6 +51,7 @@ export default function GameRoom() {
       if (state == 1) {
         socket.emit("post-ready", 2);
       } else {
+        console.log("push")
         router.push(`/game/${router.query.roomId}`);
       }
     });
@@ -84,7 +85,6 @@ export default function GameRoom() {
     })
       .then((response) => response.json())
       .then((json) => {
-        console.log(json.data);
         let value = json.data;
         if(value.owner == localStorage.getItem("uid")){
           setRole('Admin')

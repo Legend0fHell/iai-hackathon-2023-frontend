@@ -13,6 +13,8 @@ export default class PlayGame extends Phaser.Scene {
   }
 
   create() {
+    console.log('game data: ',this.gameData)
+
     // console.log(this.gem, this.character)
     this.background = this.add.image(
       this.gameData.map.x,
@@ -33,7 +35,7 @@ export default class PlayGame extends Phaser.Scene {
       300 / 2,
       this.gameData.character
     );
-    this.excalibur = this.physics.add.sprite(64, 300 / 2 + 15, "excalibur");
+    this.weapon = this.physics.add.sprite(64, 300 / 2 + 15, this.gameData.weapon);
     this.diamond_pickaxe = this.physics.add.sprite(
       400 - 60,
       300 / 2 + 15,
@@ -66,15 +68,15 @@ export default class PlayGame extends Phaser.Scene {
 
     this.player = player;
 
-    this.excalibur.setScale(1.5);
-    this.excalibur.angle = 90;
-    this.excalibur.play("excalibur_idle");
+    this.weapon.setScale(1.5);
+    this.weapon.angle = 90;
+    // this.weapon.play("weapon_idle");
 
     this.cPlayer = this.add.container(0, 0);
 
     this.cPlayer.setSize(32, 32);
     this.physics.add.existing(this.cPlayer);
-    this.cPlayer.add([this.player, this.excalibur, this.dust]);
+    this.cPlayer.add([this.player, this.weapon, this.dust]);
 
     // Logic
 
@@ -100,6 +102,14 @@ export default class PlayGame extends Phaser.Scene {
     this.game.events.emit("putOnPlayGame", true);
   }
 
+  swing_weapon(item) {
+    item.angle = 30;
+    for (let index = 1; index <= 60; index++) {
+      item.angle += 1;
+      console.log(item.angle)
+    }
+  }
+
   movePlayer(player, speed) {
     player.x += speed;
     if (player.x > 400) {
@@ -116,7 +126,8 @@ export default class PlayGame extends Phaser.Scene {
     if (this.swing == false) {
       this.step.stop();
       this.swing = true;
-      this.excalibur.play("excalibur_swing_r", true);
+      // this.weapon.play("weapon_swing_r", true);
+      this.swing_weapon(this.weapon);
       this.swing_sound.play();
       this.dust.play("idle_dust_particle");
       this.falling.play();
@@ -135,7 +146,7 @@ export default class PlayGame extends Phaser.Scene {
       this.swing = true;
       this.diamond_pickaxe.play("pickaxe_swing_l", true);
       this.dust.play("idle_dust_particle");
-      this.excalibur.visible = false;
+      this.weapon.visible = false;
       // this.falling.play();
     }
 

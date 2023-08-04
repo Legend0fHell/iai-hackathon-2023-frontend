@@ -9,7 +9,7 @@ const GameQuestions = ({ data, handleOnClick, correct, answer, message }) => {
       sx={{
         backgroundColor: "#000",
         padding: "2%",
-        width: "100%",
+        width: "912px",
       }}
     >
       <NodeContent

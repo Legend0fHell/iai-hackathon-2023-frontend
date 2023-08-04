@@ -1,5 +1,5 @@
 import { use, useEffect, useState } from "react";
-import { Box, Dialog, DialogContent, Button } from "@mui/material";
+import { Box, Dialog, DialogContent, Backdrop, CircularProgress, Typography } from "@mui/material";
 
 import GameQuestions from "./GameQuestions";
 
@@ -40,15 +40,14 @@ export default function CoreGame() {
       y: -140,
     },
     character: "knight",
-    monster: "goblin",
+    monster: "orc",
+    weapon:'wooden_sword'
   };
 
   // This is the basic data for game scene
   const [gameData, setGameData] = useState(gameDataTrash);
-
-  // Check if done animation
-  if (done) {
-  }
+  const [loading, setLoading] = useState(true);
+  const [open, setOpen] = useState(false)
 
   // Function that load phaser game into <div id ='game'/>
   const loadGame = async () => {
@@ -79,8 +78,23 @@ export default function CoreGame() {
       },
     });
 
+    game.events.on('putOnPlayGame', (event) => {
+      console.log('Hello: ', event);
+      setLoading(false);
+    })
     setGame(game);
   };
+
+  useEffect(() => {
+    // Check if done animation
+    if (loading) {
+      setOpen(true)
+      loadGame()
+    } else {
+      setOpen(false)
+    }
+  }, [loading])
+
 
   // Not Important. Demo change data game instantly ( Can be removed )
   const changeNextQuestion = () => {
@@ -160,6 +174,23 @@ export default function CoreGame() {
     };
   }, [game]);
 
+  if (loading) {
+    return (
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1, backgroundColor: '#4C6FFF' }}
+        open={true}
+      >
+        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <CircularProgress color="inherit" />
+          <Typography variant='h4' sx={{ fontSize: '1.5rem', fontFamily: 'Inter, sans-serif', color: '#fff', pt: '8%' }}>
+            Loading game...
+          </Typography>
+          <Box id="game" sx={{visibility:'hidden', position:'absolute'}} ></Box>
+        </Box>
+
+      </Backdrop>
+    )
+  }
   return (
     <>
       {/* <Button variant="outlined" onClick={handleClickOpen}>
@@ -168,7 +199,7 @@ export default function CoreGame() {
       {/* <Button variant="outlined" onClick={changeNextQuestion}>
         Change Map
       </Button> */}
-      <Dialog fullWidth={false} maxWidth="lg" open={currentCard != null}>
+      <Dialog fullWidth={false} maxWidth="lg" open={currentCard != null || open == true}>
         <DialogContent sx={{ padding: "0px" }}>
           <Box
             sx={{
@@ -185,7 +216,7 @@ export default function CoreGame() {
                 alignItems: "center",
               }}
             >
-              <Box id="game"></Box>
+              <Box id="game" sx={{height:'480px'}} ></Box>
               {currentQuestion && (
                 <GameQuestions
                   data={currentQuestion}

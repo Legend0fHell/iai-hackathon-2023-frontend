@@ -27,24 +27,19 @@ export default class BootGame extends Phaser.Scene {
             frameHeight: 24
         })
 
+        this.load.spritesheet('demon', "../assets/game/dungeonSprites_/demon_.png", {
+            frameWidth: 24,
+            frameHeight: 24
+        })
+
         this.load.spritesheet('skeleton', "../assets/game/dungeonSprites_/skeleton_.png", {
             frameWidth: 24,
             frameHeight: 24
         })
 
         // Characters
-        this.load.spritesheet('lancelot', "../assets/game/camelot_/lancelot_.png", {
-            frameWidth: 32,
-            frameHeight: 32
-        })
-
         this.load.spritesheet('knight', "../assets/game/dungeonSprites_/knight_.png", {
-            frameWidth: 24,
-            frameHeight: 24
-        })
-
-        this.load.spritesheet('mHero', "../assets/game/dungeonSprites_/mHero_.png", {
-            frameWidth: 24,
+            frameWidth: 24, 
             frameHeight: 24
         })
 
@@ -55,15 +50,28 @@ export default class BootGame extends Phaser.Scene {
             frameHeight: 32
         })
 
-        this.load.spritesheet('pickaxe_diamond', "../assets/game/caveSprites_/pickaxe_diamond.png", {
+        this.load.spritesheet('pickaxe_diamond', "../assets/game/caveSprites_/pickaxe_diamond.png",{
             frameWidth: 32,
             frameHeight: 32
         })
 
-        this.load.spritesheet('orc', "../assets/game/dungeonSprites_/weapons_.png", {
+        this.load.spritesheet('wooden_sword', "../assets/game/images/wooden_sword.png",{
             frameWidth: 12,
             frameHeight: 24
         })
+        this.load.spritesheet('iron_sword', "../assets/game/images/iron_sword.png",{
+            frameWidth: 12,
+            frameHeight: 24
+        })
+        this.load.spritesheet('golden_sword', "../assets/game/images/golden_sword.png",{
+            frameWidth: 12,
+            frameHeight: 24
+        })
+        this.load.spritesheet('diamond_sword', "../assets/game/images/diamond_sword.png",{
+            frameWidth: 12,
+            frameHeight: 24
+        })
+
 
         this.load.spritesheet('dust', "../assets/game/caveSprites_/dust_.png", {
             frameWidth: 8,
@@ -142,6 +150,27 @@ export default class BootGame extends Phaser.Scene {
         })
 
         this.anims.create({
+            key: 'idle_demon_anim',
+            frames: this.anims.generateFrameNumbers('demon', {
+                start: 4,
+                end: 7
+            }),
+            frameRate: 10,
+            repeat: -1,
+        })
+
+        this.anims.create({
+            key: 'ded_demon_anim',
+            frames: this.anims.generateFrameNumbers('demon', {
+                start: 44,
+                end: 47
+            }),
+            frameRate: 10,
+            repeat: 0,
+            hideOnComplete: true
+        })
+
+        this.anims.create({
             key: 'idle_skeleton_anim',
             frames: this.anims.generateFrameNumbers('skeleton', {
                 start: 4,
@@ -160,40 +189,6 @@ export default class BootGame extends Phaser.Scene {
             frameRate: 10,
             repeat: 0,
             hideOnComplete: true
-        })
-
-        // Lancelot
-        this.anims.create({
-            key: 'idle_lancelot_anim',
-            frames: this.anims.generateFrameNumbers('lancelot', {
-                start: 0,
-                end: 3
-            }),
-            frameRate: 10,
-            repeat: -1
-        })
-
-        this.anims.create({
-            key: 'run_lancelot_anim',
-            frames: this.anims.generateFrameNumbers('lancelot', {
-                start: 8,
-                end: 11
-            }),
-            frameRate: 10,
-            repeat: -1,
-            // zeroPad: 4
-        })
-
-        this.anims.create({
-            key: 'ded_lancelot_anim',
-            frames: this.anims.generateFrameNumbers('lancelot', {
-                start: 72,
-                end: 75
-            }),
-            frameRate: 10,
-            repeat: 0,
-            hideOnComplete: true
-            // zeroPad: 4
         })
 
         // Knight
@@ -229,41 +224,6 @@ export default class BootGame extends Phaser.Scene {
             hideOnComplete: true
             // zeroPad: 4
         })
-
-        // Hero
-
-        this.anims.create({
-            key: 'idle_mHero_anim',
-            frames: this.anims.generateFrameNumbers('mHero', {
-                start: 0,
-                end: 3
-            }),
-            frameRate: 10,
-            repeat: -1,
-        })
-
-        this.anims.create({
-            key: 'run_mHero_anim',
-            frames: this.anims.generateFrameNumbers('mHero', {
-                start: 16,
-                end: 19
-            }),
-            frameRate: 10,
-            repeat: -1,
-        })
-
-        this.anims.create({
-            key: 'ded_mHero_anim',
-            frames: this.anims.generateFrameNumbers('mHero', {
-                start: 40,
-                end: 43
-            }),
-            frameRate: 10,
-            repeat: 0,
-            hideOnComplete: true
-            // zeroPad: 4
-        })
-
         // Weapons and Others
 
         this.anims.create({

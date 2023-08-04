@@ -258,10 +258,10 @@ export const Navbar = ({ userData }) => {
                         Dashboard
                       </MenuItem>
                       {/* <MenuItem onClick={handleClose}>My account</MenuItem> */}
-                      <MenuItem onClick={logout}>Logout</MenuItem>
-                      <MenuItem component="a" href="/dashboard/new">
+                      <MenuItem component="a" href="/create_game">
                         Create quiz
                       </MenuItem>
+                      <MenuItem onClick={logout}>Logout</MenuItem>
                     </Menu>
                   </>
                 ) : (
