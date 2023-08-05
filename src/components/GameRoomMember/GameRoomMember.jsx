@@ -10,7 +10,7 @@ import cat from "../../assets/images/cat.jpg";
 import city from "../../assets/images/city.gif";
 import image1 from '../../assets/images/bg.jpg'
 
-const Join = ({ onStart, data, role, leaveGame }) => {
+const Join = ({ onStart, data, role, leaveGame, rid, roomData }) => {
   return (
     <>
       <Box
@@ -30,7 +30,7 @@ const Join = ({ onStart, data, role, leaveGame }) => {
             lineHeight: "normal",
           }}
         >
-          Game: Giải tích I
+          Game: {roomData.name}
         </Typography>
 
         <Typography
@@ -40,7 +40,7 @@ const Join = ({ onStart, data, role, leaveGame }) => {
             fontFamily: "Poppins, sans-serif",
           }}
         >
-          Code: 85674385
+          Code: {rid}
         </Typography>
       </Box>
 
@@ -52,6 +52,7 @@ const Join = ({ onStart, data, role, leaveGame }) => {
         }}
       >
         {data.map((item, key) => {
+          console.log('in gen:',item)
           return (
             <Grid
               xs={4}
@@ -68,7 +69,7 @@ const Join = ({ onStart, data, role, leaveGame }) => {
                 height: 'auto',
                 aspectRatio: '1/1',
                 borderRadius: '100px',
-                border: `2px solid ${item.data.mode == 9 ? '#F4BF4F' : '#FFF'}`
+                border: `2px solid #FFF`
               }} />
               <Typography
                 variant="body1"

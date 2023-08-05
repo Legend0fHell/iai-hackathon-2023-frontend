@@ -16,7 +16,7 @@ import GameMasterPlayerCard from "../GameMasterPlayerCard/GameMasterPlayerCard";
 import users from '../../assets/images/users.png'
 import city from '../../assets/images/city.gif'
 
-const Leaderboard = (data) => {
+const Leaderboard = ({data}) => {
     let trash_data = [
         {
             rank: 1,
@@ -61,7 +61,7 @@ const Leaderboard = (data) => {
                         color: '#fff',
                         fontFamily: 'Poppins, sans-serif'
                     }}>
-                        7 players
+                         players
                     </Typography>
                 </Box>
                 {/* After finish game => This appear to let game master back to dashboard */}
@@ -101,26 +101,34 @@ const Leaderboard = (data) => {
                             Name
                         </Typography>
                     </Grid>
-                    <Grid xs={5}>
+                    <Grid xs={2}>
                         <Typography variant='h6' sx={{
                             fontFamily: 'Poppins, sans-serif',
                             color: '#fff'
                         }}>
-                            Boss Health
+                            Points
                         </Typography>
                     </Grid>
-                    <Grid xs={3}>
+                    <Grid xs={2}>
                         <Typography variant='h6' sx={{
                             fontFamily: 'Poppins, sans-serif',
                             color: '#fff'
                         }}>
-                            Clear Time
+                            Progress
+                        </Typography>
+                    </Grid>
+                    <Grid xs={2}>
+                        <Typography variant='h6' sx={{
+                            fontFamily: 'Poppins, sans-serif',
+                            color: '#fff'
+                        }}>
+                            Answered
                         </Typography>
                     </Grid>
                 </Grid>
 
                 <Box sx={{ padding: '20px 0', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                    {trash_data.map((item, index) => {
+                    {data.map((item, index) => {
                         return (
                             <GameMasterPlayerCard data={item} key={index} />
                         )
