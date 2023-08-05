@@ -3,17 +3,17 @@
 
 @font-face {
   font-family: "Andy";
-  src: url(../fonts/ANDYB.TTF);
+  src: url(/fonts/ANDYB.TTF);
 }
 
 @font-face {
   font-family: "FVF_Fernando_08";
-  src: url(../fonts/FVF_Fernando_08.TTF);
+  src: url(/fonts/FVF_Fernando_08.TTF);
 }
 
 @font-face {
   font-family: "Pixel";
-  src: url(../fonts/FVF_Fernando_08.TTF);
+  src: url(/fonts/FVF_Fernando_08.TTF);
 }
 
 html,
