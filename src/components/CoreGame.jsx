@@ -79,7 +79,6 @@ export default function CoreGame() {
     });
 
     game.events.on('putOnPlayGame', (event) => {
-      console.log('Hello: ', event);
       setLoading(false);
     })
     setGame(game);
@@ -119,7 +118,6 @@ export default function CoreGame() {
   const handleOnClick = async (value) => {
     // console.log('Clicked')
     // console.log(e.target.value)
-    console.log("Choose answer", value);
 
     socket.emit("post-answer", currentQuestion.id, value, {
       hp: health,

@@ -13,7 +13,7 @@ import tele from '../../assets/images/tele.png'
 export const Footer = () => {
     const removeRoutes = ['/join','/login','/register']
     const router = useRouter()
-    console.log(router.pathname)
+
     if (!removeRoutes.includes(router.pathname)) {
         return (
             <Box component="footer" sx={{ background: '#21204A' }}>

@@ -5,6 +5,7 @@ import GameBoard from "../../components/game/GameBoard";
 import { GAME_WIDTH } from "../../config/game";
 import { GameProvider } from "../../contexts/game";
 import CoreGame from "../../components/CoreGame";
+import EndGameModal from "../../components/EndGameModal";
 
 const GamePage = () => {
   return (
@@ -24,6 +25,7 @@ const GamePage = () => {
             <StatBar />
             <InventoryBar />
             <GameBoard />
+            <EndGameModal />
           </Box>
         </Stack>
         <CoreGame />

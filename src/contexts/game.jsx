@@ -21,7 +21,7 @@ export const useGameContext = () => useContext(GameContext);
 export const GameProvider = ({ children }) => {
   const router = useRouter();
   const [character, setCharacter] = useState(CHARACTER_CONFIGS.knight);
-  const [gem, setGem] = useState(24);
+  const [gem, setGem] = useState(0);
   const [score, setScore] = useState(0);
   const [movable, setMovable] = useState(true);
   const [streak, setStreak] = useState(0);
@@ -55,10 +55,11 @@ export const GameProvider = ({ children }) => {
   const [selectedSlotId, setSelectedSlotId] = useState(0);
   const [currentCard, setCurrentCard] = useState(null);
   const [room, setRoom] = useState(null);
-  const [questions, setQuestions] = useState([]);
+  const [questions, setQuestions] = useState(null);
   const [currentQuestion, setCurrentQuestion] = useState(null);
 
   const addGem = useCallback((amount) => setGem((gem) => gem + amount), []);
+  const [endGame, setEndGame] = useState(false);
 
   const addScore = useCallback(
     (amount) => setScore((score) => score + amount),
@@ -179,6 +180,8 @@ export const GameProvider = ({ children }) => {
 
           setCards(newCards);
         }
+      } else {
+        reduceHealth(currentCard.data.damage);
       }
 
       if (weapon) {
@@ -519,10 +522,28 @@ export const GameProvider = ({ children }) => {
       }
     });
 
+    socket.on("get-end", (uid, gem) => {
+      localStorage.setItem("gem", gem);
+      console.log(gem);
+    });
+
     return () => {
       socket.off("get-playerDate");
+      socket.off("get-end");
     };
   }, []);
+
+  useEffect(() => {
+    if (questions != null && currentQuestion == null && questions.length == 0) {
+      setMovable(false);
+
+      setTimeout(() => {
+        setEndGame(true);
+
+        socket.emit("post-end", gem);
+      }, 1000);
+    }
+  }, [questions, currentQuestion]);
 
   return (
     <GameContext.Provider
@@ -552,6 +573,7 @@ export const GameProvider = ({ children }) => {
         sellItem,
         currentQuestion,
         streak,
+        endGame,
       }}
     >
       {children}

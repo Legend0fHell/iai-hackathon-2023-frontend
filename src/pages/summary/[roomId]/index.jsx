@@ -1,5 +1,5 @@
 // import type { NextPage } from "next";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Typography,
@@ -11,11 +11,14 @@ import {
 import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
 import Image from "next/image";
 import PropTypes from "prop-types";
+import Spritesheet from "react-responsive-spritesheet";
 
 // Images
 import character from "../../../assets/images/character.png";
-import gem from "../../../assets/images/gem.png";
+import gemImage from "../../../assets/images/gem.png";
 import city from "../../../assets/images/city.gif";
+import axios from "axios";
+import { useRouter } from "next/router";
 
 function LinearProgressWithLabel(props) {
   return (
@@ -53,50 +56,65 @@ LinearProgressWithLabel.propTypes = {
 };
 
 const Summary = () => {
+  const router = useRouter();
+  const [result, setResult] = useState(null);
+
+  useEffect(() => {
+    async function fetchData() {
+      const res = await axios.post("http://157.245.149.209:5678/game/summary", {
+        uid: localStorage.getItem("uid"),
+        data: router.query.roomId,
+      });
+      setResult(res.data.data);
+    }
+
+    fetchData();
+  }, []);
+
   return (
     <>
-      <Box
-        component="section"
-        sx={(theme) => ({
-          height: "100vh",
-        })}
-      >
+      {result != null && (
         <Box
-          sx={{
-            height: "100%",
-            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.20), rgba(0, 0, 0, 0.40)), url(${city.src})`,
-            backgroundSize: "contain",
-            display: "flex",
-            flexDirection: "column",
-            // justifyContent: 'center',
-            alignItems: "center",
-            paddingBottom: "4%",
-          }}
+          component="section"
+          sx={(theme) => ({
+            height: "100vh",
+          })}
         >
-
           <Box
             sx={{
-              width: "35%",
-              height: "fit-content",
-              backgroundColor: "rgba(36, 36, 36, 0.70)",
-              borderRadius: "5px",
-              marginTop: "4%",
+              height: "100%",
+              backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.20), rgba(0, 0, 0, 0.40)), url(${city.src})`,
+              backgroundSize: "contain",
               display: "flex",
               flexDirection: "column",
+              // justifyContent: 'center',
               alignItems: "center",
+              paddingBottom: "4%",
             }}
           >
-            <Typography
-              variant="h3"
+            <Box
               sx={{
-                fontFamily: "VT323, sans-serif",
-                color: "#fff",
-                paddingTop: "32px",
+                width: "35%",
+                height: "fit-content",
+                backgroundColor: "rgba(36, 36, 36, 0.70)",
+                borderRadius: "5px",
+                marginTop: "4%",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
               }}
             >
-              Summary
-            </Typography>
-            <Typography
+              <Typography
+                variant="h3"
+                sx={{
+                  fontFamily: "VT323, sans-serif",
+                  color: "#fff",
+                  paddingTop: "32px",
+                }}
+              >
+                Summary
+              </Typography>
+              {/* <Typography
               variant="h3"
               sx={{
                 fontFamily: "VT323, sans-serif",
@@ -104,140 +122,145 @@ const Summary = () => {
               }}
             >
               1st
-            </Typography>
-            <Image
-              src={character}
-              style={{
-                width: "15%",
-                height: "auto",
-              }}
-            />
-
-            {/* Text Section */}
-            <Box sx={{ paddingBottom: "32px" }}>
-              <Box sx={{ display: "flex", gap: "16px", marginTop: "20px" }}>
-                <Typography
-                  variant="h4"
-                  sx={{
-                    fontFamily: "VT323, sans-serif",
-                    color: "#fff",
-                    textDecoration: "underline",
+            </Typography> */}
+              <Box sx={{ width: 150, height: 150 }}>
+                <Spritesheet
+                  image={`/assets/game/images/knight.png`}
+                  widthFrame={24}
+                  heightFrame={24}
+                  fps={6}
+                  startAt={0}
+                  endAt={4}
+                  style={{
+                    imageRendering: "pixelated",
+                    transform: `scale(1})`,
                   }}
-                >
-                  Precision:
-                </Typography>
-                <Typography
-                  variant="h4"
-                  sx={{
-                    fontFamily: "VT323, sans-serif",
-                    color: "#1EF467",
-                  }}
-                >
-                  100%
-                </Typography>
-              </Box>
-              <Box sx={{ display: "flex", gap: "16px", marginTop: "20px" }}>
-                <Typography
-                  variant="h4"
-                  sx={{
-                    fontFamily: "VT323, sans-serif",
-                    color: "#fff",
-                    textDecoration: "underline",
-                  }}
-                >
-                  Correct:
-                </Typography>
-                <Typography
-                  variant="h4"
-                  sx={{
-                    fontFamily: "VT323, sans-serif",
-                    color: "#1EF467",
-                  }}
-                >
-                  40/40
-                </Typography>
+                  loop
+                />
               </Box>
 
-              <Box sx={{ display: "flex", gap: "16px", marginTop: "20px" }}>
-                <Typography
-                  variant="h4"
-                  sx={{
-                    fontFamily: "VT323, sans-serif",
-                    color: "#fff",
-                    textDecoration: "underline",
-                  }}
-                >
-                  Clear time:
-                </Typography>
-                <Typography
-                  variant="h4"
-                  sx={{
-                    fontFamily: "VT323, sans-serif",
-                    color: "#fff",
-                  }}
-                >
-                  650s
-                </Typography>
-              </Box>
-
-              <Box sx={{ display: "flex", gap: "16px", marginTop: "20px" }}>
-                <Typography
-                  variant="h4"
-                  sx={{
-                    fontFamily: "VT323, sans-serif",
-                    color: "#fff",
-                    textDecoration: "underline",
-                  }}
-                >
-                  Rewarded gems:
-                </Typography>
-                <Box
-                  sx={{ display: "flex", gap: "12px", alignItems: "center" }}
-                >
+              {/* Text Section */}
+              <Box sx={{ paddingBottom: "32px" }}>
+                <Box sx={{ display: "flex", gap: "16px", marginTop: "20px" }}>
                   <Typography
-                    variant="h4"
+                    variant="h5"
                     sx={{
                       fontFamily: "VT323, sans-serif",
                       color: "#fff",
                     }}
                   >
-                    15
+                    Precision:
                   </Typography>
-                  <Image
-                    src={gem}
-                    style={{
-                      width: "32px",
-                      height: "32px",
+                  <Typography
+                    variant="h5"
+                    sx={{
+                      fontFamily: "VT323, sans-serif",
+                      color: "#1EF467",
                     }}
-                  />
+                  >
+                    {Math.floor((result.corCnt / result.totalQues) * 100)}%
+                  </Typography>
+                </Box>
+                <Box sx={{ display: "flex", gap: "16px", marginTop: "20px" }}>
+                  <Typography
+                    variant="h5"
+                    sx={{
+                      fontFamily: "VT323, sans-serif",
+                      color: "#fff",
+                    }}
+                  >
+                    Correct:
+                  </Typography>
+                  <Typography
+                    variant="h5"
+                    sx={{
+                      fontFamily: "VT323, sans-serif",
+                      color: "#1EF467",
+                    }}
+                  >
+                    {result.corCnt}/{result.totalQues}
+                  </Typography>
+                </Box>
+
+                <Box sx={{ display: "flex", gap: "16px", marginTop: "20px" }}>
+                  <Typography
+                    variant="h5"
+                    sx={{
+                      fontFamily: "VT323, sans-serif",
+                      color: "#fff",
+                    }}
+                  >
+                    Clear time:
+                  </Typography>
+                  <Typography
+                    variant="h5"
+                    sx={{
+                      fontFamily: "VT323, sans-serif",
+                      color: "#fff",
+                    }}
+                  >
+                    {Math.floor(result.totalTime / 1000)}s
+                  </Typography>
+                </Box>
+
+                <Box sx={{ display: "flex", gap: "16px", marginTop: "20px" }}>
+                  <Typography
+                    variant="h5"
+                    sx={{
+                      fontFamily: "VT323, sans-serif",
+                      color: "#fff",
+                    }}
+                  >
+                    Rewarded gems:
+                  </Typography>
+                  <Box
+                    sx={{ display: "flex", gap: "12px", alignItems: "center" }}
+                  >
+                    <Typography
+                      variant="h5"
+                      sx={{
+                        fontFamily: "VT323, sans-serif",
+                        color: "#fff",
+                      }}
+                    >
+                      {result.gems}
+                    </Typography>
+                    <Image
+                      src={gemImage}
+                      style={{
+                        width: "32px",
+                        height: "32px",
+                      }}
+                    />
+                  </Box>
                 </Box>
               </Box>
-            </Box>
 
-            <Button
-              component="a"
-              href="/dashboard"
-              variant="outlined"
-              sx={{
-                borderColor: "#BDCADB",
-                borderRadius: "0px",
-                fontFamily: "VT323, sans-serif",
-                color: "#BDCADB",
-                fontSize: "24px",
-                textTransform: "unset",
-                border: "2px solid",
-                padding: "8px 20px",
-                marginBottom: "32px",
-                "&:hover": {
-                  border: "2px solid #BDCADB",
-                },
-              }}
-            >
-              Back to Dashboard
-            </Button>
+              <Button
+                component="a"
+                href="/dashboard"
+                variant="outlined"
+                sx={{
+                  borderColor: "#BDCADB",
+                  borderRadius: "0px",
+                  fontFamily: "VT323, sans-serif",
+                  color: "#BDCADB",
+                  fontSize: "24px",
+                  textTransform: "unset",
+                  border: "2px solid",
+                  padding: "8px 20px",
+                  marginBottom: "32px",
+                  "&:hover": {
+                    border: "2px solid #BDCADB",
+                  },
+                }}
+              >
+                Back to Dashboard
+              </Button>
+            </Box>
           </Box>
         </Box>
-      </Box>
+      )}
     </>
   );
 };
