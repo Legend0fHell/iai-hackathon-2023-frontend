@@ -16,38 +16,6 @@ const GameMaster = () => {
 
   const [dataRes, setData] = useState([]);
   const [qNum, setQNum] = useState(1);
-  useEffect(() => {
-    fetch("http://157.245.149.209:5678/room/userlist", {
-      method: "POST",
-      body: JSON.stringify({
-        uid: localStorage.getItem("uid"),
-        data: router.query.roomId,
-      }),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        let data = [];
-        data = json.data || [];
-        let reme = -1;
-        data.forEach((usr, idx) => {
-          if (usr.data.mode == 9) reme = idx;
-          else
-            Object.assign(data[idx], {
-              rank: 0,
-              correctStreak: 0,
-              corCnt: 0,
-              totCnt: 0,
-              points: 0,
-              progress: 0,
-            });
-        });
-        if (reme > -1) data.splice(reme, 1);
-        setData(data);
-      });
-  }, []);
 
   useState(() => {
     fetch("http://157.245.149.209:5678/room/get", {
@@ -68,6 +36,38 @@ const GameMaster = () => {
         else totQues = json.data.qnum;
 
         setQNum(totQues);
+
+        fetch("http://157.245.149.209:5678/room/userlist", {
+          method: "POST",
+          body: JSON.stringify({
+            uid: localStorage.getItem("uid"),
+            data: router.query.roomId,
+          }),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          },
+        })
+          .then((response) => response.json())
+          .then((json) => {
+            let data = [];
+            data = json.data || [];
+            let reme = -1;
+            data.forEach((usr, idx) => {
+              if (usr.data.mode == 9) reme = idx;
+              else
+                Object.assign(data[idx], {
+                  rank: 0,
+                  correctStreak: 0,
+                  corCnt: 0,
+                  totCnt: 0,
+                  points: 0,
+                  progress: 0,
+                  qNum: totQues,
+                });
+            });
+            if (reme > -1) data.splice(reme, 1);
+            setData(data);
+          });
       });
   }, []);
 

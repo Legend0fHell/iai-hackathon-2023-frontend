@@ -19,7 +19,6 @@ export default class PlayGame extends Phaser.Scene {
     // Logic
 
     this.game.events.on("Answer_Event", (event) => {
-      console.log(event);
       this.answer = event;
       this.isRunning = true;
       this.player.play("run_" + this.gameData.character + "_anim");

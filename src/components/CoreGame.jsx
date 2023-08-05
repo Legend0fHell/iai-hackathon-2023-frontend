@@ -159,6 +159,7 @@ export default function CoreGame() {
   useEffect(() => {
     if (!game) return;
 
+    let correct;
     socket.on("get-answer", (id, isCorrect) => {
       if (isCorrect) {
         game.events.emit("Answer_Event", true);
@@ -170,11 +171,12 @@ export default function CoreGame() {
         setCorrect("#EC6B5E");
         setMessage("Oh noo, wrong answer! 😥");
       }
+      correct = isCorrect;
     });
 
     game.events.on("done", () => {
       handleClose();
-      onFinished(isCorrect);
+      onFinished(correct);
     });
 
     return () => {
@@ -185,7 +187,6 @@ export default function CoreGame() {
 
   useEffect(() => {
     if (currentCard == null) return;
-    console.log(localStorage);
     localStorage.setItem("monster", currentCard.data.name);
     localStorage.setItem(
       "weapon",
