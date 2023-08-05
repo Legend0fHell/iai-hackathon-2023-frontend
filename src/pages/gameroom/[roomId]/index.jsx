@@ -19,7 +19,7 @@ export default function GameRoom() {
 
   const leaveGame = useCallback(() => {
     console.log('Leave');
-    fetch("http://157.245.149.209:5678/room/leave", {
+    fetch("https://iaihackathon.engineer:5678/room/leave", {
       method: "POST",
       body: JSON.stringify({
         'uid': localStorage.getItem("uid"),
@@ -98,7 +98,7 @@ export default function GameRoom() {
   },[role])
 
   useEffect(() => {
-    fetch("http://157.245.149.209:5678/room/userlist", {
+    fetch("https://iaihackathon.engineer:5678/room/userlist", {
       method: "POST",
       body: JSON.stringify({
         'uid': localStorage.getItem("uid"),
@@ -114,7 +114,7 @@ export default function GameRoom() {
         setData(json.data);
       });
 
-    fetch("http://157.245.149.209:5678/room/get", {
+    fetch("https://iaihackathon.engineer:5678/room/get", {
       method: "POST",
       body: JSON.stringify({
         'uid': localStorage.getItem("uid"),
