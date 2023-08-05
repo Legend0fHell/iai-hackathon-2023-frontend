@@ -55,6 +55,7 @@ const CreateGame = () => {
   const [name, setName] = React.useState("");
   const [diff, setDiff] = React.useState("");
   const [desc, setDesc] = React.useState("");
+  const [maxQuestion, setMaxQuestion] = React.useState("");
   const [tframe, setTframe] = React.useState("");
   const [group, setGroup] = React.useState("");
   const [file, setFile] = React.useState("");
@@ -133,7 +134,7 @@ const CreateGame = () => {
       config = {
         method: "post",
         maxBodyLength: Infinity,
-        url: "http://157.245.149.209:8000/api/doc2quiz",
+        url: `http://157.245.149.209:8000/api/doc2quiz?num=${maxQuestion}`,
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -664,6 +665,28 @@ const CreateGame = () => {
                       thickness={4}
                     />
                   </Box>
+                  {c_mode == "doc2quiz" && (
+                    <>
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          fontFamily: "Poppins, sans-serif",
+                          color: "#6E84AB",
+                          paddingBottom: "12px",
+                        }}
+                      >
+                        Set the max number of questions
+                      </Typography>
+
+                      <TextField
+                        variant="outlined"
+                        type="number"
+                        value={maxQuestion}
+                        onChange={(e) => setMaxQuestion(Number(e.target.value))}
+                        sx={{ width: "30ch", paddingBottom: "16px" }}
+                      />
+                    </>
+                  )}
 
                   <Button
                     variant="contained"
