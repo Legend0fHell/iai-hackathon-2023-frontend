@@ -35,9 +35,12 @@ const GameMaster = () => {
       .then((response) => response.json())
       .then((json) => {
         data = json.data || [];
+        let reme = -1;
         data.forEach((usr, idx) => {
-          Object.assign(data[idx], {rank: 0, correctStreak: 0, corCnt: 0, totCnt: 0, points: 0, progress: 0});
+          if(usr.data.mode == 9) reme = idx;
+          else Object.assign(data[idx], {rank: 0, correctStreak: 0, corCnt: 0, totCnt: 0, points: 0, progress: 0});
         })
+        if(reme > -1) data.splice(reme, 1);
       });
     fetch("http://157.245.149.209:5678/room/get", {
         method: "POST",
