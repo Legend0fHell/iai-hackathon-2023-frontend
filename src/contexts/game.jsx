@@ -513,7 +513,7 @@ export const GameProvider = ({ children }) => {
   }, [router]);
 
   useEffect(() => {
-    socket.on("get-playerData", (uid, streak, nCorrects, score) => {
+    socket.on("get-playerData", (uid, streak, nCorrects, total, score) => {
       console.log(uid, score);
 
       if (uid == localStorage.getItem("uid")) {
