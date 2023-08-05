@@ -64,21 +64,29 @@ const GameMasterPlayerCard = ({data}) => {
                     fontFamily: 'Poppins, sans-serif',
                     color: '#fff'
                 }}>
-                    {data.name ? data.name : 'Nhat Minh'}
+                    {data.user.uname ? data.user.uname : 'Nhat Minh'}
                 </Typography>
             </Grid>
-            <Grid xs={5} sx={{ display: 'flex', alignItems: 'center' }} >
+            <Grid xs={2} sx={{ display: 'flex', alignItems: 'center' }} >
+                <Typography variant='body1' sx={{
+                    fontFamily: 'Poppins, sans-serif',
+                    color: '#fff'
+                }}>
+                    {data.points ? data.points : 0}
+                </Typography>
+            </Grid>
+            <Grid xs={2} sx={{ display: 'flex', alignItems: 'center' }} >
                 <Box sx={{ width: '80%' }}>
                     <LinearProgressWithLabel value={data.progress ? data.progress : 80} />
                 </Box>
 
             </Grid>
-            <Grid xs={3} sx={{ display: 'flex', alignItems: 'center' }} >
+            <Grid xs={2} sx={{ display: 'flex', alignItems: 'center' }} >
                 <Typography variant='body1' sx={{
                     fontFamily: 'Poppins, sans-serif',
                     color: '#fff'
                 }}>
-                    {data.cleartime ? data.cleartime : ''}
+                    {`${data.totCnt ? data.totCnt : 0}/${data.totQues ? data.totQues : 1}`}
                 </Typography>
             </Grid>
         </Grid>
