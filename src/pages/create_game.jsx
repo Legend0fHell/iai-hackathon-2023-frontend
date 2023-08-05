@@ -26,6 +26,7 @@ import image2 from "../assets/images/star field.png";
 import image3 from "../assets/images/day_gone.jpg";
 
 import FileUploadIcon from "@mui/icons-material/FileUpload";
+import { SEO } from "../components/SEO";
 
 function CircularProgressWithLabel(props) {
   return (
@@ -55,6 +56,7 @@ const CreateGame = () => {
   const [name, setName] = React.useState("");
   const [diff, setDiff] = React.useState("");
   const [desc, setDesc] = React.useState("");
+  const [maxQuestion, setMaxQuestion] = React.useState("");
   const [tframe, setTframe] = React.useState("");
   const [group, setGroup] = React.useState("");
   const [file, setFile] = React.useState("");
@@ -133,7 +135,11 @@ const CreateGame = () => {
       config = {
         method: "post",
         maxBodyLength: Infinity,
+<<<<<<< HEAD
         url: "https://iaihackathon.engineer:8000/api/doc2quiz",
+=======
+        url: `http://157.245.149.209:8000/api/doc2quiz?num=${maxQuestion}`,
+>>>>>>> 8b9e1d0992abbed710265d237d22cfa2922cd165
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -175,6 +181,16 @@ const CreateGame = () => {
 
   return (
     <>
+      <SEO
+        url={`${"https://testeria.games"}/create_game`}
+        openGraphType="website"
+        schemaType="article"
+        title={`Create Game`}
+        description={"Create new game"}
+        image={
+          "https://images.unsplash.com/photo-1656312193617-b8d43d0b9535?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=686&q=80"
+        }
+      />
       <Box
         component="section"
         className="DashboardSection"
@@ -664,6 +680,28 @@ const CreateGame = () => {
                       thickness={4}
                     />
                   </Box>
+                  {c_mode == "doc2quiz" && (
+                    <>
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          fontFamily: "Poppins, sans-serif",
+                          color: "#6E84AB",
+                          paddingBottom: "12px",
+                        }}
+                      >
+                        Set the max number of questions
+                      </Typography>
+
+                      <TextField
+                        variant="outlined"
+                        type="number"
+                        value={maxQuestion}
+                        onChange={(e) => setMaxQuestion(Number(e.target.value))}
+                        sx={{ width: "30ch", paddingBottom: "16px" }}
+                      />
+                    </>
+                  )}
 
                   <Button
                     variant="contained"
