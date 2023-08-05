@@ -46,7 +46,7 @@ LinearProgressWithLabel.propTypes = {
 };
 
 const GameMasterPlayerCard = ({data}) => {
-    console.log(data)
+    console.log('GMP Data: ',data)
 
     return (
         <Grid container sx={{ backgroundColor: '#373737', padding: '8px', borderRadius:'10px' }} >
@@ -77,7 +77,7 @@ const GameMasterPlayerCard = ({data}) => {
             </Grid>
             <Grid xs={2} sx={{ display: 'flex', alignItems: 'center' }} >
                 <Box sx={{ width: '80%' }}>
-                    <LinearProgressWithLabel value={data.progress ? data.progress : 80} />
+                    <LinearProgressWithLabel value={data.progress ? data.progress : 0} />
                 </Box>
 
             </Grid>
@@ -86,7 +86,7 @@ const GameMasterPlayerCard = ({data}) => {
                     fontFamily: 'Poppins, sans-serif',
                     color: '#fff'
                 }}>
-                    {`${data.totCnt ? data.totCnt : 0}/${data.totQues ? data.totQues : 1}`}
+                    {`${data.totCnt ? data.totCnt : 0}/${data.qNum ? data.qNum : 1}`}
                 </Typography>
             </Grid>
         </Grid>

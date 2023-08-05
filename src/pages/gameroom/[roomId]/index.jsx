@@ -47,7 +47,7 @@ export default function GameRoom() {
     }, 50);
 
     socket.on("get-join", (state) => {
-      console.log('join state', state)
+      // console.log('join state', state)
       setData(data => {
         let ball_data = {
           "user": state,
@@ -64,14 +64,14 @@ export default function GameRoom() {
       setData(data => {
         let tr_data = [...data]
         let ensure = false;
-        console.log('Before data:', tr_data)
+        // console.log('Before data:', tr_data)
         tr_data.forEach((usr, idx) => {
           if (usr.user.uid == state && !ensure) {
             tr_data.splice(idx, 1);
             ensure = true;
           }
         })
-        console.log('after data', tr_data)
+        // console.log('after data', tr_data)
         return tr_data;
       })
     })
@@ -79,7 +79,7 @@ export default function GameRoom() {
 
   useEffect(() => {
     socket.on("get-start", (state) => {
-      console.log(state);
+      // console.log(state);
 
       if (state == 1) {
         socket.emit("post-ready", 2);
@@ -88,7 +88,7 @@ export default function GameRoom() {
         if (role == "Admin") {
           console.log('Push Admin')
           router.push(`/gamemaster/${router.query.roomId}`);
-        } else {
+        } else if (role == "Member") {
           console.log("Push Member")
           router.push(`/game/${router.query.roomId}`);
         }
