@@ -76,12 +76,14 @@ const Summary = () => {
   return (
     <>
       <SEO
-        url={`${'https://testeria.games'}/summary/${router.query.roomId}`}
+        url={`${"https://testeria.games"}/summary/${router.query.roomId}`}
         openGraphType="website"
         schemaType="article"
         title={`Summary - ${router.query.roomId}`}
         description={"Take a look of your performance in the game"}
-        image={"https://images.unsplash.com/photo-1656312193617-b8d43d0b9535?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=686&q=80"}
+        image={
+          "https://images.unsplash.com/photo-1656312193617-b8d43d0b9535?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=686&q=80"
+        }
       />
       {result != null && (
         <Box

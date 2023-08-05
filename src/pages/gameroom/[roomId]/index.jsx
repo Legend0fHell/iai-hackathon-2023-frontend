@@ -11,21 +11,21 @@ export default function GameRoom() {
   const router = useRouter();
 
   const [data, setData] = useState([]);
-  const [role, setRole] = useState('');
-  const [roomData, setRoomData] = useState('');
+  const [role, setRole] = useState("");
+  const [roomData, setRoomData] = useState("");
 
   const startGame = useCallback(() => {
-    console.log('Start')
+    console.log("Start");
     socket.emit("post-start");
   }, []);
 
   const leaveGame = useCallback(() => {
-    console.log('Leave');
+    console.log("Leave");
     fetch("http://157.245.149.209:5678/room/leave", {
       method: "POST",
       body: JSON.stringify({
-        'uid': localStorage.getItem("uid"),
-        'data': router.query.roomId
+        uid: localStorage.getItem("uid"),
+        data: router.query.roomId,
       }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
@@ -33,9 +33,9 @@ export default function GameRoom() {
     })
       .then((response) => response.json())
       .then((json) => {
-        router.push('/dashboard')
+        router.push("/dashboard");
       });
-  }, [])
+  }, []);
 
   useEffect(() => {
     socket.emit(
@@ -50,21 +50,21 @@ export default function GameRoom() {
 
     socket.on("get-join", (state) => {
       // console.log('join state', state)
-      setData(data => {
+      setData((data) => {
         let ball_data = {
-          "user": state,
-          "data": {
-            "mode": 1
-          }
-        }
-        return [...data, ball_data]
-      })
-    })
+          user: state,
+          data: {
+            mode: 1,
+          },
+        };
+        return [...data, ball_data];
+      });
+    });
 
     socket.on("get-leave", (state) => {
-      console.log('Leave State:', state);
-      setData(data => {
-        let tr_data = [...data]
+      console.log("Leave State:", state);
+      setData((data) => {
+        let tr_data = [...data];
         let ensure = false;
         // console.log('Before data:', tr_data)
         tr_data.forEach((usr, idx) => {
@@ -72,11 +72,11 @@ export default function GameRoom() {
             tr_data.splice(idx, 1);
             ensure = true;
           }
-        })
+        });
         // console.log('after data', tr_data)
         return tr_data;
-      })
-    })
+      });
+    });
   }, []);
 
   useEffect(() => {
@@ -86,25 +86,24 @@ export default function GameRoom() {
       if (state == 1) {
         socket.emit("post-ready", 2);
       } else {
-        console.log('role', role)
+        console.log("role", role);
         if (role == "Admin") {
-          console.log('Push Admin')
+          console.log("Push Admin");
           router.push(`/gamemaster/${router.query.roomId}`);
         } else if (role == "Member") {
-          console.log("Push Member")
+          console.log("Push Member");
           router.push(`/game/${router.query.roomId}`);
         }
-
       }
     });
-  }, [role])
+  }, [role]);
 
   useEffect(() => {
     fetch("http://157.245.149.209:5678/room/userlist", {
       method: "POST",
       body: JSON.stringify({
-        'uid': localStorage.getItem("uid"),
-        'data': router.query.roomId
+        uid: localStorage.getItem("uid"),
+        data: router.query.roomId,
       }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
@@ -112,15 +111,15 @@ export default function GameRoom() {
     })
       .then((response) => response.json())
       .then((json) => {
-        console.log('room list: ', json.data)
+        console.log("room list: ", json.data);
         setData(json.data);
       });
 
     fetch("http://157.245.149.209:5678/room/get", {
       method: "POST",
       body: JSON.stringify({
-        'uid': localStorage.getItem("uid"),
-        'data': router.query.roomId
+        uid: localStorage.getItem("uid"),
+        data: router.query.roomId,
       }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
@@ -129,25 +128,27 @@ export default function GameRoom() {
       .then((response) => response.json())
       .then((json) => {
         let value = json.data;
-        setRoomData(value)
+        setRoomData(value);
         if (value.owner == localStorage.getItem("uid")) {
-          setRole('Admin')
+          setRole("Admin");
         } else {
-          setRole('Member')
+          setRole("Member");
         }
       });
-  }, [])
+  }, []);
 
   if (data) {
     return (
       <>
         <SEO
-          url={`${'https://testeria.games'}/gameroom/${router.query.roomId}`}
+          url={`${"https://testeria.games"}/gameroom/${router.query.roomId}`}
           openGraphType="website"
           schemaType="article"
           title={`Game Room - ${router.query.roomId}`}
           description={"Waiting until the game start. Enjoy a cup of coffee!"}
-          image={"https://images.unsplash.com/photo-1656312193617-b8d43d0b9535?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=686&q=80"}
+          image={
+            "https://images.unsplash.com/photo-1656312193617-b8d43d0b9535?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=686&q=80"
+          }
         />
         <Box
           component="section"
@@ -167,11 +168,17 @@ export default function GameRoom() {
               paddingBottom: "4%",
             }}
           >
-            <GameRoomMember onStart={startGame} leaveGame={leaveGame} data={data} role={role} rid={router.query.roomId} roomData={roomData} />
+            <GameRoomMember
+              onStart={startGame}
+              leaveGame={leaveGame}
+              data={data}
+              role={role}
+              rid={router.query.roomId}
+              roomData={roomData}
+            />
           </Box>
         </Box>
       </>
-
     );
   }
 }

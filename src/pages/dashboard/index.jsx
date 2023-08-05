@@ -21,7 +21,7 @@ import poison1 from "../../assets/images/poison.png";
 import potion from "../../assets/images/potion.png";
 import lightning from "../../assets/images/lightning.png";
 import heart from "../../assets/images/love-always-wins.png";
-import wizard from '../../assets/images/wizard.png'
+import wizard from "../../assets/images/wizard.png";
 
 const Index = () => {
   const [value, setValue] = React.useState("2");
@@ -45,7 +45,7 @@ const Index = () => {
     })
       .then((response) => response.json())
       .then((json) => {
-        console.log('user data: ', json.data)
+        console.log("user data: ", json.data);
         setuData(json.data);
       });
 
@@ -84,12 +84,14 @@ const Index = () => {
     return (
       <>
         <SEO
-          url={`${'https://testeria.games'}/dashboard`}
+          url={`${"https://testeria.games"}/dashboard`}
           openGraphType="website"
           schemaType="article"
           title={"Dashboard"}
           description={"Contain all user data"}
-          image={"https://images.unsplash.com/photo-1656312193617-b8d43d0b9535?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=686&q=80"}
+          image={
+            "https://images.unsplash.com/photo-1656312193617-b8d43d0b9535?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=686&q=80"
+          }
         />
         <Box
           component="section"
@@ -202,18 +204,19 @@ const Index = () => {
 
                   <TabPanel value="2" sx={{ padding: "24px 0" }}>
                     <Grid container spacing={4}>
-                      {room && room.map((item, key) => {
-                        return (
-                          <GameCard
-                            img_src={login_bg}
-                            title={"Giải tích I"}
-                            description={"Giải quyết những bài toán hóc búa"}
-                            code={item}
-                            data={item}
-                            key={key}
-                          />
-                        )
-                      })}
+                      {room &&
+                        room.map((item, key) => {
+                          return (
+                            <GameCard
+                              img_src={login_bg}
+                              title={"Giải tích I"}
+                              description={"Giải quyết những bài toán hóc búa"}
+                              code={item}
+                              data={item}
+                              key={key}
+                            />
+                          );
+                        })}
                     </Grid>
                   </TabPanel>
                 </TabContext>
@@ -271,7 +274,7 @@ const Index = () => {
                     width: "100%",
                     backgroundColor: "#E8E8E9",
                     padding: "24px",
-                    marginTop: '32px'
+                    marginTop: "32px",
                   }}
                 >
                   <Typography
@@ -284,201 +287,314 @@ const Index = () => {
                     Perks
                   </Typography>
 
-                  <Grid container spacing={2} sx={{ marginTop: "20px", }} >
-                    <Grid xs={4} >
-                      <Box sx={{
-                        backgroundColor: '#fff',
-                        boxShadow: '0px 2px 4px 0px rgba(0, 0, 0, 0.25)',
-                        width: '100%',
-                        borderRadius: '5px'
-                      }}>
-                        <Image src={wizard} width={60} height={60} alt="item" style={{
-                          objectFit: 'cover',
-                          margin: '16px 32px'
-                        }} />
-                        <Box sx={{
-                          backgroundColor: 'rgba(255, 190, 93, 0.15)',
-                          display: 'flex',
-                          justifyContent: 'center',
-                          padding: '4px',
-                          alignItems: 'center',
-                          gap: '8px'
-                        }}>
-                          <Image src={gem} width={24} height={24} alt='gem' style={{
-                            objectFit: 'cover'
-                          }} />
-                          <Typography variant='h6' sx={{
-                            fontFamily: 'Poppins, sans-serif',
-                            color: '#794B00',
-                            fontWeight: 'bold'
-                          }} >
+                  <Grid container spacing={2} sx={{ marginTop: "20px" }}>
+                    <Grid xs={4}>
+                      <Box
+                        sx={{
+                          backgroundColor: "#fff",
+                          boxShadow: "0px 2px 4px 0px rgba(0, 0, 0, 0.25)",
+                          width: "100%",
+                          borderRadius: "5px",
+                        }}
+                      >
+                        <Image
+                          src={wizard}
+                          width={60}
+                          height={60}
+                          alt="item"
+                          style={{
+                            objectFit: "cover",
+                            margin: "16px 32px",
+                          }}
+                        />
+                        <Box
+                          sx={{
+                            backgroundColor: "rgba(255, 190, 93, 0.15)",
+                            display: "flex",
+                            justifyContent: "center",
+                            padding: "4px",
+                            alignItems: "center",
+                            gap: "8px",
+                          }}
+                        >
+                          <Image
+                            src={gem}
+                            width={24}
+                            height={24}
+                            alt="gem"
+                            style={{
+                              objectFit: "cover",
+                            }}
+                          />
+                          <Typography
+                            variant="h6"
+                            sx={{
+                              fontFamily: "Poppins, sans-serif",
+                              color: "#794B00",
+                              fontWeight: "bold",
+                            }}
+                          >
                             25
                           </Typography>
                         </Box>
                       </Box>
                     </Grid>
-                    <Grid xs={4} >
-                      <Box sx={{
-                        backgroundColor: '#fff',
-                        boxShadow: '0px 2px 4px 0px rgba(0, 0, 0, 0.25)',
-                        width: '100%',
-                        borderRadius: '5px'
-                      }}>
-                        <Image src={heart} width={60} height={60} alt="item" style={{
-                          objectFit: 'cover',
-                          margin: '16px 32px'
-                        }} />
-                        <Box sx={{
-                          backgroundColor: 'rgba(255, 190, 93, 0.15)',
-                          display: 'flex',
-                          justifyContent: 'center',
-                          padding: '4px',
-                          alignItems: 'center',
-                          gap: '8px'
-                        }}>
-                          <Image src={gem} width={24} height={24} alt='gem' style={{
-                            objectFit: 'cover'
-                          }} />
-                          <Typography variant='h6' sx={{
-                            fontFamily: 'Poppins, sans-serif',
-                            color: '#794B00',
-                            fontWeight: 'bold'
-                          }} >
+                    <Grid xs={4}>
+                      <Box
+                        sx={{
+                          backgroundColor: "#fff",
+                          boxShadow: "0px 2px 4px 0px rgba(0, 0, 0, 0.25)",
+                          width: "100%",
+                          borderRadius: "5px",
+                        }}
+                      >
+                        <Image
+                          src={heart}
+                          width={60}
+                          height={60}
+                          alt="item"
+                          style={{
+                            objectFit: "cover",
+                            margin: "16px 32px",
+                          }}
+                        />
+                        <Box
+                          sx={{
+                            backgroundColor: "rgba(255, 190, 93, 0.15)",
+                            display: "flex",
+                            justifyContent: "center",
+                            padding: "4px",
+                            alignItems: "center",
+                            gap: "8px",
+                          }}
+                        >
+                          <Image
+                            src={gem}
+                            width={24}
+                            height={24}
+                            alt="gem"
+                            style={{
+                              objectFit: "cover",
+                            }}
+                          />
+                          <Typography
+                            variant="h6"
+                            sx={{
+                              fontFamily: "Poppins, sans-serif",
+                              color: "#794B00",
+                              fontWeight: "bold",
+                            }}
+                          >
                             15
                           </Typography>
                         </Box>
                       </Box>
                     </Grid>
-                    <Grid xs={4} >
-                      <Box sx={{
-                        backgroundColor: '#fff',
-                        boxShadow: '0px 2px 4px 0px rgba(0, 0, 0, 0.25)',
-                        width: '100%',
-                        borderRadius: '5px'
-                      }}>
-                        <Image src={lightning} width={60} height={60} alt="item" style={{
-                          objectFit: 'cover',
-                          margin: '16px 32px'
-                        }} />
-                        <Box sx={{
-                          backgroundColor: 'rgba(255, 190, 93, 0.15)',
-                          display: 'flex',
-                          justifyContent: 'center',
-                          padding: '4px',
-                          alignItems: 'center',
-                          gap: '8px'
-                        }}>
-                          <Image src={gem} width={24} height={24} alt='gem' style={{
-                            objectFit: 'cover'
-                          }} />
-                          <Typography variant='h6' sx={{
-                            fontFamily: 'Poppins, sans-serif',
-                            color: '#794B00',
-                            fontWeight: 'bold'
-                          }} >
+                    <Grid xs={4}>
+                      <Box
+                        sx={{
+                          backgroundColor: "#fff",
+                          boxShadow: "0px 2px 4px 0px rgba(0, 0, 0, 0.25)",
+                          width: "100%",
+                          borderRadius: "5px",
+                        }}
+                      >
+                        <Image
+                          src={lightning}
+                          width={60}
+                          height={60}
+                          alt="item"
+                          style={{
+                            objectFit: "cover",
+                            margin: "16px 32px",
+                          }}
+                        />
+                        <Box
+                          sx={{
+                            backgroundColor: "rgba(255, 190, 93, 0.15)",
+                            display: "flex",
+                            justifyContent: "center",
+                            padding: "4px",
+                            alignItems: "center",
+                            gap: "8px",
+                          }}
+                        >
+                          <Image
+                            src={gem}
+                            width={24}
+                            height={24}
+                            alt="gem"
+                            style={{
+                              objectFit: "cover",
+                            }}
+                          />
+                          <Typography
+                            variant="h6"
+                            sx={{
+                              fontFamily: "Poppins, sans-serif",
+                              color: "#794B00",
+                              fontWeight: "bold",
+                            }}
+                          >
                             30
                           </Typography>
                         </Box>
                       </Box>
                     </Grid>
-                    <Grid xs={4} >
-                      <Box sx={{
-                        backgroundColor: '#fff',
-                        boxShadow: '0px 2px 4px 0px rgba(0, 0, 0, 0.25)',
-                        width: '100%',
-                        borderRadius: '5px'
-                      }}>
-                        <Image src={potion} width={60} height={60} alt="item" style={{
-                          objectFit: 'cover',
-                          margin: '16px 32px'
-                        }} />
-                        <Box sx={{
-                          backgroundColor: 'rgba(255, 190, 93, 0.15)',
-                          display: 'flex',
-                          justifyContent: 'center',
-                          padding: '4px',
-                          alignItems: 'center',
-                          gap: '8px'
-                        }}>
-                          <Image src={gem} width={24} height={24} alt='gem' style={{
-                            objectFit: 'cover'
-                          }} />
-                          <Typography variant='h6' sx={{
-                            fontFamily: 'Poppins, sans-serif',
-                            color: '#794B00',
-                            fontWeight: 'bold'
-                          }} >
+                    <Grid xs={4}>
+                      <Box
+                        sx={{
+                          backgroundColor: "#fff",
+                          boxShadow: "0px 2px 4px 0px rgba(0, 0, 0, 0.25)",
+                          width: "100%",
+                          borderRadius: "5px",
+                        }}
+                      >
+                        <Image
+                          src={potion}
+                          width={60}
+                          height={60}
+                          alt="item"
+                          style={{
+                            objectFit: "cover",
+                            margin: "16px 32px",
+                          }}
+                        />
+                        <Box
+                          sx={{
+                            backgroundColor: "rgba(255, 190, 93, 0.15)",
+                            display: "flex",
+                            justifyContent: "center",
+                            padding: "4px",
+                            alignItems: "center",
+                            gap: "8px",
+                          }}
+                        >
+                          <Image
+                            src={gem}
+                            width={24}
+                            height={24}
+                            alt="gem"
+                            style={{
+                              objectFit: "cover",
+                            }}
+                          />
+                          <Typography
+                            variant="h6"
+                            sx={{
+                              fontFamily: "Poppins, sans-serif",
+                              color: "#794B00",
+                              fontWeight: "bold",
+                            }}
+                          >
                             20
                           </Typography>
                         </Box>
                       </Box>
                     </Grid>
-                    <Grid xs={4} >
-                      <Box sx={{
-                        backgroundColor: '#fff',
-                        boxShadow: '0px 2px 4px 0px rgba(0, 0, 0, 0.25)',
-                        width: '100%',
-                        borderRadius: '5px'
-                      }}>
-                        <Image src={poison1} width={60} height={60} alt="item" style={{
-                          objectFit: 'cover',
-                          margin: '16px 32px'
-                        }} />
-                        <Box sx={{
-                          backgroundColor: 'rgba(255, 190, 93, 0.15)',
-                          display: 'flex',
-                          justifyContent: 'center',
-                          padding: '4px',
-                          alignItems: 'center',
-                          gap: '8px'
-                        }}>
-                          <Image src={gem} width={24} height={24} alt='gem' style={{
-                            objectFit: 'cover'
-                          }} />
-                          <Typography variant='h6' sx={{
-                            fontFamily: 'Poppins, sans-serif',
-                            color: '#794B00',
-                            fontWeight: 'bold'
-                          }} >
+                    <Grid xs={4}>
+                      <Box
+                        sx={{
+                          backgroundColor: "#fff",
+                          boxShadow: "0px 2px 4px 0px rgba(0, 0, 0, 0.25)",
+                          width: "100%",
+                          borderRadius: "5px",
+                        }}
+                      >
+                        <Image
+                          src={poison1}
+                          width={60}
+                          height={60}
+                          alt="item"
+                          style={{
+                            objectFit: "cover",
+                            margin: "16px 32px",
+                          }}
+                        />
+                        <Box
+                          sx={{
+                            backgroundColor: "rgba(255, 190, 93, 0.15)",
+                            display: "flex",
+                            justifyContent: "center",
+                            padding: "4px",
+                            alignItems: "center",
+                            gap: "8px",
+                          }}
+                        >
+                          <Image
+                            src={gem}
+                            width={24}
+                            height={24}
+                            alt="gem"
+                            style={{
+                              objectFit: "cover",
+                            }}
+                          />
+                          <Typography
+                            variant="h6"
+                            sx={{
+                              fontFamily: "Poppins, sans-serif",
+                              color: "#794B00",
+                              fontWeight: "bold",
+                            }}
+                          >
                             30
                           </Typography>
                         </Box>
                       </Box>
                     </Grid>
-                    <Grid xs={4} >
-                      <Box sx={{
-                        backgroundColor: '#fff',
-                        boxShadow: '0px 2px 4px 0px rgba(0, 0, 0, 0.25)',
-                        width: '100%',
-                        borderRadius: '5px'
-                      }}>
-                        <Image src={sword} width={60} height={60} alt="item" style={{
-                          objectFit: 'cover',
-                          margin: '16px 32px'
-                        }} />
-                        <Box sx={{
-                          backgroundColor: 'rgba(255, 190, 93, 0.15)',
-                          display: 'flex',
-                          justifyContent: 'center',
-                          padding: '4px',
-                          alignItems: 'center',
-                          gap: '8px'
-                        }}>
-                          <Image src={gem} width={24} height={24} alt='gem' style={{
-                            objectFit: 'cover'
-                          }} />
-                          <Typography variant='h6' sx={{
-                            fontFamily: 'Poppins, sans-serif',
-                            color: '#794B00',
-                            fontWeight: 'bold'
-                          }} >
+                    <Grid xs={4}>
+                      <Box
+                        sx={{
+                          backgroundColor: "#fff",
+                          boxShadow: "0px 2px 4px 0px rgba(0, 0, 0, 0.25)",
+                          width: "100%",
+                          borderRadius: "5px",
+                        }}
+                      >
+                        <Image
+                          src={sword}
+                          width={60}
+                          height={60}
+                          alt="item"
+                          style={{
+                            objectFit: "cover",
+                            margin: "16px 32px",
+                          }}
+                        />
+                        <Box
+                          sx={{
+                            backgroundColor: "rgba(255, 190, 93, 0.15)",
+                            display: "flex",
+                            justifyContent: "center",
+                            padding: "4px",
+                            alignItems: "center",
+                            gap: "8px",
+                          }}
+                        >
+                          <Image
+                            src={gem}
+                            width={24}
+                            height={24}
+                            alt="gem"
+                            style={{
+                              objectFit: "cover",
+                            }}
+                          />
+                          <Typography
+                            variant="h6"
+                            sx={{
+                              fontFamily: "Poppins, sans-serif",
+                              color: "#794B00",
+                              fontWeight: "bold",
+                            }}
+                          >
                             25
                           </Typography>
                         </Box>
                       </Box>
                     </Grid>
                   </Grid>
-
                 </Box>
               </Grid>
             </Grid>
