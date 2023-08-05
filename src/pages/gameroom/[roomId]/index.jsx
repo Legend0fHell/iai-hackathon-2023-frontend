@@ -5,6 +5,8 @@ import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { socket } from "../../../models/wsEventListener";
 
+import { SEO } from "../../../components/SEO";
+
 export default function GameRoom() {
   const router = useRouter();
 
@@ -84,7 +86,7 @@ export default function GameRoom() {
       if (state == 1) {
         socket.emit("post-ready", 2);
       } else {
-        console.log('role',role)
+        console.log('role', role)
         if (role == "Admin") {
           console.log('Push Admin')
           router.push(`/gamemaster/${router.query.roomId}`);
@@ -95,7 +97,7 @@ export default function GameRoom() {
 
       }
     });
-  },[role])
+  }, [role])
 
   useEffect(() => {
     fetch("http://157.245.149.209:5678/room/userlist", {
@@ -138,27 +140,38 @@ export default function GameRoom() {
 
   if (data) {
     return (
-      <Box
-        component="section"
-        sx={{
-          height: "100vh",
-        }}
-      >
+      <>
+        <SEO
+          url={`${'https://testeria.games'}/gameroom/${router.query.roomId}`}
+          openGraphType="website"
+          schemaType="article"
+          title={`Game Room - ${router.query.roomId}`}
+          description={"Waiting until the game start. Enjoy a cup of coffee!"}
+          image={"https://images.unsplash.com/photo-1656312193617-b8d43d0b9535?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=686&q=80"}
+        />
         <Box
+          component="section"
           sx={{
-            height: "100%",
-            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.20), rgba(0, 0, 0, 0.40)), url(${city.src})`,
-            backgroundSize: "contain",
-            display: "flex",
-            flexDirection: "column",
-            // justifyContent: 'center',
-            alignItems: "center",
-            paddingBottom: "4%",
+            height: "100vh",
           }}
         >
-          <GameRoomMember onStart={startGame} leaveGame={leaveGame} data={data} role={role} rid={router.query.roomId} roomData={roomData} />
+          <Box
+            sx={{
+              height: "100%",
+              backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.20), rgba(0, 0, 0, 0.40)), url(${city.src})`,
+              backgroundSize: "contain",
+              display: "flex",
+              flexDirection: "column",
+              // justifyContent: 'center',
+              alignItems: "center",
+              paddingBottom: "4%",
+            }}
+          >
+            <GameRoomMember onStart={startGame} leaveGame={leaveGame} data={data} role={role} rid={router.query.roomId} roomData={roomData} />
+          </Box>
         </Box>
-      </Box>
+      </>
+
     );
   }
 }
