@@ -10,12 +10,47 @@ export default class PlayGame extends Phaser.Scene {
     this.character = character;
     this.gameData = gameData;
     this.setDone = setDone;
+    this.flag = false;
   }
 
   create() {
-    console.log('game data: ',this.gameData)
-
     // console.log(this.gem, this.character)
+    this.createEverything();
+    // Logic
+
+    this.game.events.on("Answer_Event", (event) => {
+      console.log(event);
+      this.answer = event;
+      this.isRunning = true;
+      this.player.play("run_" + this.gameData.character + "_anim");
+      this.step.play();
+      this.dust.playReverse("dust_particle");
+    });
+
+    // Finally trigger an event so that the scene is now visible. This is optional
+    // but useful if you want to transition your game's appearance.
+    this.game.events.emit("putOnPlayGame", true);
+  }
+
+  movePlayer(player, speed) {
+    player.x += speed;
+    if (player.x > 400) {
+      this.resetPlayer(player);
+    }
+  }
+
+  resetPlayer(player) {
+    player.x = 0;
+    player.y = 300 / 2;
+  }
+
+  createEverything() {
+    if (this.monster) {
+      this.monster.destroy();
+      this.player.destroy();
+      this.weapon.destroy();
+    }
+
     this.background = this.add.image(
       this.gameData.map.x,
       this.gameData.map.y,
@@ -28,14 +63,18 @@ export default class PlayGame extends Phaser.Scene {
     this.monster = this.physics.add.sprite(
       400 - 50,
       300 / 2,
-      this.gameData.monster
+      localStorage.getItem("monster")
     );
     const player = this.physics.add.sprite(
       50,
       300 / 2,
       this.gameData.character
     );
-    this.weapon = this.physics.add.sprite(64, 300 / 2 + 15, this.gameData.weapon);
+    this.weapon = this.physics.add.sprite(
+      53,
+      300 / 2 + 15,
+      localStorage.getItem("weapon")
+    );
     this.diamond_pickaxe = this.physics.add.sprite(
       400 - 60,
       300 / 2 + 15,
@@ -53,10 +92,10 @@ export default class PlayGame extends Phaser.Scene {
     // Set Scale and play anim
     this.monster.setScale(2);
     this.monster.setSize(5, 20, true);
-    this.monster.play("idle_" + this.gameData.monster + "_anim");
+    this.monster.play("idle_" + localStorage.getItem("monster") + "_anim");
 
     this.diamond_pickaxe.setScale(1.5);
-    this.diamond_pickaxe.angle = -90;
+    this.diamond_pickaxe.rotation = -Math.PI / 2;
     // this.diamond_pickaxe.play('pickaxe_swing_l')
 
     this.dust.setScale(1.5);
@@ -69,7 +108,9 @@ export default class PlayGame extends Phaser.Scene {
     this.player = player;
 
     this.weapon.setScale(1.5);
-    this.weapon.angle = 90;
+    this.weapon.rotation = 0;
+    this.weapon.angle = 0;
+    this.weapon.setOrigin(0.5, 1);
     // this.weapon.play("weapon_idle");
 
     this.cPlayer = this.add.container(0, 0);
@@ -78,17 +119,6 @@ export default class PlayGame extends Phaser.Scene {
     this.physics.add.existing(this.cPlayer);
     this.cPlayer.add([this.player, this.weapon, this.dust]);
 
-    // Logic
-
-    this.game.events.on("Answer_Event", (event) => {
-      console.log(event);
-      this.answer = event;
-      this.isRunning = true;
-      this.player.play("run_" + this.gameData.character + "_anim");
-      this.step.play();
-      this.dust.playReverse("dust_particle");
-    });
-
     this.physics.add.overlap(
       player,
       this.monster,
@@ -96,30 +126,6 @@ export default class PlayGame extends Phaser.Scene {
       null,
       this
     );
-
-    // Finally trigger an event so that the scene is now visible. This is optional
-    // but useful if you want to transition your game's appearance.
-    this.game.events.emit("putOnPlayGame", true);
-  }
-
-  swing_weapon(item) {
-    item.angle = 30;
-    for (let index = 1; index <= 60; index++) {
-      item.angle += 1;
-      console.log(item.angle)
-    }
-  }
-
-  movePlayer(player, speed) {
-    player.x += speed;
-    if (player.x > 400) {
-      this.resetPlayer(player);
-    }
-  }
-
-  resetPlayer(player) {
-    player.x = 0;
-    player.y = 300 / 2;
   }
 
   killMonster(player, monster) {
@@ -127,14 +133,13 @@ export default class PlayGame extends Phaser.Scene {
       this.step.stop();
       this.swing = true;
       // this.weapon.play("weapon_swing_r", true);
-      this.swing_weapon(this.weapon);
       this.swing_sound.play();
       this.dust.play("idle_dust_particle");
       this.falling.play();
       this.diamond_pickaxe.visible = false;
     }
     player.play("idle_" + this.gameData.character + "_anim", true);
-    monster.play("ded_" + this.gameData.monster + "_anim", true);
+    monster.play("ded_" + localStorage.getItem("monster") + "_anim", true);
 
     this.isRunning = false;
   }
@@ -157,6 +162,12 @@ export default class PlayGame extends Phaser.Scene {
   }
 
   handleOverlap(player, monster) {
+    if (!this.flag) {
+      this.flag = true;
+    } else {
+      return;
+    }
+
     if (this.answer) {
       this.killMonster(player, monster);
     } else {
@@ -164,23 +175,21 @@ export default class PlayGame extends Phaser.Scene {
     }
 
     setTimeout(() => {
-      this.setDone(true);
+      this.game.events.emit("done");
     }, 1000);
   }
 
   update() {
     if (this.isRunning) {
       this.movePlayer(this.cPlayer, 2);
-      // player.x += 2
+
+      if (this.player.x > 400) {
+        this.createEverything();
+      }
     }
 
-    let { lives, progress } = this;
-    // For example, monitor the number of lives and exit when
-    // if (!lives) {
-    //     // Save the progress.
-    //     this.registry.merge(progress)
-    //     // Trigger the game end.
-    //     this.game.events.emit("putOnPlayGame", false)
-    // }
+    if (this.flag && this.answer && this.weapon.angle < 100) {
+      this.weapon.angle += 3;
+    }
   }
 }
