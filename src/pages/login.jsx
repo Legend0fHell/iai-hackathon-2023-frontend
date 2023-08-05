@@ -21,6 +21,8 @@ import Grid from '@mui/material/Unstable_Grid2'; // Grid
 import { useRouter } from "next/router";
 import { login } from "@/models/auth";
 
+import { SEO } from "@/components/SEO";
+
 // Images
 import login_bg from '../assets/images/login_bg.jpg'
 
@@ -53,13 +55,13 @@ const Login = () => {
       console.log('No Data');
       return;
     };
-    if (pass.match(/^(?!.* )(?=.*\d)(?=.*[A-Z]).{8,}$/) && email.match(/^\S+@\S+\.\S+$/) ) {
+    if (pass.match(/^(?!.* )(?=.*\d)(?=.*[A-Z]).{8,}$/) && email.match(/^\S+@\S+\.\S+$/)) {
       console.log(email, pass)
       try {
         await login(email, pass);
       } catch (error) {
         console.log(error)
-      } 
+      }
       router.push('/');
     } else {
       console.log('Password not valid')
@@ -67,7 +69,14 @@ const Login = () => {
   };
   return (
     <div>
-
+      <SEO
+        url={`${'https://testeria.games'}/login`}
+        openGraphType="website"
+        schemaType="article"
+        title={`Login`}
+        description={"Login user"}
+        image={"https://images.unsplash.com/photo-1656312193617-b8d43d0b9535?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=686&q=80"}
+      />
       <Box component='section' sx={(theme) => ({
         backgroundColor: '##F0F4FF',
         backgroundPosition: 'center',

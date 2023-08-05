@@ -26,6 +26,7 @@ import image2 from "../assets/images/star field.png";
 import image3 from "../assets/images/day_gone.jpg";
 
 import FileUploadIcon from "@mui/icons-material/FileUpload";
+import { SEO } from "../components/SEO";
 
 function CircularProgressWithLabel(props) {
   return (
@@ -176,6 +177,14 @@ const CreateGame = () => {
 
   return (
     <>
+      <SEO
+        url={`${'https://testeria.games'}/create_game`}
+        openGraphType="website"
+        schemaType="article"
+        title={`Create Game`}
+        description={"Create new game"}
+        image={"https://images.unsplash.com/photo-1656312193617-b8d43d0b9535?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=686&q=80"}
+      />
       <Box
         component="section"
         className="DashboardSection"

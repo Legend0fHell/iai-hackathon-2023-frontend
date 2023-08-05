@@ -10,7 +10,7 @@ import {
   InputAdornment,
   IconButton,
   Input,
-  FormHelperText 
+  FormHelperText
 }
   from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
@@ -25,6 +25,8 @@ import register_bg from '../assets/images/register_bg.jpg'
 import google from '../assets/images/google.png'
 import face from '../assets/images/face.png'
 import twitter from '../assets/images/twitter.png'
+
+import { SEO } from "@/components/SEO";
 
 const Register = () => {
   const router = useRouter();
@@ -67,7 +69,14 @@ const Register = () => {
 
   return (
     <div>
-
+      <SEO
+        url={`${'https://testeria.games'}/register`}
+        openGraphType="website"
+        schemaType="article"
+        title={`Register`}
+        description={"Register New User"}
+        image={"https://images.unsplash.com/photo-1656312193617-b8d43d0b9535?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=686&q=80"}
+      />
       <Box component='section' sx={(theme) => ({
         backgroundColor: '##F0F4FF',
         height: '100vh',
@@ -193,7 +202,7 @@ const Register = () => {
                   }
                 />
                 <FormHelperText>
-                Required 8 to 15 chars; min 1 uppercase letter; min 1 number; no whitespace
+                  Required 8 to 15 chars; min 1 uppercase letter; min 1 number; no whitespace
                 </FormHelperText>
               </FormControl>
             </Box>
@@ -299,7 +308,7 @@ const Register = () => {
 
               </Box>
 
-              <Box sx={{ display: 'flex', paddingTop:'16px' }} >
+              <Box sx={{ display: 'flex', paddingTop: '16px' }} >
                 <Typography
                   variant='body1'
                   sx={{

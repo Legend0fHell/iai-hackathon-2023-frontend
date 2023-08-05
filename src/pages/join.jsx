@@ -10,6 +10,8 @@ import {
 }
     from '@mui/material';
 
+import { SEO } from "../components/SEO";
+
 // Images
 import city from '../assets/images/city.gif'
 
@@ -24,26 +26,34 @@ const Join = () => {
     }
 
     const handleJoin = (e) => {
-            if(code == null || code == "") return;
-            fetch("http://157.245.149.209:5678/room/join", {
-              method: "POST",
-              body: JSON.stringify({
+        if (code == null || code == "") return;
+        fetch("http://157.245.149.209:5678/room/join", {
+            method: "POST",
+            body: JSON.stringify({
                 uid: localStorage.getItem("uid"),
                 data: code,
-              }),
-              headers: {
+            }),
+            headers: {
                 "Content-type": "application/json; charset=UTF-8",
-              },
-            })
-              .then((response) => response.json())
-              .then((json) => {
+            },
+        })
+            .then((response) => response.json())
+            .then((json) => {
                 console.log(json.msg);
                 router.push(`/gameroom/${code}`);
-              });
+            });
     }
 
     return (
         <>
+            <SEO
+                url={`${'https://testeria.games'}/join`}
+                openGraphType="website"
+                schemaType="article"
+                title={`Join`}
+                description={"Join new game with other players"}
+                image={"https://images.unsplash.com/photo-1656312193617-b8d43d0b9535?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=686&q=80"}
+            />
             <Box component='section' sx={(theme) => ({
                 height: '100vh',
             })}
@@ -56,9 +66,9 @@ const Join = () => {
                     flexDirection: 'column',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    paddingBottom:'4%',
-                    gap:'32px',
-                    
+                    paddingBottom: '4%',
+                    gap: '32px',
+
                 }}
                 >
                     <Typography

@@ -29,6 +29,8 @@ import PeopleIcon from '@mui/icons-material/People';
 // Components
 import GroupCard from "../../components/Group/GroupCard";
 
+import { SEO } from "../../components/SEO";
+
 import image1 from '../../assets/images/login_bg.jpg'
 
 const GroupPage = () => {
@@ -119,6 +121,14 @@ const GroupPage = () => {
 
     return (
         <>
+            <SEO
+                url={`${'https://testeria.games'}/group/`}
+                openGraphType="website"
+                schemaType="article"
+                title={`Group`}
+                description={"Discover all groups"}
+                image={"https://images.unsplash.com/photo-1656312193617-b8d43d0b9535?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=686&q=80"}
+            />
             <Box component='section' className="GroupSection" sx={(theme) => ({
                 backgroundColor: '#F0F4FF',
                 height: groups && groups.length > 5 ? 'auto' : '100vh'
