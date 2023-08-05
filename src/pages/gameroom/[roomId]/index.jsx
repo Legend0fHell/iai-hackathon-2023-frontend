@@ -8,8 +8,9 @@ import { socket } from "../../../models/wsEventListener";
 export default function GameRoom() {
   const router = useRouter();
 
-  const [data, setData] = useState('');
-  const [role, setRole] = useState('')
+  const [data, setData] = useState([]);
+  const [role, setRole] = useState('');
+  const [roomData, setRoomData] = useState('');
 
   const startGame = useCallback(() => {
     console.log('Start')
@@ -45,17 +46,56 @@ export default function GameRoom() {
       socket.emit("post-ready", 1);
     }, 50);
 
+    socket.on("get-join", (state) => {
+      console.log('join state', state)
+      setData(data => {
+        let ball_data = {
+          "user": state,
+          "data": {
+            "mode": 1
+          }
+        }
+        return [...data, ball_data]
+      })
+    })
+
+    socket.on("get-leave", (state) => {
+      console.log('Leave State:', state);
+      setData(data => {
+        let tr_data = [...data]
+        let ensure = false;
+        console.log('Before data:', tr_data)
+        tr_data.forEach((usr, idx) => {
+          if (usr.user.uid == state && !ensure) {
+            tr_data.splice(idx, 1);
+            ensure = true;
+          }
+        })
+        console.log('after data', tr_data)
+        return tr_data;
+      })
+    })
+  }, []);
+
+  useEffect(() => {
     socket.on("get-start", (state) => {
       console.log(state);
 
       if (state == 1) {
         socket.emit("post-ready", 2);
       } else {
-        console.log("push")
-        router.push(`/game/${router.query.roomId}`);
+        console.log('role',role)
+        if (role == "Admin") {
+          console.log('Push Admin')
+          router.push(`/gamemaster/${router.query.roomId}`);
+        } else {
+          console.log("Push Member")
+          router.push(`/game/${router.query.roomId}`);
+        }
+
       }
     });
-  }, []);
+  },[role])
 
   useEffect(() => {
     fetch("http://157.245.149.209:5678/room/userlist", {
@@ -70,6 +110,7 @@ export default function GameRoom() {
     })
       .then((response) => response.json())
       .then((json) => {
+        console.log('room list: ', json.data)
         setData(json.data);
       });
 
@@ -86,7 +127,8 @@ export default function GameRoom() {
       .then((response) => response.json())
       .then((json) => {
         let value = json.data;
-        if(value.owner == localStorage.getItem("uid")){
+        setRoomData(value)
+        if (value.owner == localStorage.getItem("uid")) {
           setRole('Admin')
         } else {
           setRole('Member')
@@ -114,7 +156,7 @@ export default function GameRoom() {
             paddingBottom: "4%",
           }}
         >
-          <GameRoomMember onStart={startGame} leaveGame={leaveGame} data={data} role={role} />
+          <GameRoomMember onStart={startGame} leaveGame={leaveGame} data={data} role={role} rid={router.query.roomId} roomData={roomData} />
         </Box>
       </Box>
     );

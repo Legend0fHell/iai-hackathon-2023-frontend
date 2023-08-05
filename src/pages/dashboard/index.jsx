@@ -15,6 +15,12 @@ import gem from "../../assets/images/gem.png";
 import login_bg from "../../assets/images/login_bg.jpg";
 import wizard_staff from "../../assets/images/wizard_staff.png";
 import holy_rope from "../../assets/images/holy_rope.png";
+import sword from "../../assets/images/game.png";
+import poison1 from "../../assets/images/poison.png";
+import potion from "../../assets/images/potion.png";
+import lightning from "../../assets/images/lightning.png";
+import heart from "../../assets/images/love-always-wins.png";
+import wizard from '../../assets/images/wizard.png'
 
 const Index = () => {
   const [value, setValue] = React.useState("2");
@@ -38,6 +44,7 @@ const Index = () => {
     })
       .then((response) => response.json())
       .then((json) => {
+        console.log('user data: ', json.data)
         setuData(json.data);
       });
 
@@ -68,11 +75,11 @@ const Index = () => {
       .then((response) => response.json())
       .then((json) => {
         // console.log("all rooms: ", json.data);
-        console.log("all rooms", Object.values(json.data));
+        // console.log("all rooms", Object.values(json.data));
         setRoom(Object.values(json.data));
       });
   }, []);
-  if(uData){
+  if (uData) {
     return (
       <>
         <Box
@@ -140,7 +147,7 @@ const Index = () => {
                   </Typography>
                 </Box>
               </Box>
-  
+
               <Box sx={{ display: "flex", gap: "8px", alignItems: "center" }}>
                 <Typography
                   variant="body1"
@@ -157,9 +164,9 @@ const Index = () => {
               </Box>
             </Box>
             {/* User Banner */}
-  
+
             {/* Game Section */}
-            <Grid container spacing={8} pt={4}>
+            <Grid container spacing={8} pt={4} pb={10}>
               <Grid xs={8}>
                 <TabContext value={value}>
                   <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -183,7 +190,7 @@ const Index = () => {
                       </Grid>
                     </Grid>
                   </TabPanel>
-  
+
                   <TabPanel value="2" sx={{ padding: "24px 0" }}>
                     <Grid container spacing={4}>
                       {room && room.map((item, key) => {
@@ -203,7 +210,7 @@ const Index = () => {
                 </TabContext>
               </Grid>
               {/* Game Section */}
-  
+
               {/* Daily Tasks Section */}
               <Grid xs={4}>
                 <Box
@@ -222,7 +229,7 @@ const Index = () => {
                   >
                     Daily Tasks
                   </Typography>
-  
+
                   {/* Tasks */}
                   <Box
                     sx={{
@@ -248,6 +255,221 @@ const Index = () => {
                       description={"Reward: Holy Rope"}
                     />
                   </Box>
+                </Box>
+
+                <Box
+                  sx={{
+                    width: "100%",
+                    backgroundColor: "#E8E8E9",
+                    padding: "24px",
+                    marginTop:'32px'
+                  }}
+                >
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      fontFamily: "Poppins, sans-serif",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Perks
+                  </Typography>
+
+                  <Grid container spacing={2} sx={{marginTop: "20px",}} >
+                    <Grid xs={4} >
+                      <Box sx={{
+                        backgroundColor: '#fff',
+                        boxShadow: '0px 2px 4px 0px rgba(0, 0, 0, 0.25)',
+                        width: '100%',
+                        borderRadius:'5px'
+                      }}>
+                        <Image src={wizard} width={60} height={60} alt="item" style={{
+                          objectFit: 'cover',
+                          margin: '16px 32px'
+                        }} />
+                        <Box sx={{
+                          backgroundColor: 'rgba(255, 190, 93, 0.15)',
+                          display:'flex',
+                          justifyContent:'center',
+                          padding:'4px',
+                          alignItems:'center', 
+                          gap: '8px'
+                        }}>
+                          <Image src={gem} width={24} height={24} alt='gem' style={{
+                            objectFit:'cover'
+                          }} />
+                          <Typography variant='h6' sx={{
+                            fontFamily:'Poppins, sans-serif',
+                            color:'#794B00',
+                            fontWeight:'bold'
+                          }} >
+                            25
+                          </Typography>
+                        </Box>
+                      </Box>
+                    </Grid>
+                    <Grid xs={4} >
+                      <Box sx={{
+                        backgroundColor: '#fff',
+                        boxShadow: '0px 2px 4px 0px rgba(0, 0, 0, 0.25)',
+                        width: '100%',
+                        borderRadius:'5px'
+                      }}>
+                        <Image src={heart} width={60} height={60} alt="item" style={{
+                          objectFit: 'cover',
+                          margin: '16px 32px'
+                        }} />
+                        <Box sx={{
+                          backgroundColor: 'rgba(255, 190, 93, 0.15)',
+                          display:'flex',
+                          justifyContent:'center',
+                          padding:'4px',
+                          alignItems:'center',
+                          gap: '8px'
+                        }}>
+                          <Image src={gem} width={24} height={24} alt='gem' style={{
+                            objectFit:'cover'
+                          }} />
+                          <Typography variant='h6' sx={{
+                            fontFamily:'Poppins, sans-serif',
+                            color:'#794B00',
+                            fontWeight:'bold'
+                          }} >
+                            15
+                          </Typography>
+                        </Box>
+                      </Box>
+                    </Grid>
+                    <Grid xs={4} >
+                      <Box sx={{
+                        backgroundColor: '#fff',
+                        boxShadow: '0px 2px 4px 0px rgba(0, 0, 0, 0.25)',
+                        width: '100%',
+                        borderRadius:'5px'
+                      }}>
+                        <Image src={lightning} width={60} height={60} alt="item" style={{
+                          objectFit: 'cover',
+                          margin: '16px 32px'
+                        }} />
+                        <Box sx={{
+                          backgroundColor: 'rgba(255, 190, 93, 0.15)',
+                          display:'flex',
+                          justifyContent:'center',
+                          padding:'4px',
+                          alignItems:'center',
+                          gap: '8px'
+                        }}>
+                          <Image src={gem} width={24} height={24} alt='gem' style={{
+                            objectFit:'cover'
+                          }} />
+                          <Typography variant='h6' sx={{
+                            fontFamily:'Poppins, sans-serif',
+                            color:'#794B00',
+                            fontWeight:'bold'
+                          }} >
+                            30
+                          </Typography>
+                        </Box>
+                      </Box>
+                    </Grid>
+                    <Grid xs={4} >
+                      <Box sx={{
+                        backgroundColor: '#fff',
+                        boxShadow: '0px 2px 4px 0px rgba(0, 0, 0, 0.25)',
+                        width: '100%',
+                        borderRadius:'5px'
+                      }}>
+                        <Image src={potion} width={60} height={60} alt="item" style={{
+                          objectFit: 'cover',
+                          margin: '16px 32px'
+                        }} />
+                        <Box sx={{
+                          backgroundColor: 'rgba(255, 190, 93, 0.15)',
+                          display:'flex',
+                          justifyContent:'center',
+                          padding:'4px',
+                          alignItems:'center',
+                          gap: '8px'
+                        }}>
+                          <Image src={gem} width={24} height={24} alt='gem' style={{
+                            objectFit:'cover'
+                          }} />
+                          <Typography variant='h6' sx={{
+                            fontFamily:'Poppins, sans-serif',
+                            color:'#794B00',
+                            fontWeight:'bold'
+                          }} >
+                            20
+                          </Typography>
+                        </Box>
+                      </Box>
+                    </Grid>
+                    <Grid xs={4} >
+                      <Box sx={{
+                        backgroundColor: '#fff',
+                        boxShadow: '0px 2px 4px 0px rgba(0, 0, 0, 0.25)',
+                        width: '100%',
+                        borderRadius:'5px'
+                      }}>
+                        <Image src={poison1} width={60} height={60} alt="item" style={{
+                          objectFit: 'cover',
+                          margin: '16px 32px'
+                        }} />
+                        <Box sx={{
+                          backgroundColor: 'rgba(255, 190, 93, 0.15)',
+                          display:'flex',
+                          justifyContent:'center',
+                          padding:'4px',
+                          alignItems:'center',
+                          gap: '8px'
+                        }}>
+                          <Image src={gem} width={24} height={24} alt='gem' style={{
+                            objectFit:'cover'
+                          }} />
+                          <Typography variant='h6' sx={{
+                            fontFamily:'Poppins, sans-serif',
+                            color:'#794B00',
+                            fontWeight:'bold'
+                          }} >
+                            30
+                          </Typography>
+                        </Box>
+                      </Box>
+                    </Grid>
+                    <Grid xs={4} >
+                      <Box sx={{
+                        backgroundColor: '#fff',
+                        boxShadow: '0px 2px 4px 0px rgba(0, 0, 0, 0.25)',
+                        width: '100%',
+                        borderRadius:'5px'
+                      }}>
+                        <Image src={sword} width={60} height={60} alt="item" style={{
+                          objectFit: 'cover',
+                          margin: '16px 32px'
+                        }} />
+                        <Box sx={{
+                          backgroundColor: 'rgba(255, 190, 93, 0.15)',
+                          display:'flex',
+                          justifyContent:'center',
+                          padding:'4px',
+                          alignItems:'center',
+                          gap: '8px'
+                        }}>
+                          <Image src={gem} width={24} height={24} alt='gem' style={{
+                            objectFit:'cover'
+                          }} />
+                          <Typography variant='h6' sx={{
+                            fontFamily:'Poppins, sans-serif',
+                            color:'#794B00',
+                            fontWeight:'bold'
+                          }} >
+                            25
+                          </Typography>
+                        </Box>
+                      </Box>
+                    </Grid>
+                  </Grid>
+
                 </Box>
               </Grid>
             </Grid>

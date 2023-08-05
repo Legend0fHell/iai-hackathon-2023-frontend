@@ -9,7 +9,8 @@ import {
   InputLabel,
   InputAdornment,
   IconButton,
-  Input
+  Input,
+  FormHelperText 
 }
   from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
@@ -56,9 +57,9 @@ const Register = () => {
       console.log('No Data');
       return;
     };
-    if (pass.match(/^(?!.* )(?=.*\d)(?=.*[A-Z]).{8,15}$/) && email.match(/^\S+@\S+\.\S+$/)) {
+    if (pass.match(/^(?!.* )(?=.*\d)(?=.*[A-Z]).{8,}$/) && email.match(/^\S+@\S+\.\S+$/)) {
       await register(email, pass, { 'uname': name });
-      router.push('/');
+      // router.push('/');
     } else {
       console.log('Password not valid')
     }
@@ -173,6 +174,7 @@ const Register = () => {
                   type={showPassword ? 'text' : 'password'}
                   value={pass}
                   onChange={handleChangePassword}
+                  helperText='Required 8 to 15 chars; 1 uppercase letter; 1 number'
                   sx={{
                     '&::before': {
                       borderBottom: '2px solid rgba(21, 24, 109, 0.60)',
@@ -190,6 +192,9 @@ const Register = () => {
                     </InputAdornment>
                   }
                 />
+                <FormHelperText>
+                Required 8 to 15 chars; min 1 uppercase letter; min 1 number; no whitespace
+                </FormHelperText>
               </FormControl>
             </Box>
 
